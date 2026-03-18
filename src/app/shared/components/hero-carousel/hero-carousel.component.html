@@ -1,0 +1,45 @@
+<div class="hero" *ngIf="items.length">
+  <div class="slider">
+    <div
+      class="slide"
+      *ngFor="let item of items; let i = index"
+      [ngClass]="getSlideClass(i)"
+      (mouseenter)="onHover(item, i)"
+      (mouseleave)="onLeave()"
+    >
+      <img
+        *ngIf="hoveredId !== item.id"
+        [src]="imageBase + item.backdrop_path"
+        loading="lazy"
+      />
+      <iframe
+        *ngIf="hoveredId === item.id && trailers[item.id]"
+        [src]="trailers[item.id]"
+        frameborder="0"
+        allow="autoplay"
+      ></iframe>
+    </div>
+  </div>
+
+  <div class="overlay">
+    <div class="bottom-child">
+      <h1>{{ items[currentIndex].title || items[currentIndex].name }}</h1>
+      <p>{{ items[currentIndex].overview }}</p>
+      <div class="actions">
+        <button>▶ Play</button>
+        <button>+ Watchlist</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="nav left" (click)="prev()">‹</button>
+  <button class="nav right" (click)="next()">›</button>
+
+  <div class="dots">
+    <span
+      *ngFor="let item of items; let i = index"
+      [class.active]="i === currentIndex"
+      (click)="setSlide(i)"
+    ></span>
+  </div>
+</div>

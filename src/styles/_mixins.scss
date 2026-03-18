@@ -1,0 +1,67 @@
+//responsive media queries
+
+// $breakpoint-xs: 480px;
+// $breakpoint-sm: 576px;
+// $breakpoint-md: 768px;
+// $breakpoint-lg: 1024px;
+// $breakpoint-xl: 1280px;
+// $breakpoint-2xl: 1536px;
+
+@mixin breakpoint($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: #{$breakpoint-xs}) {
+      @content;
+    }
+  }
+  @if $breakpoint == sm {
+    @media (max-width: #{$breakpoint-sm}) {
+      @content;
+    }
+  }
+  @if $breakpoint == md {
+    @media (max-width: #{$breakpoint-md}) {
+      @content;
+    }
+  }
+  @if $breakpoint == lg {
+    @media (max-width: #{$breakpoint-lg}) {
+      @content;
+    }
+  }
+  @if $breakpoint == xl {
+    @media (max-width: #{$breakpoint-xl}) {
+      @content;
+    }
+  }
+}
+
+// Flex Center
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Text Truncate
+@mixin truncate($lines: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @if $lines == 1 {
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+  }
+}
+
+// Shadows
+@mixin shadow($size: sm) {
+  @if $size == sm {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  } @else if $size == md {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  } @else if $size ==lg {
+    box-shadow: 0px 0px 12px 5px rgba(0, 0, 0, 0.15);
+  }
+}

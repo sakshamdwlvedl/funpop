@@ -1,0 +1,53 @@
+.carousel {
+  padding: 20px 0;
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+
+    .carousel-container {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .fade {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      opacity: 0;
+      width: 60px;
+      pointer-events: none;
+      z-index: 2;
+      transition: all 0.3s ease;
+
+      &.left {
+        left: 0;
+        background: linear-gradient(to right, rgba(0, 0, 0, 1.9), transparent);
+      }
+
+      &.right {
+        right: 0;
+        background: linear-gradient(to left, rgba(0, 0, 0, 1.9), transparent);
+      }
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+}

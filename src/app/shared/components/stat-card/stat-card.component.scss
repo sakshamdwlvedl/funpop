@@ -1,0 +1,24 @@
+.card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-radius: 16px;
+  color: #fff;
+  min-width: 200px;
+  transition: 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+
+.icon {
+  font-size: 30px;
+  margin-right: 15px;
+}
+
+.title {
+  font-size: 14px;
+  opacity: 0.8;
+}

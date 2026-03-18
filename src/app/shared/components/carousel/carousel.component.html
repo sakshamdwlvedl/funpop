@@ -1,0 +1,12 @@
+<div class="carousel">
+  <h2>{{ title }}</h2>
+
+  <div class="carousel-wrapper">
+    <div class="fade left" [class.active]="showLeftFade"></div>
+    <div class="fade right" [class.active]="showRightFade"></div>
+
+    <div class="carousel-container" #scrollContainer (scroll)="onScroll()">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
