@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .header {
   padding: 20px 20px 0;
   display: flex;
@@ -11,10 +13,26 @@
     color: #111;
   }
 
-  input {
-    width: 500px;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
+  form {
+    min-width: 500px;
+  }
+}
+
+@include breakpoint("md") {
+  .header {
+    .heading {
+      font-size: 20px;
+    }
+    form {
+      font-size: 14px;
+      width: 100%;
+      min-width: 0;
+    }
+  }
+}
+
+@include breakpoint("sm") {
+  .header {
+    padding: 10px 10px 0;
   }
 }

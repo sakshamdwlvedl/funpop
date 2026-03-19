@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .dashboard {
   padding: 20px;
   background: #f8fafc;
@@ -5,5 +7,11 @@
   font-family: Arial, sans-serif;
   .movie-bank {
     height: 63px;
+  }
+}
+
+@include breakpoint("sm") {
+  .dashboard {
+    padding: 10px;
   }
 }

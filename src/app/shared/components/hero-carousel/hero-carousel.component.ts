@@ -36,7 +36,7 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
     clearInterval(this.interval);
     this.interval = setInterval(() => {
       if (!this.hoveredId) {
-        // this.next(false);
+        this.next(false);
       }
     }, 5000);
   }

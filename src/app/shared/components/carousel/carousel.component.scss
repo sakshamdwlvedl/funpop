@@ -64,8 +64,13 @@
 @include breakpoint(sm) {
   .carousel {
     padding: 10px 0;
-    h2{
+    h2 {
       font-size: 16px;
+    }
+    .carousel-wrapper {
+      .carousel-container {
+        gap: 10px;
+      }
     }
   }
 }

@@ -45,7 +45,7 @@
         <p *ngIf="!commonService.isMobile">
           {{ items[currentIndex].overview }}
         </p>
-        <div class="actions">
+        <div class="actions" *ngIf="!commonService.isMobile">
           <button>▶ Play</button>
           <button>+ Watchlist</button>
         </div>

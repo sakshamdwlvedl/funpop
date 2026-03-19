@@ -1,0 +1,124 @@
+@use "mixins" as *;
+
+:host {
+  display: block;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.p-inputtext {
+  padding: 4px 10px;
+  font-size: 16px;
+}
+
+.p-inputtext:focus {
+  box-shadow: none;
+}
+
+.input-wrapper {
+  position: relative;
+  border: 1px solid #d7d7d7;
+  border-radius: 10px;
+}
+
+.password-wrapper input {
+  padding-right: 32px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.has-icon input {
+  padding-left: 32px;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.disabled-label {
+  opacity: 0.6;
+}
+
+.required-star {
+  color: red;
+  margin-left: 2px;
+}
+
+/* 🔥 Animated Placeholder */
+.animated-placeholder {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 6px;
+  font-size: 14px;
+  color: #999;
+  pointer-events: none;
+  left: 12px;
+
+  &.has-icon {
+    left: 32px;
+  }
+}
+
+.static-text {
+  white-space: nowrap;
+}
+
+.keyword-measure {
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.keyword-container {
+  position: relative;
+  height: 18px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.keyword {
+  display: inline-block;
+  white-space: nowrap;
+  transition: transform 0.4s ease;
+}
+
+/* Current visible */
+.keyword.current {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Next is already in place but hidden */
+.keyword.next {
+  transform: translateY(0);
+  opacity: 0;
+}
+
+/* Only current moves up */
+.slide-up.current {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+/* Next just fades in (no movement) */
+.slide-up.next {
+  opacity: 1;
+}
+
+@include breakpoint("sm") {
+  .p-inputtext {
+    font-size: 14px;
+  }
+}

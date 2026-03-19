@@ -1,0 +1,68 @@
+<div
+  *ngIf="config.isVisible ?? true"
+  class="form-group"
+  [formGroup]="form"
+  [ngClass]="config.customClass"
+>
+  <label
+    *ngIf="config.label"
+    [for]="controlName"
+    class="block mb-1"
+    [class.disabled-label]="control.disabled"
+  >
+    {{ config.label }}
+  </label>
+
+  <div
+    class="input-wrapper"
+    [class.password-wrapper]="config.type === 'password'"
+    [class.has-icon]="config.icon"
+  >
+    <i *ngIf="config.icon" class="input-icon" [ngClass]="config.icon"></i>
+
+    <!-- 🔥 Animated Placeholder -->
+    <div
+      *ngIf="!control.value && config.keywords?.length"
+      class="animated-placeholder"
+      [class.has-icon]="config.icon"
+    >
+      <span class="static-text">
+        {{ config.staticPlaceholder || "Search" }}
+      </span>
+
+      <span class="keyword-container">
+        <span
+          class="keyword"
+          [style.transform]="'translateY(' + translateY + '%)'"
+        >
+          {{ currentKeyword }}
+        </span>
+      </span>
+    </div>
+
+    <input
+      pInputText
+      [id]="controlName"
+      [type]="isPasswordVisible ? 'text' : config.type || 'text'"
+      [formControlName]="controlName"
+      [placeholder]="
+        !config.keywords ? config.placeholder || 'Please Enter' : ''
+      "
+      [readonly]="config.readonly"
+      [disabled]="config.disabled || false"
+      [attr.maxlength]="config.maxLength"
+      [attr.minlength]="config.minLength"
+      class="w-full"
+      (keydown)="blockInvalidNumberKeys($event)"
+      (input)="onInput($event)"
+      (blur)="onBlur($event)"
+    />
+
+    <i
+      *ngIf="config.type === 'password'"
+      class="password-toggle pi"
+      [ngClass]="isPasswordVisible ? 'pi-eye' : 'pi-eye-slash'"
+      (click)="togglePasswordVisibility()"
+    ></i>
+  </div>
+</div>
