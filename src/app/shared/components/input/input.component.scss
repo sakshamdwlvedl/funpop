@@ -11,6 +11,7 @@
 .p-inputtext {
   padding: 4px 10px;
   font-size: 16px;
+  width: 100%;
 }
 
 .p-inputtext:focus {
@@ -21,6 +22,7 @@
   position: relative;
   border: 1px solid #d7d7d7;
   border-radius: 10px;
+  @include truncate(1);
 }
 
 .password-wrapper input {
@@ -61,7 +63,8 @@
   top: 50%;
   transform: translateY(-50%);
   display: flex;
-  gap: 6px;
+  width: 100%;
+  gap: 3px;
   font-size: 14px;
   color: #999;
   pointer-events: none;
@@ -76,45 +79,21 @@
   white-space: nowrap;
 }
 
-.keyword-measure {
-  visibility: hidden;
-  white-space: nowrap;
-}
-
 .keyword-container {
   position: relative;
   height: 18px;
   overflow: hidden;
   display: inline-block;
-}
+  flex: 1;
 
-.keyword {
-  display: inline-block;
-  white-space: nowrap;
-  transition: transform 0.4s ease;
-}
-
-/* Current visible */
-.keyword.current {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-/* Next is already in place but hidden */
-.keyword.next {
-  transform: translateY(0);
-  opacity: 0;
-}
-
-/* Only current moves up */
-.slide-up.current {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-
-/* Next just fades in (no movement) */
-.slide-up.next {
-  opacity: 1;
+  .keyword {
+    position: absolute;
+    transform: translateY(0);
+    transition: all 0.4s ease;
+    &.slideDown {
+      transform: translateY(100%);
+    }
+  }
 }
 
 @include breakpoint("sm") {

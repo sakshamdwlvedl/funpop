@@ -31,11 +31,8 @@
       </span>
 
       <span class="keyword-container">
-        <span
-          class="keyword"
-          [style.transform]="'translateY(' + translateY + '%)'"
-        >
-          {{ currentKeyword }}
+        <span class="keyword" [class.slideDown]="slideDown">
+          {{ config.keywords?.[currentKeywordIndex] }}
         </span>
       </span>
     </div>
