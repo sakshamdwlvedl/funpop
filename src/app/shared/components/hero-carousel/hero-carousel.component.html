@@ -1,39 +1,64 @@
-<div class="hero" *ngIf="items.length">
-  <div class="slider">
-    <div
-      class="slide"
-      *ngFor="let item of items; let i = index"
-      [ngClass]="getSlideClass(i)"
-      (mouseenter)="onHover(item, i)"
-      (mouseleave)="onLeave()"
-    >
-      <img
-        *ngIf="hoveredId !== item.id"
-        [src]="imageBase + item.backdrop_path"
-        loading="lazy"
-      />
-      <iframe
-        *ngIf="hoveredId === item.id && trailers[item.id]"
-        [src]="trailers[item.id]"
-        frameborder="0"
-        allow="autoplay"
-      ></iframe>
-    </div>
-  </div>
-
-  <div class="overlay">
-    <div class="bottom-child">
-      <h1>{{ items[currentIndex].title || items[currentIndex].name }}</h1>
-      <p>{{ items[currentIndex].overview }}</p>
-      <div class="actions">
-        <button>▶ Play</button>
-        <button>+ Watchlist</button>
+<div class="hero-wrapper">
+  <div class="hero" *ngIf="items.length; else skeletonLoader">
+    <div class="slider">
+      <div
+        class="slide"
+        *ngFor="let item of items; let i = index"
+        [ngClass]="getSlideClass(i)"
+        (mouseenter)="onHover(item, i)"
+        (mouseleave)="onLeave()"
+      >
+        <img
+          *ngIf="hoveredId !== item.id"
+          fetchpriority="high"
+          [src]="imageBase + '/w1280' + item.backdrop_path"
+          [attr.srcset]="
+            imageBase +
+            '/w780' +
+            item.backdrop_path +
+            ' 780w, ' +
+            imageBase +
+            '/w1280' +
+            item.backdrop_path +
+            ' 1280w, ' +
+            imageBase +
+            '/w1920' +
+            item.backdrop_path +
+            ' 1920w'
+          "
+          sizes="(max-width: 768px) 100vw, 60vw"
+          width="1280"
+          height="720"
+        />
+        <iframe
+          *ngIf="hoveredId === item.id && trailers[item.id]"
+          [src]="trailers[item.id]"
+          frameborder="0"
+          allow="autoplay"
+        ></iframe>
       </div>
     </div>
-  </div>
 
-  <button class="nav left" (click)="prev()">‹</button>
-  <button class="nav right" (click)="next()">›</button>
+    <div class="overlay">
+      <div class="bottom-child">
+        <h1>{{ items[currentIndex].title || items[currentIndex].name }}</h1>
+        <p *ngIf="!commonService.isMobile">
+          {{ items[currentIndex].overview }}
+        </p>
+        <div class="actions">
+          <button>▶ Play</button>
+          <button>+ Watchlist</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="nav left" (click)="prev()">
+      <i class="pi pi-angle-left"></i>
+    </button>
+    <button class="nav right" (click)="next()">
+      <i class="pi pi-angle-right"></i>
+    </button>
+  </div>
 
   <div class="dots">
     <span
@@ -43,3 +68,18 @@
     ></span>
   </div>
 </div>
+
+<ng-template #skeletonLoader>
+  <app-skeleton-loader
+    [config]="{
+      items: [
+        {
+          type: 'rect',
+          width: '100%',
+          height:
+            commonService.isTablet || commonService.isMobile ? '53vw' : '75vh',
+        },
+      ],
+    }"
+  ></app-skeleton-loader>
+</ng-template>

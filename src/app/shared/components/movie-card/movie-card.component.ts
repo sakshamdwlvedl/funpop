@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-movie-card',
@@ -14,7 +15,7 @@ export class MovieCardComponent {
   hoveredId: number | null = null;
   trailers: { [key: number]: string } = {};
 
-  imageBase = 'https://image.tmdb.org/t/p/w500';
+  imageBase = environment.TMDB_IMG_BASE + '/w342';
 
   constructor() {}
 }

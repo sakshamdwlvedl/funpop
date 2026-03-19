@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ApiCallService } from '../../../core/services/api-call.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../../environments/environment';
+import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
+import { CommonService } from '../../../core/services/common.service';
 
 @Component({
   selector: 'app-hero-carousel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SkeletonLoaderComponent],
   templateUrl: './hero-carousel.component.html',
   styleUrls: ['./hero-carousel.component.scss'],
 })
@@ -23,6 +25,7 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
   constructor(
     private apiService: ApiCallService,
     private sanitizer: DomSanitizer,
+    public commonService: CommonService,
   ) {}
 
   ngOnInit(): void {
@@ -33,27 +36,25 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
     clearInterval(this.interval);
     this.interval = setInterval(() => {
       if (!this.hoveredId) {
-        this.next(false);
+        // this.next(false);
       }
     }, 5000);
   }
 
   next(resetTimer = true) {
     this.currentIndex = (this.currentIndex + 1) % this.items.length;
-    this.loadTrailer(this.items[this.currentIndex]);
     if (resetTimer) this.startAutoSlide();
   }
 
   prev(resetTimer = true) {
     this.currentIndex =
       (this.currentIndex - 1 + this.items.length) % this.items.length;
-    this.loadTrailer(this.items[this.currentIndex]);
     if (resetTimer) this.startAutoSlide();
   }
 
   setSlide(index: number) {
     this.currentIndex = index;
-    this.loadTrailer(this.items[index]);
+    this.startAutoSlide();
   }
 
   loadTrailer(item: any) {

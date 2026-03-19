@@ -1,7 +1,7 @@
 <div class="carousel">
   <h2>{{ title }}</h2>
 
-  <div class="carousel-wrapper">
+  <div class="carousel-wrapper" *ngIf="hasContent; else skeletonLoader">
     <div class="fade left" [class.active]="showLeftFade"></div>
     <div class="fade right" [class.active]="showRightFade"></div>
 
@@ -10,3 +10,20 @@
     </div>
   </div>
 </div>
+
+<ng-template #skeletonLoader>
+  <app-skeleton-loader
+    [config]="{
+      items: [
+        {
+          type: 'rect',
+          count: 20,
+          width: commonService.isMobile ? '140px' : '180px',
+          height: commonService.isMobile ? '210px' : '250px',
+          direction: 'row',
+          overflow: 'auto',
+        },
+      ],
+    }"
+  ></app-skeleton-loader>
+</ng-template>

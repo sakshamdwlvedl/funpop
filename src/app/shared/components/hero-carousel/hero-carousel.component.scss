@@ -1,145 +1,227 @@
 @use "variables" as *;
 @use "mixins" as *;
 
-.hero {
+.hero-wrapper {
+  width: 100%;
   position: relative;
-  height: 70vh;
-  overflow: hidden;
-  color: #fff;
-  border-radius: 12px;
 
-  .overlay {
-    position: absolute;
-    z-index: 2;
-    bottom: 0;
-    padding: 58px;
-    height: 100%;
-    width: 100%;
-    background: radial-gradient(
-      circle at top right,
-      transparent 60%,
-      rgba(0, 0, 0, 0.8)
-    );
-    display: flex;
-    align-items: flex-end;
-    pointer-events: none;
+  .hero {
+    position: relative;
+    height: 75vh;
+    overflow: hidden;
+    color: #fff;
+    border-radius: 12px;
 
-    .bottom-child {
-      pointer-events: auto;
+    .overlay {
+      position: absolute;
+      z-index: 2;
+      bottom: 0;
+      padding: 58px;
+      height: 100%;
+      width: 100%;
+      background: radial-gradient(
+        circle at top right,
+        transparent 60%,
+        rgba(0, 0, 0, 0.8)
+      );
+      display: flex;
+      align-items: flex-end;
+      pointer-events: none;
 
-      h1 {
-        font-size: 40px;
-        margin-bottom: 10px;
+      .bottom-child {
+        h1 {
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+
+        p {
+          font-size: 14px;
+          line-height: 1.5;
+        }
+
+        .actions {
+          margin-top: 20px;
+
+          button {
+            margin-right: 10px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            pointer-events: auto;
+            cursor: pointer;
+            z-index: 5;
+          }
+        }
+      }
+    }
+
+    .nav {
+      position: absolute;
+      top: 50%;
+      @include flex-center;
+      transform: translateY(-50%);
+      font-size: 30px;
+      background-color: transparent;
+      border: none;
+      border-radius: 50%;
+      width: 20%;
+      height: 30%;
+      cursor: pointer;
+      z-index: 5;
+
+      i {
+        font-size: 18px;
+        font-weight: 400;
       }
 
-      p {
-        font-size: 14px;
-        line-height: 1.5;
+      &.left {
+        left: 0;
       }
 
-      .actions {
-        margin-top: 20px;
+      &.right {
+        right: 0;
+      }
+    }
 
-        button {
-          margin-right: 10px;
-          padding: 10px 16px;
-          border: none;
-          border-radius: 6px;
-          cursor: pointer;
+    .slider {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      @include flex-center;
+      perspective: 1000px;
+
+      .slide {
+        position: absolute;
+        width: 60%;
+        height: 80%;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.6s ease;
+        background-color: black;
+        @include flex-center;
+
+        img,
+        iframe {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        &.center {
+          transform: translateX(0) scale(1);
+          z-index: 3;
+          opacity: 1;
+        }
+
+        &.left {
+          transform: translateX(-70%) scale(0.8) rotateY(20deg);
+          z-index: 2;
+          opacity: 0.6;
+        }
+
+        &.right {
+          transform: translateX(70%) scale(0.8) rotateY(-20deg);
+          z-index: 2;
+          opacity: 0.6;
+        }
+
+        &.hidden {
+          transform: translateX(0) scale(0.5);
+          opacity: 0;
+          z-index: 1;
         }
       }
     }
   }
 
-  .nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 30px;
-    background-color: transparent;
-    border: none;
-    border-radius: 50%;
-    width: 20%;
-    height: 30%;
-    cursor: pointer;
-    z-index: 5;
-
-    &.left {
-      left: 0;
-    }
-
-    &.right {
-      right: 0;
-    }
-  }
-
   .dots {
     position: absolute;
-    bottom: -30px;
+    bottom: 16px;
     width: 100%;
     text-align: center;
+    transition: all 0.3s ease;
 
     span {
       display: inline-block;
-      width: 10px;
-      height: 10px;
-      margin: 0 5px;
-      background: black;
+      width: 6px;
+      height: 6px;
+      margin: 0 4px;
+      background: #bfbfbf;
       border-radius: 50%;
       cursor: pointer;
-    }
-
-    .active {
-      background: red;
+      transition: all 0.3s ease;
+      &.active {
+        width: 12px;
+        background: black;
+        border-radius: 12px;
+      }
     }
   }
+}
 
-  .slider {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    @include flex-center;
-    perspective: 1000px;
+@include breakpoint(lg) {
+  .hero-wrapper {
+    margin-bottom: 10px;
+    .hero {
+      height: 53vw;
+      .slider {
+        .slide {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .nav {
+        top: 20px;
+        background-color: white;
+        transform: unset;
+        width: 40px;
+        height: 40px;
+        @include shadow(md);
 
-    .slide {
-      position: absolute;
-      width: 60%;
-      height: 80%;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.6s ease;
-      background-color: black;
-      @include flex-center;
+        &.left {
+          left: 20px;
+          padding: 2px 2px 1px 0;
+        }
+        &.right {
+          right: 20px;
+          padding: 2px 0 0 2px;
+        }
+      }
+    }
+    .dots {
+      bottom: -30px;
+    }
+  }
+}
 
-      img,
-      iframe {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+@include breakpoint(md) {
+  .hero-wrapper {
+    .hero {
+      .overlay {
+        padding: 30px;
+      }
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .hero-wrapper {
+    margin-bottom: 28px;
+    .hero {
+      .overlay {
+        .bottom-child {
+          h1 {
+            font-size: 26px;
+          }
+        }
       }
 
-      &.center {
-        transform: translateX(0) scale(1);
-        z-index: 3;
-        opacity: 1;
-      }
-
-      &.left {
-        transform: translateX(-70%) scale(0.8) rotateY(20deg);
-        z-index: 2;
-        opacity: 0.6;
-      }
-
-      &.right {
-        transform: translateX(70%) scale(0.8) rotateY(-20deg);
-        z-index: 2;
-        opacity: 0.6;
-      }
-
-      &.hidden {
-        transform: translateX(0) scale(0.5);
-        opacity: 0;
-        z-index: 1;
+      .nav {
+        width: 30px;
+        height: 30px;
+        i {
+          font-size: 14px;
+        }
       }
     }
   }

@@ -1,5 +1,10 @@
 <div class="card">
-  <img [src]="imageBase + movie.poster_path" loading="lazy" />
+  <img
+    [src]="imageBase + movie.poster_path"
+    width="180"
+    height="270"
+    loading="lazy"
+  />
 
   <div class="title">
     {{ movie.title || movie.name }}

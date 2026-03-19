@@ -6,6 +6,7 @@ import { CarouselComponent } from '../../shared/components/carousel/carousel.com
 import { HeroCarouselComponent } from '../../shared/components/hero-carousel/hero-carousel.component';
 import { MovieCardComponent } from '../../shared/components/movie-card/movie-card.component';
 import { DASHBOARD_CONFIG } from './dashboard.config';
+import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -40,10 +41,8 @@ export class DashboardComponent implements OnInit {
           ...res.trendingMovies.results.slice(0, 10),
           ...res.trendingTV.results.slice(0, 10),
         ];
-
         Object.keys(res).forEach((key) => {
           const section = this.sections.find((s) => s.key === key);
-
           if (section?.type === 'mixed') {
             const movies = res[key].movies.results || [];
             const tv = res[key].tv.results || [];
@@ -54,6 +53,10 @@ export class DashboardComponent implements OnInit {
         });
       },
     });
+  }
+
+  showSkeleton(): boolean {
+    return Object.keys(this.data).length === 0;
   }
 
   trackById(index: number, item: any) {

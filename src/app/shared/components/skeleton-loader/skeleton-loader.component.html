@@ -1,0 +1,43 @@
+<ng-container *ngFor="let item of config.items" [ngSwitch]="item.type">
+  <div
+    class="rect-wrapper"
+    *ngSwitchCase="'rect'"
+    [ngStyle]="{
+      flexDirection: item.direction === 'row' ? 'row' : 'column',
+      overflow: item.overflow || 'hidden',
+    }"
+  >
+    <div
+      *ngFor="let _ of [].constructor(item.count || 1)"
+      class="skeleton rect"
+      [ngStyle]="{
+        minWidth: item.width || '100%',
+        height: item.height || '100px',
+        marginBottom: item.mb || '0',
+      }"
+    ></div>
+  </div>
+
+  <div
+    *ngSwitchCase="'circle'"
+    class="skeleton circle"
+    [ngStyle]="{
+      width: item.width || '50px',
+      height: item.height || '50px',
+      marginBottom: item.gap || '0',
+    }"
+  ></div>
+
+  <div
+    *ngSwitchCase="'text'"
+    class="text-wrapper"
+    [style.marginBottom]="item.gap || '0'"
+  >
+    <div
+      *ngFor="let row of [].constructor(item.count || 1)"
+      class="skeleton text"
+      [style.width]="item.width || '100%'"
+      [style.height]="item.height || '16px'"
+    ></div>
+  </div>
+</ng-container>
