@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { ENDPOINTS } from '../api/endpoints';
-import { forkJoin } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
+import { MovieDetails } from '../../features/interfaces/movie-detail.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,66 +10,81 @@ import { forkJoin } from 'rxjs';
 export class ApiCallService {
   constructor(private http: HttpService) {}
 
-  getTrendingMovies() {
-    return this.http.get(ENDPOINTS.TMDB.TRENDING_MOVIES);
+  getTrending(mediaType: 'movie' | 'tv') {
+    return this.http.get(ENDPOINTS.TMDB.TRENDING(mediaType)).pipe(
+      map((res) => {
+        return {
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: mediaType,
+          })),
+        };
+      }),
+    );
   }
 
-  getTopRatedMovies() {
-    return this.http.get(ENDPOINTS.TMDB.TOP_RATED);
+  getTopRated(mediaType: 'movie' | 'tv') {
+    return this.http.get(ENDPOINTS.TMDB.TOP_RATED(mediaType)).pipe(
+      map((res) => {
+        return {
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: mediaType,
+          })),
+        };
+      }),
+    );
   }
 
-  getMoviesByRegion(region: string) {
-    return this.http.get(ENDPOINTS.TMDB.DISCOVER, {
-      region,
-      sort_by: 'popularity.desc',
-    });
+  getPopular(mediaType: 'movie' | 'tv') {
+    return this.http.get(ENDPOINTS.TMDB.POPULAR(mediaType)).pipe(
+      map((res) => {
+        return {
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: mediaType,
+          })),
+        };
+      }),
+    );
   }
 
-  searchMovies(query: string) {
-    return this.http.get(ENDPOINTS.TMDB.SEARCH_MOVIE, { query });
+  getNewReleasedMovies() {
+    return this.http.get(ENDPOINTS.TMDB.NOW_PLAYING_MOVIE).pipe(
+      map((res) => {
+        return {
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: 'movie',
+          })),
+        };
+      }),
+    );
   }
 
-  getIndianMovies(language: string) {
-    return this.http.get(ENDPOINTS.TMDB.DISCOVER, {
-      with_original_language: language,
-      sort_by: 'popularity.desc',
-    });
+  getNewReleasedTV() {
+    return this.http.get(ENDPOINTS.TMDB.NOW_PLAYING_TV).pipe(
+      map((res) => {
+        return {
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: 'tv',
+          })),
+        };
+      }),
+    );
   }
 
-  getTrendingTV() {
-    return this.http.get(ENDPOINTS.TMDB.TRENDING_TV);
-  }
-
-  searchTV(query: string) {
-    return this.http.get(ENDPOINTS.TMDB.SEARCH_TV, { query });
+  getDetails(mediaType: 'movie' | 'tv', id: string): Observable<MovieDetails> {
+    return this.http.get(ENDPOINTS.TMDB.DETAILS(mediaType, id));
   }
 
   getVideos(id: number, type: 'movie' | 'tv') {
     return this.http.get(ENDPOINTS.TMDB.VIDEOS(type, id));
-  }
-
-  getHomeData(sections: any, region: any) {
-    const requests: any = {};
-
-    sections.forEach((section: any) => {
-      if (section.endpoint) {
-        requests[section.key] = this.http.get(
-          (ENDPOINTS as any).TMDB[section.endpoint],
-        );
-      }
-
-      if (section.type === 'mixed' && section.genre) {
-        requests[section.key] = forkJoin({
-          movies: this.http.get(
-            `${ENDPOINTS.TMDB.DISCOVER}?with_genres=${section.genre}&region=${region}`,
-          ),
-          tv: this.http.get(
-            `${ENDPOINTS.TMDB.DISCOVER.replace('/movie', '/tv')}?with_genres=${section.genre}`,
-          ),
-        });
-      }
-    });
-
-    return forkJoin(requests);
   }
 }

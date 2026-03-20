@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
   styleUrl: './movie-card.component.scss',
 })
 export class MovieCardComponent {
-  @Input() type: 'movie' | 'tv' = 'movie';
+  @Input() type!: 'movie' | 'tv';
   @Input() movie: any = {};
 
   hoveredId: number | null = null;

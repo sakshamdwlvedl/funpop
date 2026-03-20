@@ -1,0 +1,20 @@
+<div class="dashboard">
+  <app-hero-carousel
+    [items]="data['heroCarousel'] ?? []"
+    #heroRef
+  ></app-hero-carousel>
+
+  <ng-container *ngFor="let section of sections">
+    <div class="section" #sectionRef>
+      <app-carousel [title]="section.label">
+        <app-movie-card
+          *ngFor="let item of data[section.key]; trackBy: trackById"
+          [movie]="item"
+          [type]="item.media_type"
+          (click)="navigateToDetailsPage(item)"
+        >
+        </app-movie-card>
+      </app-carousel>
+    </div>
+  </ng-container>
+</div>

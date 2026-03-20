@@ -52,9 +52,9 @@ export class CarouselComponent implements AfterContentInit {
   }
 
   checkFade() {
-    const el = this.scrollContainer.nativeElement;
+    const el = this.scrollContainer?.nativeElement;
 
-    this.showLeftFade = el.scrollLeft > 0;
-    this.showRightFade = el.scrollLeft + el.clientWidth < el.scrollWidth - 1;
+    this.showLeftFade = el?.scrollLeft > 0;
+    this.showRightFade = el?.scrollLeft + el?.clientWidth < el?.scrollWidth - 1;
   }
 }

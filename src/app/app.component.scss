@@ -1,0 +1,11 @@
+@use "mixins" as *;
+
+.router-outlet {
+  padding: 20px;
+}
+
+@include breakpoint("sm") {
+  .router-outlet {
+    padding: 10px;
+  }
+}
