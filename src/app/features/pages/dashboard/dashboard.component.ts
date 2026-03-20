@@ -91,7 +91,6 @@ export class DashboardComponent implements OnInit {
   }
 
   navigateToDetailsPage(item: any) {
-    debugger;
     this.router.navigate(['/details', item.media_type, item.id]);
   }
 
