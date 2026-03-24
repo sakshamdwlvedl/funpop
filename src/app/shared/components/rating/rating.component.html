@@ -1,1 +1,3 @@
-<div class="rating" *ngIf="rating">⭐ {{ rating | number: "1.1-1" }}/10</div>
+<div class="rating" [ngClass]="getRatingClass()">
+  ⭐ {{ rating | number: "1.1-1" }}/10
+</div>

@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         ease: 'power3.out',
         scrollTrigger: {
           trigger: section.nativeElement,
-          start: 'top 85%',
+          start: 'top 100%',
           end: 'top 40%',
         },
       });

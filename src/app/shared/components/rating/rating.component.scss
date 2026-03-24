@@ -1,13 +1,22 @@
 @use "mixins" as *;
 
 .rating {
-  background: black;
   padding: 4px 10px;
   border-radius: 999px;
   font-weight: 600;
   font-size: 12px;
   color: white;
   width: fit-content;
+
+  &.good {
+    background-color: green;
+  }
+  &.avg {
+    background-color: orangered;
+  }
+  &.bad {
+    background-color: crimson;
+  }
 }
 
 @include breakpoint(sm) {

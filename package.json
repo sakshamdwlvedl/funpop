@@ -6,6 +6,8 @@
     "start": "ng serve -o",
     "build": "ng build",
     "deploy": "ng deploy --base-href=/movie-bank/",
+    "check-ip": "hostname -I",
+    "dev-server": "ng serve --host 0.0.0.0 --port 4200",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

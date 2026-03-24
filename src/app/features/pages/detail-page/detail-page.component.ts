@@ -113,8 +113,6 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
   }
 
   initAnimations() {
-    // if (!this.commonService.isMobile && this.movieTitle) {
-    // Split the movie title into words for stagger animation
     let split;
 
     if (!this.commonService.isMobile) {
@@ -162,8 +160,11 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       0,
     );
     tl.to('.backdrop img', { scale: 1.1, filter: 'blur(10px)' }, 0);
-    tl.to(
-      '.backdrop .white-overlay',
+    tl.fromTo(
+      '.backdrop .black-overlay',
+      {
+        opacity: this.commonService.isMobile ? 0 : 0.6,
+      },
       {
         opacity: 0.7,
         backgroundColor: 'white',
@@ -196,7 +197,10 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       scrollTrigger: {
         trigger: '.movie-details',
         start: 'top 10%',
-        end: '+=500%',
+        end:
+          this.commonService.isMobile || this.commonService.isTablet
+            ? '+=300'
+            : '+=500%',
         scrub: 2,
         pin: true,
       },
@@ -247,11 +251,14 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       },
       1.6,
     );
-    // }
   }
 
   onSeasonClick(season: any) {
     this.selectedSeason = season;
+  }
+
+  getCollectionClass() {
+    return this.details.revenue > this.details.budget ? 'profit' : 'loss';
   }
 
   ngOnDestroy(): void {

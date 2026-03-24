@@ -8,7 +8,7 @@
   <div class="hero-spacer"></div>
 
   <div class="backdrop">
-    <div class="white-overlay"></div>
+    <div class="black-overlay"></div>
     <img
       [src]="imageBase + '/w1280' + details.backdrop_path"
       loading="lazy"
@@ -50,7 +50,7 @@
               <img
                 [src]="imageBase + '/w92' + details.poster_path"
                 [alt]="details.title"
-                class="rounded shadow-sm"
+                class="shadow-sm"
               />
             </div>
             <div class="header-content">
@@ -78,7 +78,7 @@
               <div
                 class="info-item stagger-item genre-section full-width small-screen"
               >
-                <div class="label">Genre</div>
+                <div class="label">Genre <i class="pi pi-angle-right"></i></div>
 
                 <div class="value genres-list scroll-container">
                   <div class="value chip" *ngFor="let genre of details.genres">
@@ -91,7 +91,7 @@
 
           <!-- plot -->
           <div class="section">
-            <div class="label">Plot</div>
+            <div class="label">Plot <i class="pi pi-angle-right"></i></div>
 
             <p class="value">
               {{ details.overview }}
@@ -103,7 +103,9 @@
             <div class="info-item">
               <div class="info-row stagger-item">
                 <div class="info-item">
-                  <div class="label">Release Date</div>
+                  <div class="label">
+                    Released On <i class="pi pi-angle-right"></i>
+                  </div>
                   <div class="value">
                     {{
                       details.release_date || details.first_air_date
@@ -114,7 +116,9 @@
 
                 <div class="wrap-unit" *ngIf="mediaType === 'movie'">
                   <div class="info-item">
-                    <div class="label">Budget</div>
+                    <div class="label">
+                      Budget <i class="pi pi-angle-right"></i>
+                    </div>
                     <div class="value">
                       {{
                         details.budget | currency: "USD" : "symbol" : "1.0-0"
@@ -123,25 +127,32 @@
                   </div>
 
                   <div class="info-item">
-                    <div class="label">Collection</div>
-                    <div class="value">
+                    <div class="label">
+                      Collection <i class="pi pi-angle-right"></i>
+                    </div>
+                    <div class="value" [ngClass]="getCollectionClass()">
                       {{
                         details.revenue | currency: "USD" : "symbol" : "1.0-0"
                       }}
+                      {{ getCollectionClass() === "profit" ? "↗" : "↘" }}
                     </div>
                   </div>
                 </div>
 
                 <div class="wrap-unit" *ngIf="mediaType === 'tv'">
                   <div class="info-item">
-                    <div class="label">Total Seasons</div>
+                    <div class="label">
+                      Total Seasons <i class="pi pi-angle-right"></i>
+                    </div>
                     <div class="value">
                       {{ details.number_of_seasons }}
                     </div>
                   </div>
 
                   <div class="info-item">
-                    <div class="label">Status</div>
+                    <div class="label">
+                      Status <i class="pi pi-angle-right"></i>
+                    </div>
                     <div class="value">
                       {{ details.status }}
                     </div>
@@ -153,7 +164,7 @@
             <div
               class="info-item stagger-item genre-section full-width large-screen"
             >
-              <div class="label">Genre</div>
+              <div class="label">Genre <i class="pi pi-angle-right"></i></div>
 
               <div class="value genres-list scroll-container">
                 <div class="value chip" *ngFor="let genre of details.genres">
@@ -163,7 +174,9 @@
             </div>
 
             <div class="info-item stagger-item full-width">
-              <div class="label">Production Houses</div>
+              <div class="label">
+                Production Houses <i class="pi pi-angle-right"></i>
+              </div>
 
               <div class="prod-house-container scroll-container">
                 <ng-container

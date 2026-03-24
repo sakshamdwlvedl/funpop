@@ -48,7 +48,11 @@
 
 @include breakpoint(sm) {
   .card {
-    min-width: 140px;
-    height: 210px;
+    min-width: 110px;
+    height: 166px;
+    .title {
+      padding: 10px 12px;
+      font-size: 12px;
+    }
   }
 }
