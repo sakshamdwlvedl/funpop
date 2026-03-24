@@ -199,7 +199,7 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
         start: 'top 10%',
         end:
           this.commonService.isMobile || this.commonService.isTablet
-            ? '+=300'
+            ? '+=300%'
             : '+=500%',
         scrub: 2,
         pin: true,
@@ -228,6 +228,19 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       },
       0.6,
     );
+
+    //animating genre before the plot section for mobile case
+    if (this.commonService.isMobile) {
+      tl2.from(
+        '.genre-section.small-screen',
+        {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+        },
+        1,
+      );
+    }
 
     /* 3️⃣ Plot section animation */
     tl2.from(
