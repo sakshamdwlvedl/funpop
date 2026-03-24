@@ -1,8 +1,14 @@
 <div class="details-wrapper">
+  <app-scroll-indicator
+    color="#ffffff"
+    [bottom]="commonService.isMobile ? '45%' : '10%'"
+    size="32px"
+  />
+
   <div class="hero-spacer"></div>
 
-  <!-- *ngIf="!commonService.isMobile" -->
   <div class="backdrop">
+    <div class="white-overlay"></div>
     <img
       [src]="imageBase + '/w1280' + details.backdrop_path"
       loading="lazy"
@@ -13,94 +19,207 @@
       loading="lazy"
       *ngIf="commonService.isMobile"
     />
-    <h1 class="movie-title text-wrap">{{ details.title }}</h1>
+
+    <h1
+      class="movie-title text-wrap"
+      #movieTitle
+      *ngIf="!commonService.isMobile"
+    >
+      {{ details.title || details.name }}
+    </h1>
   </div>
 
   <div class="content">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit... Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Quis a perspiciatis, distinctio
-    repellendus nisi corrupti autem hic atque eligendi sapiente eveniet
-    exercitationem quibusdam? Alias, pariatur in necessitatibus atque eligendi
-    neque autem reiciendis? Maxime, asperiores quas? Voluptatibus dolore atque
-    aut suscipit fugiat nesciunt. Eos rerum, placeat accusamus saepe libero
-    similique labore error officia sed exercitationem animi? Odit vel itaque
-    omnis, rerum cumque enim ratione cupiditate quo debitis quae ipsa amet nemo
-    necessitatibus deleniti ipsam consequuntur? Quam omnis, consequatur tempora
-    culpa voluptatem non exercitationem ipsam ad fugit asperiores, dolorum magni
-    rem libero facilis eos voluptas optio architecto enim. Ab voluptas et
-    molestias fuga expedita optio, aliquam voluptate illum tempora deserunt amet
-    ipsum exercitationem nemo perferendis magni doloremque numquam, veritatis
-    inventore. Voluptatum magnam fugit est at quae aut sint beatae iste illum.
-    Nostrum et optio dicta iusto quibusdam eos dolorem ipsam recusandae
-    asperiores fugit libero sapiente nesciunt omnis debitis incidunt,
-    exercitationem amet atque consectetur aspernatur cupiditate! A aspernatur,
-    pariatur distinctio quia esse soluta molestiae dolorum laborum unde
-    praesentium modi. Fugiat distinctio dolorum amet qui hic nulla labore vel
-    dolore, aliquid temporibus repudiandae iure doloribus? Quae ad voluptates
-    laudantium minus eos. Molestiae consequatur quo inventore eveniet
-    architecto, pariatur quasi laborum. Labore incidunt, a consectetur fugiat
-    neque amet asperiores corrupti dolorum ab deserunt perferendis adipisci sit
-    doloremque, rerum deleniti ut voluptatem commodi reiciendis expedita, sint
-    provident. Nemo sequi, voluptates laborum, quidem dolore laudantium illum,
-    necessitatibus aut perspiciatis cumque hic. Corrupti aliquid optio accusamus
-    qui cum provident quia, minima voluptatum blanditiis earum veritatis
-    explicabo, dolore natus. Delectus et natus fuga veniam, laudantium ipsum
-    eius, maiores atque fugit reiciendis, odio nisi blanditiis! Sapiente dolorum
-    dicta placeat quidem doloremque deserunt, optio vel nobis incidunt hic, sed
-    accusamus maxime id. Voluptates molestiae nostrum doloribus deserunt at
-    asperiores quam! Ad aspernatur praesentium vel inventore, totam omnis
-    blanditiis quas eligendi possimus perspiciatis, ipsum labore laboriosam
-    eveniet officiis temporibus animi tempora. Vel, quis iusto odio eveniet
-    exercitationem voluptas deleniti eos modi dignissimos sapiente minus? Quod
-    tempore esse dolorum sed eaque assumenda expedita non consequuntur
-    voluptate, mollitia nemo repudiandae! Dolorem fuga quaerat deleniti,
-    distinctio sunt iure magnam neque reiciendis similique. Ullam, molestiae
-    odit? Repellendus, fugiat adipisci. Deleniti, possimus expedita earum ab
-    porro velit amet nisi natus. Maxime a, sed consequatur omnis placeat
-    deserunt praesentium necessitatibus quae pariatur aspernatur obcaecati
-    ipsam, odio neque fugit accusamus? Nisi atque voluptatem sequi impedit nihil
-    quasi, eum ipsum, distinctio laboriosam sint accusamus repellat quia
-    reprehenderit nam mollitia, numquam maiores odio dolorum facilis. Accusamus
-    consequatur delectus ipsum corrupti dolorum tempora expedita pariatur ullam
-    tenetur atque! Optio quia ullam repellendus alias vitae eum in earum cumque.
-    Eveniet porro voluptates earum unde, ipsum nesciunt molestiae! Labore
-    facilis inventore unde expedita ut fugit, cum enim fuga non vero veritatis
-    adipisci sit cupiditate. Ratione maiores aliquam adipisci, aliquid provident
-    rerum atque laudantium fuga natus praesentium voluptatem eaque magni
-    expedita distinctio, nulla quibusdam laborum minima neque nemo. Ab
-    perspiciatis ipsum reprehenderit magnam exercitationem, sunt praesentium
-    voluptatum ipsa architecto reiciendis atque necessitatibus excepturi
-    suscipit delectus velit? Illo, odio perspiciatis voluptatum nihil tempore ab
-    unde rem. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa
-    delectus dolor odit eveniet! Blanditiis molestiae quae, velit odit dolor ex
-    adipisci voluptatem hic! Odit, optio ipsa? Ipsa placeat aut earum veritatis,
-    molestiae similique, aliquam consectetur cupiditate dolores atque id
-    asperiores eaque maxime provident voluptatum laboriosam aspernatur dicta
-    vero voluptatem quis ex pariatur illo, minus expedita. Itaque quis
-    laboriosam velit repudiandae commodi iste maiores laudantium doloremque
-    magni! Quos eius maiores architecto voluptatem quidem totam aspernatur
-    omnis, magni incidunt libero nobis ducimus, magnam dignissimos enim corporis
-    rerum ab dolor esse doloribus atque odit explicabo delectus. Quisquam
-    debitis numquam aperiam repellat pariatur nisi in laboriosam nam sunt
-    laborum error voluptate earum consectetur, eum aspernatur dolore corrupti
-    tenetur deserunt nemo accusamus molestiae, enim vel. Nam voluptate quibusdam
-    aut placeat et mollitia culpa nostrum in ullam at aperiam, ratione error
-    sed. Officia harum atque cumque laudantium dolores reiciendis cum totam
-    autem quia, saepe aut voluptatum magnam praesentium optio veniam rerum. Esse
-    soluta rerum facilis modi unde quod recusandae placeat nemo excepturi at
-    ipsum voluptates repudiandae culpa molestias maiores quae magni cumque,
-    doloremque id in, nihil nostrum aspernatur, tempora nobis! Fugiat atque
-    animi, magnam, nemo dignissimos soluta labore maxime blanditiis nobis
-    voluptatibus quo doloremque, voluptatem ad ipsum aperiam accusantium. Ab,
-    laudantium architecto eveniet eligendi harum nostrum possimus a alias
-    reiciendis veritatis id tempora in accusamus natus optio, repellendus
-    necessitatibus eos voluptate? Nesciunt, quia dolorum! Provident molestiae
-    consequatur magni distinctio voluptates, beatae repellat autem facilis vero
-    cupiditate id doloremque impedit! Aliquam in quam id quaerat ullam tempore
-    nostrum explicabo cupiditate repudiandae mollitia! Voluptate ea aut earum
-    rerum sunt aliquam facilis commodi veniam, eum, recusandae rem tempora a
-    culpa blanditiis in vero quis similique ullam! Qui error nobis autem ad quam
-    tempora provident molestias magni, iusto deleniti numquam maxime veniam
-    ipsum eius non ratione laboriosam animi at vero?
+    <div class="movie-details container">
+      <div class="row g-4 align-items-start">
+        <!-- Poster -->
+        <div class="col-lg-4 col-md-5 poster-col">
+          <div class="poster" #posterCard>
+            <img
+              [src]="imageBase + '/w342' + details.poster_path"
+              [alt]="details.title"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col-lg-8 col-md-7 details-right-section">
+          <div class="top-header">
+            <div class="poster-mobile">
+              <img
+                [src]="imageBase + '/w92' + details.poster_path"
+                [alt]="details.title"
+                class="rounded shadow-sm"
+              />
+            </div>
+            <div class="header-content">
+              <h1 class="title">
+                {{ details.title || details.name }}
+              </h1>
+
+              <!-- meta -->
+              <div class="meta d-flex flex-wrap align-items-center">
+                <div *ngIf="mediaType === 'movie'" class="value">
+                  {{ runtime }}
+                </div>
+
+                <span class="dot" *ngIf="mediaType === 'movie'">•</span>
+
+                <div class="value">
+                  {{ languageNames }}
+                </div>
+
+                <span class="dot">•</span>
+
+                <app-rating [rating]="details.vote_average"></app-rating>
+              </div>
+
+              <div
+                class="info-item stagger-item genre-section full-width small-screen"
+              >
+                <div class="label">Genre</div>
+
+                <div class="value genres-list scroll-container">
+                  <div class="value chip" *ngFor="let genre of details.genres">
+                    {{ genre.name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- plot -->
+          <div class="section">
+            <div class="label">Plot</div>
+
+            <p class="value">
+              {{ details.overview }}
+            </p>
+          </div>
+
+          <!-- grid info -->
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-row stagger-item">
+                <div class="info-item">
+                  <div class="label">Release Date</div>
+                  <div class="value">
+                    {{
+                      details.release_date || details.first_air_date
+                        | date: "EEE, dd MMM yyyy"
+                    }}
+                  </div>
+                </div>
+
+                <div class="wrap-unit" *ngIf="mediaType === 'movie'">
+                  <div class="info-item">
+                    <div class="label">Budget</div>
+                    <div class="value">
+                      {{
+                        details.budget | currency: "USD" : "symbol" : "1.0-0"
+                      }}
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="label">Collection</div>
+                    <div class="value">
+                      {{
+                        details.revenue | currency: "USD" : "symbol" : "1.0-0"
+                      }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wrap-unit" *ngIf="mediaType === 'tv'">
+                  <div class="info-item">
+                    <div class="label">Total Seasons</div>
+                    <div class="value">
+                      {{ details.number_of_seasons }}
+                    </div>
+                  </div>
+
+                  <div class="info-item">
+                    <div class="label">Status</div>
+                    <div class="value">
+                      {{ details.status }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="info-item stagger-item genre-section full-width large-screen"
+            >
+              <div class="label">Genre</div>
+
+              <div class="value genres-list scroll-container">
+                <div class="value chip" *ngFor="let genre of details.genres">
+                  {{ genre.name }}
+                </div>
+              </div>
+            </div>
+
+            <div class="info-item stagger-item full-width">
+              <div class="label">Production Houses</div>
+
+              <div class="prod-house-container scroll-container">
+                <ng-container
+                  *ngFor="let house of details.production_companies"
+                >
+                  <div
+                    class="house-info"
+                    *ngIf="house.logo_path"
+                    [title]="house.name"
+                  >
+                    <img
+                      [src]="imageBase + '/w45' + house.logo_path"
+                      loading="lazy"
+                    />
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seasons-section stagger-item mt-4" *ngIf="mediaType === 'tv'">
+        <div class="chip-section">
+          <ng-container *ngFor="let season of details.seasons">
+            <div
+              class="chip text-nowrap"
+              [class.selected]="selectedSeason.id === season.id"
+              *ngIf="season.season_number !== 0"
+              (click)="onSeasonClick(season)"
+            >
+              {{ season.name }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="season-info">
+          <div class="left">
+            <img
+              [src]="imageBase + '/w92' + selectedSeason.poster_path"
+              loading="lazy"
+              alt="season poster"
+            />
+          </div>
+          <div class="right">
+            <app-rating [rating]="selectedSeason.vote_average"></app-rating>
+            <p>
+              <span class="label">Total episodes - </span>
+              {{ selectedSeason.episode_count }}
+            </p>
+            <p *ngIf="selectedSeason.overview">
+              <span class="label">Overview - </span
+              >{{ selectedSeason.overview }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -4,6 +4,7 @@ import {
   OnInit,
   QueryList,
   ViewChildren,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -33,7 +34,7 @@ gsap.registerPlugin(ScrollTrigger);
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   data: any = {};
   sections = DASHBOARD_CONFIG.sections;
 
@@ -53,6 +54,8 @@ export class DashboardComponent implements OnInit {
 
   ngAfterViewInit() {
     this.animateSections();
+    this.animateHero();
+    ScrollTrigger.refresh();
   }
 
   animateSections() {
@@ -70,9 +73,21 @@ export class DashboardComponent implements OnInit {
         scrollTrigger: {
           trigger: section.nativeElement,
           start: 'top 85%',
-          toggleActions: 'play none none none',
+          end: 'top 40%',
         },
       });
+    });
+  }
+
+  animateHero() {
+    gsap.to('.hero-carousel', {
+      opacity: 0,
+      scrollTrigger: {
+        trigger: '.hero-carousel',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
     });
   }
 
@@ -100,5 +115,9 @@ export class DashboardComponent implements OnInit {
 
   trackById(index: number, item: any) {
     return item.id;
+  }
+
+  ngOnDestroy(): void {
+    ScrollTrigger.getAll().forEach((t) => t.kill());
   }
 }

@@ -1,0 +1,37 @@
+.glass-arrow {
+  position: fixed;
+  left: 50%;
+  bottom: var(--bottom);
+  transform: translateX(-50%);
+  z-index: 1000;
+  cursor: pointer;
+
+  padding: 10px 12px 6px;
+  border-radius: 30px;
+
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.08);
+
+  transition:
+    opacity 0.4s ease,
+    transform 0.3s ease;
+}
+
+.arrow {
+  display: inline-block;
+  font-size: 26px;
+  color: var(--color);
+
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+}

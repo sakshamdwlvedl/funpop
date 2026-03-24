@@ -27,11 +27,21 @@
   scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
 }
 
+::selection {
+  background: black;
+  color: white;
+}
+
 html {
+  scroll-behavior: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+p {
+  margin-bottom: 0;
 }

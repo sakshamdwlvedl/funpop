@@ -11,6 +11,10 @@ export interface MovieDetails {
   images: Images;
   imdb_id: string;
   keywords: Keywords;
+  name: string;
+  number_of_seasons?: string;
+  seasons?: any;
+  first_air_date?: string;
   origin_country: string[];
   original_language: string;
   original_title: string;

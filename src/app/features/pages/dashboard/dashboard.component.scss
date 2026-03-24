@@ -4,10 +4,30 @@
   background: #f8fafc;
   min-height: 100vh;
   font-family: Arial, sans-serif;
+
+  .hero-carousel {
+    position: sticky;
+    top: 0;
+  }
+
   .movie-bank {
     height: 63px;
   }
+
   .section {
     will-change: transform, opacity;
+  }
+}
+
+@include breakpoint(lg) {
+  ::ng-deep {
+    .section {
+      &.first-section {
+        margin-top: 28px;
+        .carousel {
+          padding: 0 0 14px 0;
+        }
+      }
+    }
   }
 }
