@@ -140,7 +140,7 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       scrollTrigger: {
         trigger: '.hero-spacer',
         start: 'top top',
-        end: 'bottom top',
+        end: '160% top',
         scrub: 2,
       },
     });
