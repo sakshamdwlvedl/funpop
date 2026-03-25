@@ -1,384 +1,500 @@
 @use "mixins" as *;
 @use "variables" as *;
 
+.chips-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  @include horizontal-scroll;
+}
+
+.common-container {
+  background: linear-gradient(to top, #e6e6e6 0%, rgba(230, 230, 230, 0) 100%);
+  padding: 16px;
+  border: 1px solid $gray-200;
+  border-radius: 12px;
+  @include shadow(md);
+}
+
+.dot {
+  opacity: 0.5;
+  color: black;
+}
+
+.label {
+  font-size: 18px;
+  font-weight: 600;
+  border-left: 4px solid orange;
+  padding-left: 4px;
+  line-height: 1;
+}
+
+.value {
+  font-size: 16px;
+  color: #111;
+  font-weight: 500;
+
+  &.profit {
+    color: green;
+  }
+  &.loss {
+    color: red;
+  }
+}
+
 .details-wrapper {
   position: relative;
-}
 
-.hero-spacer {
-  height: 100vh;
-}
-
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 0;
-  overflow: hidden;
-
-  .black-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    z-index: 1;
-    opacity: 0.6;
+  .hero-spacer {
+    height: 100vh;
   }
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    scale: 1.05;
-    transform-origin: center center;
-    filter: blur(0px);
-  }
-
-  .movie-title {
+  .backdrop {
     position: fixed;
-    font-weight: 800;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 0 20px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 100px;
-    text-align: center;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-    pointer-events: none;
-    z-index: 2;
-  }
-}
+    height: 100vh;
+    z-index: 0;
+    overflow: hidden;
 
-.content {
-  position: relative;
-  padding: 20px;
-  z-index: 1; // scrolls over blurred image
-
-  .movie-details {
-    padding: 40px 20px;
-    max-width: 1100px;
-
-    .poster {
-      border-radius: 18px;
-      overflow: hidden;
-      position: relative;
-
-      img {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 18px;
-        object-fit: cover;
-      }
+    .black-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index: 1;
+      opacity: 0.6;
     }
 
-    .top-header {
-      margin-bottom: 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      scale: 1.05;
+      transform-origin: center center;
+      filter: blur(0px);
+    }
 
-      .header-content {
-        min-width: 0;
+    .movie-title {
+      position: fixed;
+      font-weight: 800;
+      width: 100%;
+      padding: 0 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 100px;
+      text-align: center;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+      pointer-events: none;
+      z-index: 2;
+    }
+  }
+
+  .content {
+    position: relative;
+    // padding: 20px;
+    z-index: 1; // scrolls over blurred image
+
+    .movie-details {
+      padding: 40px 20px;
+      max-width: 1090px;
+
+      .sections {
+        gap: 30px;
       }
 
-      .poster-mobile {
-        display: none;
-        flex-shrink: 0;
+      .poster {
+        border-radius: 18px;
+        overflow: hidden;
+        position: relative;
+
         img {
-          width: 92px;
+          width: 100%;
           height: auto;
           display: block;
-          border-radius: 12px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        @include breakpoint(md) {
-          display: block;
+          border-radius: 18px;
+          object-fit: cover;
         }
       }
-    }
 
-    .details-right-section {
-      position: relative;
-      min-width: 0;
+      .main-section {
+        .right-section {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 20px;
+          position: relative;
+          min-width: 0;
 
-      .info-item {
-        min-width: 0;
-
-        &.full-width {
-          grid-column: 1 / -1;
-        }
-
-        &.genre-section {
-          .genres-list {
+          .top-header {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            &::-webkit-scrollbar {
+            gap: 16px;
+
+            .poster-mobile {
               display: none;
+              flex-shrink: 0;
+              img {
+                width: 92px;
+                height: auto;
+                display: block;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+              }
+
+              @include breakpoint(md) {
+                display: block;
+              }
+            }
+
+            .mobile-right-wrapper {
+              display: flex;
+              flex-direction: column;
+              align-items: stretch;
+              gap: 16px;
+              min-width: 0;
+
+              .header-content {
+                min-width: 0;
+
+                .title {
+                  font-size: 42px;
+                  font-weight: 700;
+                  margin-bottom: 10px;
+                  color: #111;
+                  line-height: 1.2;
+                }
+
+                .meta {
+                  gap: 10px;
+                  color: #666;
+                  font-size: 15px;
+                  margin-bottom: 0;
+                }
+              }
+
+              .chips-section {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+              }
             }
           }
 
-          &.small-screen {
-            margin-top: 10px;
-            display: none;
+          .plot-section {
+            position: relative;
+            background: linear-gradient(
+              to top,
+              rgba($gray-100, 1) 0%,
+              rgba($gray-100, 0) 100%
+            );
+            margin-top: 35px;
+
+            .label {
+              margin-bottom: 12px;
+            }
+
+            .plot {
+              color: #000000;
+              line-height: 1.6;
+              font-weight: 500;
+              max-width: 650px;
+            }
+
+            .director-section {
+              width: 60%;
+              position: absolute;
+              padding: 6px 50px;
+              cursor: pointer;
+              top: 0;
+              right: 0;
+              transform: translate(0, -50%);
+              border: 1px solid $gray-200;
+              border-radius: 12px;
+              background-color: $gray-100;
+
+              .director-profile {
+                position: absolute;
+                padding: 4px;
+                border-radius: 50%;
+                top: 50%;
+                left: 0;
+                transform: translate(-50%, -50%);
+                background-color: $gray-100;
+                img {
+                  height: 70px;
+                  width: 70px;
+                  border-radius: 50%;
+                  object-fit: cover;
+                }
+              }
+
+              .info {
+                .name {
+                  font-weight: 600;
+                }
+                .role {
+                  font-size: 14px;
+                }
+              }
+
+              .right-arrow {
+                position: absolute;
+                right: 30px;
+                top: 50%;
+                transform: translateY(-50%);
+                transition: all 0.4s ease;
+              }
+
+              &:hover {
+                .right-arrow {
+                  right: 10px;
+                }
+              }
+            }
+          }
+
+          .extra-info {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .info-item {
+              display: flex;
+              flex-direction: column;
+              gap: 4px;
+
+              .label {
+                font-size: 12px;
+                border-left: none;
+                padding-left: 0;
+                line-height: unset;
+                i {
+                  margin-right: 2px;
+                }
+              }
+              .value {
+                font-size: 14px;
+              }
+            }
           }
         }
-        .prod-house-container {
-          display: flex;
-          align-items: center;
-          gap: 30px;
-          margin-top: 10px;
-          overflow-x: auto;
-          scrollbar-width: none;
-          &::-webkit-scrollbar {
-            display: none;
+      }
+
+      .cast-production-wrapper {
+        .cast-section {
+          .profile-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            @include horizontal-scroll;
           }
+        }
+
+        .production-house-section {
+          background: transparent;
+          border: none;
+          overflow: hidden;
+
+          .prod-house-container {
+            display: flex;
+            gap: 40px;
+            @include horizontal-scroll;
+          }
+
           .house-info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            flex-shrink: 0;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 20px;
+
             img {
-              // max-height: 60px;
-              width: auto;
-              object-fit: none;
+              max-width: 50px;
+              height: auto;
+            }
+
+            .name {
+              font-size: 12px;
+              font-weight: 700;
+              white-space: nowrap;
             }
           }
         }
       }
     }
 
-    .title {
-      font-size: 42px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #111;
-      line-height: 1.2;
-    }
-
-    .meta {
-      gap: 10px;
-      color: #666;
-      font-size: 15px;
-      margin-bottom: 0;
-
-      .dot {
-        opacity: 0.5;
-        color: black;
-      }
-    }
-
-    .section {
-      margin-bottom: 26px;
-
-      p {
-        color: #000000;
-        line-height: 1.6;
-        font-weight: 500;
-        max-width: 650px;
-      }
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 26px 0;
-      width: 100%;
-
-      .info-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 60px;
-        flex-wrap: wrap;
-
-        .wrap-unit {
-          display: flex;
-          gap: 60px;
-        }
-      }
-    }
-
-    .label {
-      font-size: 12px;
-      color: #380005;
-      font-weight: 600;
-      margin-bottom: 3px;
-      i {
-        font-size: 10px;
-      }
-    }
-
-    .value {
-      font-size: 15px;
-      color: #111;
-      font-weight: 500;
-
-      &.profit {
-        color: green;
-      }
-      &.loss {
-        color: red;
-      }
-    }
-
-    .cast-section {
-      margin-top: 20px;
-      .profile-container {
-        display: flex;
-        align-items: flex-start;
-        gap: 30px;
-        overflow-x: auto;
-        scrollbar-width: none;
-      }
-    }
-  }
-
-  .chip {
-    text-decoration: none;
-    border: 1px solid #3d3d3d;
-    border-radius: 999px;
-    background-color: transparent !important;
-    color: #3d3d3d !important;
-    font-weight: 600 !important;
-    font-size: 12px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 12px;
-    transition: all 0.1s ease;
-    cursor: pointer;
-    flex-shrink: 0;
-
-    &:hover {
-      background-color: #00000012 !important;
-    }
-  }
-
-  .seasons-section {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: 30px;
-
-    .chip-section {
+    .seasons-section {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      overflow: auto;
-      scrollbar-width: none;
-      .chip {
-        &.selected {
-          background-color: black !important;
-          color: white !important;
-          border: none;
-        }
-      }
-    }
-    .season-info {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      .left {
-        img {
-          border-radius: 12px;
-        }
-      }
-      .right {
+      flex-direction: column;
+      gap: 14px;
+
+      .chip-section {
         display: flex;
-        flex-direction: column;
+        align-items: center;
         gap: 10px;
+        @include horizontal-scroll;
+
+        .chip {
+          &.selected {
+            background-color: black !important;
+            color: white !important;
+            border: none;
+          }
+        }
+      }
+      .season-info {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        .left {
+          img {
+            border-radius: 12px;
+            @include shadow(lg);
+          }
+        }
+        .right {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          font-size: 14px;
+
+          .label {
+            border-left: none;
+            padding-left: 0;
+            line-height: unset;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    /* responsive */
+
+    @include breakpoint(lg) {
+      .movie-details {
+        .main-section {
+          .right-section {
+            .title {
+              font-size: 32px;
+            }
+          }
+        }
+      }
+    }
+
+    @include breakpoint(md) {
+      .movie-details {
+        padding: 20px 14px;
+        .left-section {
+          display: none;
+        }
+      }
+    }
+
+    @include breakpoint("sm") {
+      .common-container {
+        padding: 10px;
+      }
+      .label {
+        font-size: 16px;
+      }
+      .value {
         font-size: 14px;
       }
-    }
-  }
 
-  /* responsive */
+      .movie-details {
+        padding: 20px 10px;
+        .sections {
+          gap: 10px;
+        }
 
-  @include breakpoint(lg) {
-    .movie-details {
-      .title {
-        font-size: 32px;
-      }
-    }
-  }
+        .main-section {
+          .right-section {
+            gap: 10px;
 
-  @include breakpoint(md) {
-    .details-right-section {
-      .info-item {
-        &.genre-section {
-          &.large-screen {
-            display: none;
+            .top-header {
+              .mobile-right-wrapper {
+                gap: 12px;
+
+                .header-content {
+                  .title {
+                    font-size: 20px;
+                  }
+                }
+              }
+            }
+
+            .plot-section {
+              margin-top: 28px;
+
+              .plot {
+                font-size: 14px;
+              }
+
+              .director-section {
+                padding: 2px 40px;
+
+                .director-profile {
+                  img {
+                    height: 60px;
+                    width: 60px;
+                  }
+                }
+
+                .info {
+                  .name {
+                    font-size: 14px;
+                  }
+                  .role {
+                    font-size: 12px;
+                  }
+                }
+
+                .right-arrow {
+                  right: 18px;
+                  i {
+                    font-size: 14px;
+                  }
+                }
+              }
+            }
+
+            .extra-info {
+              .info-item {
+                .value {
+                  font-size: 12px;
+                }
+              }
+            }
           }
-          &.small-screen {
-            display: block !important;
+        }
+
+        .seasons-section {
+          .season-info {
+            .right {
+              gap: 4px !important;
+
+              .label {
+                font-size: 12px;
+              }
+            }
           }
         }
       }
-    }
-    .movie-details {
-      padding: 20px 14px;
-
-      .section {
-        margin-bottom: 16px;
-      }
-      .poster-col {
-        display: none;
-      }
-
-      .info-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-
-        .info-row {
-          gap: 16px 40px;
-
-          .wrap-unit {
-            gap: 40px;
-          }
+      .backdrop {
+        .movie-title {
+          font-size: 50px;
         }
       }
-    }
-  }
-
-  @include breakpoint("sm") {
-    .movie-details {
-      padding: 0;
-      .info-grid {
-        gap: 16px 40px;
-      }
-      .seasons-section {
-        .season-info {
-          .right {
-            gap: 4px !important;
-          }
+      .genre-section {
+        gap: 8px !important;
+        .chip {
+          padding: 1px 8px;
         }
-      }
-    }
-    .backdrop {
-      .movie-title {
-        font-size: 50px;
-      }
-    }
-    .value {
-      font-size: 14px !important;
-    }
-    .details-right-section {
-      .title {
-        font-size: 20px;
-      }
-    }
-    .genres-list {
-      gap: 8px !important;
-      .chip {
-        padding: 1px 8px;
       }
     }
   }

@@ -44,6 +44,12 @@
   align-items: center;
 }
 
+// Scrollable Container
+@mixin horizontal-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
 // Text Truncate
 @mixin truncate($lines: 1) {
   overflow: hidden;

@@ -6,11 +6,19 @@
   align-items: center;
 
   .profile-pic {
+    padding: 14px;
     img {
+      @include shadow(lg);
+      cursor: pointer;
       border-radius: 50%;
       object-fit: cover;
       height: 100px;
       width: 100px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        scale: 1.1;
+      }
     }
   }
   .name {
@@ -25,6 +33,7 @@
 @include breakpoint(sm) {
   .profile {
     .profile-pic {
+      padding: 12px;
       img {
         height: 80px;
         width: 80px;

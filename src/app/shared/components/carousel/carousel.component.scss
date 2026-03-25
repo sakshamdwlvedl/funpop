@@ -17,10 +17,8 @@
     .carousel-container {
       display: flex;
       gap: 12px;
-      overflow-x: auto;
       scroll-behavior: smooth;
-
-      scrollbar-width: none;
+      @include horizontal-scroll;
       -ms-overflow-style: none;
 
       &::-webkit-scrollbar {

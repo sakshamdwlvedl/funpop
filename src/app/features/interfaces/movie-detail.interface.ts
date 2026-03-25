@@ -4,6 +4,7 @@ export interface MovieDetails {
   belongs_to_collection: Collection | null;
   budget: number;
   credits: Credits;
+  created_by?: any;
   external_ids: ExternalIds;
   genres: Genre[];
   homepage: string;
@@ -62,6 +63,7 @@ export interface Cast {
 export interface Crew {
   id: number;
   name: string;
+  known_for_department?: string;
   job: string;
   department: string;
   profile_path: string;
@@ -95,6 +97,7 @@ export interface Image {
 
 export interface Keywords {
   keywords: Keyword[];
+  results: Keyword[];
 }
 
 export interface Keyword {

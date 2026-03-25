@@ -3,13 +3,13 @@
 .rating {
   padding: 4px 10px;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12px;
   color: white;
   width: fit-content;
 
   &.good {
-    background-color: green;
+    background-color: #28a628;
   }
   &.avg {
     background-color: orangered;

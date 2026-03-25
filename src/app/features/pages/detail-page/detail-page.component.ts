@@ -16,6 +16,7 @@ import { SplitText } from 'gsap/SplitText';
 import { RatingComponent } from '../../../shared/components/rating/rating.component';
 import { ScrollIndicatorComponent } from '../../../shared/components/scroll-indicator/scroll-indicator.component';
 import { ProfileCardComponent } from '../../../shared/components/profile-card/profile-card.component';
+import { ChipComponent } from '../../../shared/components/chip/chip.component';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -26,6 +27,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
     RatingComponent,
     ScrollIndicatorComponent,
     ProfileCardComponent,
+    ChipComponent,
   ],
   templateUrl: './detail-page.component.html',
   styleUrls: ['./detail-page.component.scss'],
@@ -38,6 +40,7 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
   languageNames: string = '';
   runtime: string = '';
   mediaType: string = '';
+  director: any;
 
   @ViewChild('posterCard') posterCard!: ElementRef;
   @ViewChild('movieTitle') movieTitle!: ElementRef;
@@ -68,6 +71,29 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
     this.selectedSeason = this.details?.seasons?.find(
       (season: any) => season.season_number === 1,
     );
+
+    this.getDirector();
+  }
+
+  getDirector() {
+    if (this.details?.created_by?.length) {
+      this.director = this.details.created_by;
+      return;
+    }
+
+    if (this.mediaType === 'movie') {
+      this.director = this.details.credits.crew.filter(
+        (crew) => crew.job === 'Director',
+      );
+    } else {
+      this.director = this.details.credits.crew.filter(
+        (crew) =>
+          (crew.job === 'Executive Producer' ||
+            crew.job === 'Original Concept' ||
+            crew.job === 'Original Story') &&
+          crew.known_for_department === 'Writing',
+      );
+    }
   }
 
   ngAfterViewInit() {
@@ -214,7 +240,7 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
 
     /* 1️⃣ Right section intro */
     tl2.from(
-      '.details-right-section',
+      '.right-section',
       {
         y: 80,
         opacity: 0,

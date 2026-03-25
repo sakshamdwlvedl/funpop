@@ -31,78 +31,131 @@
 
   <div class="content">
     <div class="movie-details container">
-      <div class="row g-4 align-items-start">
-        <!-- Poster -->
-        <div class="col-lg-4 col-md-5 poster-col">
-          <div class="poster" #posterCard>
-            <img
-              [src]="imageBase + '/w342' + details.poster_path"
-              [alt]="details.title"
-              loading="lazy"
-            />
-          </div>
-        </div>
-
-        <!-- Content -->
-        <div class="col-lg-8 col-md-7 details-right-section">
-          <div class="top-header">
-            <div class="poster-mobile">
-              <img
-                [src]="imageBase + '/w92' + details.poster_path"
-                [alt]="details.title"
-                class="shadow-sm"
-              />
-            </div>
-            <div class="header-content">
-              <h1 class="title">
-                {{ details.title || details.name }}
-              </h1>
-
-              <!-- meta -->
-              <div class="meta d-flex flex-wrap align-items-center">
-                <div *ngIf="mediaType === 'movie'" class="value">
-                  {{ runtime }}
-                </div>
-
-                <span class="dot" *ngIf="mediaType === 'movie'">•</span>
-
-                <div class="value">
-                  {{ languageNames }}
-                </div>
-
-                <span class="dot">•</span>
-
-                <app-rating [rating]="details.vote_average"></app-rating>
+      <div class="row flex-column sections">
+        <!-- main top section -->
+        <div class="col-12 main-section">
+          <div class="row p-0">
+            <!-- Poster -->
+            <div class="col-lg-4 col-md-5 left-section">
+              <div class="poster" #posterCard>
+                <img
+                  [src]="imageBase + '/w342' + details.poster_path"
+                  [alt]="details.title"
+                  loading="lazy"
+                />
               </div>
+            </div>
 
-              <div class="info-item genre-section full-width small-screen">
-                <div class="label">Genre <i class="pi pi-angle-right"></i></div>
+            <!-- Content -->
+            <div class="col-lg-8 col-md-7 right-section">
+              <div class="top-header">
+                <div class="poster-mobile">
+                  <img
+                    [src]="imageBase + '/w92' + details.poster_path"
+                    [alt]="details.title"
+                    class="shadow-sm"
+                  />
+                </div>
 
-                <div class="value genres-list scroll-container">
-                  <div class="value chip" *ngFor="let genre of details.genres">
-                    {{ genre.name }}
+                <div class="mobile-right-wrapper">
+                  <div class="header-content">
+                    <h1 class="title">
+                      {{ details.title || details.name }}
+                    </h1>
+
+                    <!-- meta -->
+                    <div class="meta d-flex flex-wrap align-items-center">
+                      <div *ngIf="mediaType === 'movie'" class="value">
+                        {{ runtime }}
+                      </div>
+
+                      <span class="dot" *ngIf="mediaType === 'movie'">•</span>
+
+                      <div class="value">
+                        {{ languageNames }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="chips-section">
+                    <div class="genre-section chips-container stagger-item">
+                      <app-rating [rating]="details.vote_average"></app-rating>
+
+                      <app-chip
+                        *ngFor="let genre of details.genres"
+                        [label]="genre.name"
+                        [styles]="{
+                          padding: '4px 10px',
+                          borderColor: 'var(--gray-200)',
+                          bgColor: 'transparent',
+                          textColor: 'var(--gray-600)',
+                          hover: {
+                            bgColor: '#00000012',
+                          },
+                        }"
+                      >
+                      </app-chip>
+                    </div>
+
+                    <div
+                      class="related-tags-section chips-container stagger-item"
+                    >
+                      <app-chip
+                        *ngFor="
+                          let tag of details.keywords.keywords ||
+                            details.keywords.results
+                        "
+                        [label]="tag.name"
+                        [styles]="{
+                          padding: '2px 8px',
+                          borderColor: 'var(--gray-200)',
+                          bgColor: 'transparent',
+                          textColor: 'var(--gray-600)',
+                          hover: {
+                            bgColor: '#00000012',
+                          },
+                        }"
+                      >
+                      </app-chip>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- plot -->
-          <div class="section">
-            <div class="label">Plot <i class="pi pi-angle-right"></i></div>
+              <div class="plot-section common-container stagger-item">
+                <div class="label">Plot</div>
 
-            <p class="value">
-              {{ details.overview }}
-            </p>
-          </div>
+                <div class="plot">
+                  {{ details.overview }}
+                </div>
 
-          <!-- grid info -->
-          <div class="info-grid">
-            <div class="info-item">
-              <div class="info-row stagger-item">
+                <div class="director-section">
+                  <div class="director-profile">
+                    <img
+                      [src]="
+                        director?.[0]?.profile_path
+                          ? imageBase + '/w92' + director?.[0]?.profile_path
+                          : 'assets/images/dummy-person.webp'
+                      "
+                      alt="director"
+                    />
+                  </div>
+
+                  <div class="info">
+                    <div class="name">{{ director?.[0]?.name }}</div>
+                    <div class="role">Director</div>
+                  </div>
+
+                  <div class="right-arrow">
+                    <i class="pi pi-angle-right"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="extra-info common-container stagger-item">
                 <div class="info-item">
                   <div class="label">
-                    Released On <i class="pi pi-angle-right"></i>
+                    <i class="pi pi-calendar"></i> Released On
                   </div>
                   <div class="value">
                     {{
@@ -112,11 +165,9 @@
                   </div>
                 </div>
 
-                <div class="wrap-unit" *ngIf="mediaType === 'movie'">
+                <ng-container *ngIf="mediaType === 'movie'">
                   <div class="info-item">
-                    <div class="label">
-                      Budget <i class="pi pi-angle-right"></i>
-                    </div>
+                    <div class="label"><i class="pi pi-wallet"></i> Budget</div>
                     <div class="value">
                       {{
                         details.budget | currency: "USD" : "symbol" : "1.0-0"
@@ -126,7 +177,7 @@
 
                   <div class="info-item">
                     <div class="label">
-                      Collection <i class="pi pi-angle-right"></i>
+                      <i class="pi pi-dollar"></i> Collection
                     </div>
                     <div class="value" [ngClass]="getCollectionClass()">
                       {{
@@ -135,12 +186,13 @@
                       {{ getCollectionClass() === "profit" ? "↗" : "↘" }}
                     </div>
                   </div>
-                </div>
+                </ng-container>
 
-                <div class="wrap-unit" *ngIf="mediaType === 'tv'">
+                <ng-container *ngIf="mediaType === 'tv'">
                   <div class="info-item">
                     <div class="label">
-                      Total Seasons <i class="pi pi-angle-right"></i>
+                      <i class="pi pi-play-circle"></i>
+                      Total Seasons
                     </div>
                     <div class="value">
                       {{ details.number_of_seasons }}
@@ -149,36 +201,93 @@
 
                   <div class="info-item">
                     <div class="label">
-                      Status <i class="pi pi-angle-right"></i>
+                      <i class="pi pi-clock"></i>
+                      Status
                     </div>
                     <div class="value">
                       {{ details.status }}
                     </div>
                   </div>
-                </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-12 seasons-section stagger-item"
+          *ngIf="mediaType === 'tv'"
+        >
+          <div class="chips-container">
+            <ng-container *ngFor="let season of details.seasons">
+              <app-chip
+                *ngIf="season.season_number !== 0"
+                (click)="onSeasonClick(season)"
+                [label]="season.name"
+                [selected]="selectedSeason.id === season.id"
+                [styles]="{
+                  padding: '4px 10px',
+                  borderColor: 'var(--gray-200)',
+                  bgColor: 'transparent',
+                  textColor: 'var(--gray-600)',
+                  hover: {
+                    bgColor: '#00000012',
+                  },
+                  selected: {
+                    borderColor: 'black',
+                    bgColor: 'black',
+                    textColor: 'white',
+                  },
+                }"
+              >
+              </app-chip>
+            </ng-container>
+          </div>
+          <div class="season-info">
+            <div class="left">
+              <img
+                [src]="imageBase + '/w92' + selectedSeason.poster_path"
+                loading="lazy"
+                alt="season poster"
+              />
+            </div>
+            <div class="right">
+              <app-rating [rating]="selectedSeason.vote_average"></app-rating>
+              <p>
+                <span class="label">Total episodes - </span>
+                {{ selectedSeason.episode_count }}
+              </p>
+              <p *ngIf="selectedSeason.overview">
+                <span class="label">Overview - </span
+                >{{ selectedSeason.overview }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 cast-production-wrapper">
+          <div class="row">
+            <div class="col-lg-8 cast-section stagger-item">
+              <div class="label">Cast</div>
+              <div class="profile-container">
+                <ng-container *ngFor="let cast of details.credits.cast">
+                  <app-profile-card [profile]="cast"></app-profile-card>
+                </ng-container>
               </div>
             </div>
 
             <div
-              class="info-item stagger-item genre-section full-width large-screen"
+              class="col-lg-4 ps-lg-5 pt-md-4 production-house-section stagger-item"
+              [ngClass]="{ 'pt-4': commonService.isMobile }"
             >
-              <div class="label">Genre <i class="pi pi-angle-right"></i></div>
+              <div class="label mb-3">Production Houses</div>
 
-              <div class="value genres-list scroll-container">
-                <div class="value chip" *ngFor="let genre of details.genres">
-                  {{ genre.name }}
-                </div>
-              </div>
-            </div>
-
-            <div class="info-item stagger-item full-width">
-              <div class="label">
-                Production Houses <i class="pi pi-angle-right"></i>
-              </div>
-
-              <div class="prod-house-container scroll-container">
+              <div class="prod-house-container">
                 <ng-container
-                  *ngFor="let house of details.production_companies"
+                  *ngFor="
+                    let house of details.production_companies;
+                    let i = index
+                  "
                 >
                   <div
                     class="house-info"
@@ -186,58 +295,17 @@
                     [title]="house.name"
                   >
                     <img
-                      [src]="imageBase + '/w45' + house.logo_path"
+                      [src]="imageBase + '/w92' + house.logo_path"
                       loading="lazy"
                     />
+                    <div class="name text-nowrap">
+                      {{ house.name }}
+                    </div>
                   </div>
                 </ng-container>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="seasons-section stagger-item mt-4" *ngIf="mediaType === 'tv'">
-        <div class="chip-section">
-          <ng-container *ngFor="let season of details.seasons">
-            <div
-              class="chip text-nowrap"
-              [class.selected]="selectedSeason.id === season.id"
-              *ngIf="season.season_number !== 0"
-              (click)="onSeasonClick(season)"
-            >
-              {{ season.name }}
-            </div>
-          </ng-container>
-        </div>
-        <div class="season-info">
-          <div class="left">
-            <img
-              [src]="imageBase + '/w92' + selectedSeason.poster_path"
-              loading="lazy"
-              alt="season poster"
-            />
-          </div>
-          <div class="right">
-            <app-rating [rating]="selectedSeason.vote_average"></app-rating>
-            <p>
-              <span class="label">Total episodes - </span>
-              {{ selectedSeason.episode_count }}
-            </p>
-            <p *ngIf="selectedSeason.overview">
-              <span class="label">Overview - </span
-              >{{ selectedSeason.overview }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="cast-section stagger-item">
-        <div class="label">Cast <i class="pi pi-angle-right"></i></div>
-        <div class="profile-container">
-          <ng-container *ngFor="let cast of details.credits.cast">
-            <app-profile-card [profile]="cast"></app-profile-card>
-          </ng-container>
         </div>
       </div>
     </div>
