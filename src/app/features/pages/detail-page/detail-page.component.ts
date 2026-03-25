@@ -15,12 +15,18 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { RatingComponent } from '../../../shared/components/rating/rating.component';
 import { ScrollIndicatorComponent } from '../../../shared/components/scroll-indicator/scroll-indicator.component';
+import { ProfileCardComponent } from '../../../shared/components/profile-card/profile-card.component';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 @Component({
   selector: 'app-detail-page',
-  imports: [CommonModule, RatingComponent, ScrollIndicatorComponent],
+  imports: [
+    CommonModule,
+    RatingComponent,
+    ScrollIndicatorComponent,
+    ProfileCardComponent,
+  ],
   templateUrl: './detail-page.component.html',
   styleUrls: ['./detail-page.component.scss'],
 })

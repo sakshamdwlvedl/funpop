@@ -1,0 +1,19 @@
+<div class="profile">
+  <div class="profile-pic">
+    <img
+      [src]="
+        profile.profile_path
+          ? imageBase + '/w92' + profile.profile_path
+          : 'assets/images/dummy-person.webp'
+      "
+      loading="lazy"
+      alt="profile"
+    />
+  </div>
+  <div class="name text-center">
+    {{ profile.name }}
+  </div>
+  <div class="role text-center">
+    {{ role }}
+  </div>
+</div>

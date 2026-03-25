@@ -228,6 +228,17 @@
         color: red;
       }
     }
+
+    .cast-section {
+      margin-top: 20px;
+      .profile-container {
+        display: flex;
+        align-items: flex-start;
+        gap: 30px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+    }
   }
 
   .chip {

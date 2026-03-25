@@ -231,6 +231,15 @@
           </div>
         </div>
       </div>
+
+      <div class="cast-section stagger-item">
+        <div class="label">Cast <i class="pi pi-angle-right"></i></div>
+        <div class="profile-container">
+          <ng-container *ngFor="let cast of details.credits.cast">
+            <app-profile-card [profile]="cast"></app-profile-card>
+          </ng-container>
+        </div>
+      </div>
     </div>
   </div>
 </div>
