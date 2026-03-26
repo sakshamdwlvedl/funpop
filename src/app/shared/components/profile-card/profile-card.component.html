@@ -10,10 +10,10 @@
       alt="profile"
     />
   </div>
-  <div class="name text-center">
+  <div class="name text-center" [title]="profile.name">
     {{ profile.name }}
   </div>
-  <div class="role text-center">
+  <div class="role text-center" [title]="role">
     {{ role }}
   </div>
 </div>

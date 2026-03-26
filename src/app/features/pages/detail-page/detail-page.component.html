@@ -53,7 +53,6 @@
                   <img
                     [src]="imageBase + '/w92' + details.poster_path"
                     [alt]="details.title"
-                    class="shadow-sm"
                   />
                 </div>
 
@@ -122,11 +121,53 @@
                 </div>
               </div>
 
-              <div class="plot-section common-container stagger-item">
+              <!-- <div class="plot-section common-container stagger-item">
                 <div class="label">Plot</div>
 
                 <div class="plot">
                   {{ details.overview }}
+                </div>
+
+                <div class="director-section">
+                  <div class="director-profile">
+                    <img
+                      [src]="
+                        director?.[0]?.profile_path
+                          ? imageBase + '/w92' + director?.[0]?.profile_path
+                          : 'assets/images/dummy-person.webp'
+                      "
+                      alt="director"
+                    />
+                  </div>
+
+                  <div class="info">
+                    <div class="name">{{ director?.[0]?.name }}</div>
+                    <div class="role">Director</div>
+                  </div>
+
+                  <div class="right-arrow">
+                    <i class="pi pi-angle-right"></i>
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="plot-section common-container stagger-item">
+                <div class="label">Plot</div>
+
+                <div class="plot" [class.expanded]="accordion.plot">
+                  {{ details.overview }}
+                </div>
+
+                <div
+                  class="read-more-btn"
+                  *ngIf="details.overview.length > 180"
+                  (click)="toggleAccordion('plot')"
+                >
+                  {{ accordion.plot ? "Read less" : "Read more" }}
+                  <i
+                    class="pi"
+                    [ngClass]="accordion.plot ? 'pi-angle-up' : 'pi-angle-down'"
+                  ></i>
                 </div>
 
                 <div class="director-section">
@@ -253,14 +294,32 @@
             </div>
             <div class="right">
               <app-rating [rating]="selectedSeason.vote_average"></app-rating>
-              <p>
+              <div>
                 <span class="label">Total episodes - </span>
                 {{ selectedSeason.episode_count }}
-              </p>
-              <p *ngIf="selectedSeason.overview">
-                <span class="label">Overview - </span
-                >{{ selectedSeason.overview }}
-              </p>
+              </div>
+              <div *ngIf="selectedSeason.overview" class="plot-wrapper">
+                <div
+                  class="season-plot-text"
+                  [class.expanded]="accordion.seasonPlot"
+                >
+                  <span class="label">Overview - </span
+                  >{{ selectedSeason.overview }}
+                </div>
+                <div
+                  class="read-more-btn"
+                  *ngIf="details.overview.length > 180"
+                  (click)="toggleAccordion('seasonPlot')"
+                >
+                  {{ accordion.seasonPlot ? "Read less" : "Read more" }}
+                  <i
+                    class="pi"
+                    [ngClass]="
+                      accordion.seasonPlot ? 'pi-angle-up' : 'pi-angle-down'
+                    "
+                  ></i>
+                </div>
+              </div>
             </div>
           </div>
         </div>

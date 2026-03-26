@@ -41,6 +41,10 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
   runtime: string = '';
   mediaType: string = '';
   director: any;
+  accordion = {
+    plot: false,
+    seasonPlot: false,
+  };
 
   @ViewChild('posterCard') posterCard!: ElementRef;
   @ViewChild('movieTitle') movieTitle!: ElementRef;
@@ -296,6 +300,10 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       },
       1.6,
     );
+  }
+
+  toggleAccordion(key: any) {
+    (this.accordion as any)[key] = !(this.accordion as any)[key];
   }
 
   onSeasonClick(season: any) {

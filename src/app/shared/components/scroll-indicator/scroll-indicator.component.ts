@@ -29,6 +29,7 @@ export class ScrollIndicatorComponent implements AfterViewInit {
       y: 140,
       opacity: 0,
       ease: 'none',
+      pointerEvents: 'none',
       scrollTrigger: {
         start: 0,
         end: 200,

@@ -66,6 +66,22 @@
       font-size: 16px;
     }
     .carousel-wrapper {
+      .fade {
+        &.left {
+          background: linear-gradient(
+            to right,
+            rgb(255, 255, 255) 2%,
+            transparent 50%
+          );
+        }
+        &.right {
+          background: linear-gradient(
+            to left,
+            rgb(255, 255, 255) 2%,
+            transparent 50%
+          );
+        }
+      }
       .carousel-container {
         gap: 4px;
       }
