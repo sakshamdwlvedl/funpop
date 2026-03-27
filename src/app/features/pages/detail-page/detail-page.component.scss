@@ -387,6 +387,7 @@
         gap: 12px;
         .left {
           img {
+            height: 138px;
             border-radius: 12px;
             @include shadow(lg);
           }

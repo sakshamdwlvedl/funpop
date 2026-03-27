@@ -1,13 +1,21 @@
-.explore-wrapper {
-  // padding: 100px 0 60px;
-  // min-height: 100vh;
-}
+@use "mixins" as *;
 
 .explore-header {
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-bottom: 32px;
+  @include breakpoint(sm) {
+    padding: 0;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+.explore-content {
+  @include breakpoint(sm) {
+    padding: 0;
+  }
 }
 
 .explore-heading {
@@ -42,33 +50,17 @@
     border-color: black;
     color: white;
   }
-}
-
-// ── Results grid ─────────────────────────────────────────────────────────────
-
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 20px;
-
-  @media (max-width: 480px) {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 12px;
+  @include breakpoint(sm) {
+    padding: 4px 10px;
   }
 }
 
+.results-grid,
 .people-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 20px;
-
-  @media (max-width: 480px) {
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 12px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
-
-// ── Skeleton cards ────────────────────────────────────────────────────────────
 
 .skeleton-card {
   aspect-ratio: 2 / 3;

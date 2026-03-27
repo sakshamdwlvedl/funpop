@@ -10,7 +10,7 @@
   <div class="backdrop">
     <div class="black-overlay"></div>
     <img
-      [src]="imageBase + '/w1280' + details.backdrop_path"
+      [src]="imageBase + '/w1920' + details.backdrop_path"
       loading="lazy"
       *ngIf="!commonService.isMobile"
     />
@@ -39,7 +39,7 @@
             <div class="col-lg-4 col-md-5 left-section">
               <div class="poster" #posterCard>
                 <img
-                  [src]="imageBase + '/w342' + details.poster_path"
+                  [src]="imageBase + '/w500' + details.poster_path"
                   [alt]="details.title"
                   loading="lazy"
                 />
@@ -51,7 +51,7 @@
               <div class="top-header">
                 <div class="poster-mobile">
                   <img
-                    [src]="imageBase + '/w92' + details.poster_path"
+                    [src]="imageBase + '/w154' + details.poster_path"
                     [alt]="details.title"
                   />
                 </div>
@@ -123,36 +123,6 @@
                 </div>
               </div>
 
-              <!-- <div class="plot-section common-container stagger-item">
-                <div class="label">Plot</div>
-
-                <div class="plot">
-                  {{ details.overview }}
-                </div>
-
-                <div class="director-section">
-                  <div class="director-profile">
-                    <img
-                      [src]="
-                        director?.[0]?.profile_path
-                          ? imageBase + '/w92' + director?.[0]?.profile_path
-                          : 'assets/images/dummy-person.webp'
-                      "
-                      alt="director"
-                    />
-                  </div>
-
-                  <div class="info">
-                    <div class="name">{{ director?.[0]?.name }}</div>
-                    <div class="role">Director</div>
-                  </div>
-
-                  <div class="right-arrow">
-                    <i class="pi pi-angle-right"></i>
-                  </div>
-                </div>
-              </div> -->
-
               <div class="plot-section common-container stagger-item">
                 <div class="label">Plot</div>
 
@@ -172,7 +142,10 @@
                   ></i>
                 </div>
 
-                <div class="director-section">
+                <div
+                  class="director-section"
+                  (click)="navigateToPerson(director?.[0]?.id)"
+                >
                   <div class="director-profile">
                     <img
                       [src]="
@@ -289,7 +262,7 @@
           <div class="season-info">
             <div class="left">
               <img
-                [src]="imageBase + '/w92' + selectedSeason.poster_path"
+                [src]="imageBase + '/w154' + selectedSeason.poster_path"
                 loading="lazy"
                 alt="season poster"
               />

@@ -317,6 +317,12 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
     this.router.navigate(['/explore'], { queryParams: { people: param } });
   }
 
+  navigateToPerson(id: string): void {
+    if (id) {
+      this.router.navigate(['/details/person', id]);
+    }
+  }
+
   toggleAccordion(key: any) {
     (this.accordion as any)[key] = !(this.accordion as any)[key];
   }

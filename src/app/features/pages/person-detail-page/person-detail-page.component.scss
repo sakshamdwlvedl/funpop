@@ -22,6 +22,7 @@ $hero-height: 480px;
   min-height: $hero-height;
   overflow: hidden;
   color: #fff;
+  border-radius: 12px;
 
   // ── Blurred bg ──────────────────────────────────────────────────────────────
   .hero-bg {
@@ -33,7 +34,7 @@ $hero-height: 480px;
       position: absolute;
       inset: -40px; // oversized to hide blur edges
       background-size: cover;
-      background-position: center top;
+      background-position: center 40%;
       filter: blur(32px) saturate(1.2);
       transform: scale(1.08);
     }
