@@ -334,15 +334,14 @@
                 <ng-container *ngFor="let cast of details.credits.cast">
                   <app-profile-card [profile]="cast"></app-profile-card>
                 </ng-container>
+                <button
+                  class="see-more-cast-btn text-nowrap"
+                  *ngIf="details.credits.cast.length > 10"
+                  (click)="navigateToFullCast()"
+                >
+                  See All Cast <i class="pi pi-arrow-right"></i>
+                </button>
               </div>
-
-              <button
-                class="see-more-cast-btn"
-                *ngIf="details.credits.cast.length > 10"
-                (click)="navigateToFullCast()"
-              >
-                See All Cast <i class="pi pi-arrow-right"></i>
-              </button>
             </div>
 
             <div
