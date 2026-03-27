@@ -4,48 +4,59 @@ export const DASHBOARD_CONFIG = {
   sections: [
     {
       key: 'trendingMovies',
-      label: 'Trending Movies',
-      apiFunction: (apiService: ApiCallService) =>
-        apiService.getTrending('movie'),
+      title: 'Trending Movies',
+      mediaType: 'movie',
+      typeKey: 'trending-movies',
+      apiFunction: (api: ApiCallService) => api.getTrending('movie'),
     },
     {
       key: 'trendingTV',
-      label: 'Trending TV Shows',
-      apiFunction: (apiService: ApiCallService) => apiService.getTrending('tv'),
-    },
-    {
-      key: 'popularMovies',
-      label: 'Popular Movies',
-      apiFunction: (apiService: ApiCallService) =>
-        apiService.getPopular('movie'),
-    },
-    {
-      key: 'popularTV',
-      label: 'Popular TV Shows',
-      apiFunction: (apiService: ApiCallService) => apiService.getPopular('tv'),
+      title: 'Trending TV Shows',
+      mediaType: 'tv',
+      typeKey: 'trending-tv',
+      apiFunction: (api: ApiCallService) => api.getTrending('tv'),
     },
     {
       key: 'topRatedMovies',
-      label: 'Top Rated Movies',
-      apiFunction: (apiService: ApiCallService) =>
-        apiService.getTopRated('movie'),
+      title: 'Top Rated Movies',
+      mediaType: 'movie',
+      typeKey: 'top-rated-movies',
+      apiFunction: (api: ApiCallService) => api.getTopRated('movie'),
     },
     {
       key: 'topRatedTV',
-      label: 'Top Rated TV Shows',
-      apiFunction: (apiService: ApiCallService) => apiService.getTopRated('tv'),
+      title: 'Top Rated TV Shows',
+      mediaType: 'tv',
+      typeKey: 'top-rated-tv',
+      apiFunction: (api: ApiCallService) => api.getTopRated('tv'),
     },
     {
-      key: 'newMovies',
-      label: 'New Releases (Movies)',
-      apiFunction: (apiService: ApiCallService) =>
-        apiService.getNewReleasedMovies(),
+      key: 'popularMovies',
+      title: 'Popular Movies',
+      mediaType: 'movie',
+      typeKey: 'popular-movies',
+      apiFunction: (api: ApiCallService) => api.getPopular('movie'),
     },
     {
-      key: 'newTV',
-      label: 'New Releases (TV)',
-      apiFunction: (apiService: ApiCallService) =>
-        apiService.getNewReleasedTV(),
+      key: 'popularTV',
+      title: 'Popular TV Shows',
+      mediaType: 'tv',
+      typeKey: 'popular-tv',
+      apiFunction: (api: ApiCallService) => api.getPopular('tv'),
+    },
+    {
+      key: 'nowPlaying',
+      title: 'Now Playing',
+      mediaType: 'movie',
+      typeKey: 'now-playing',
+      apiFunction: (api: ApiCallService) => api.getNewReleasedMovies(),
+    },
+    {
+      key: 'onTheAir',
+      title: 'On The Air',
+      mediaType: 'tv',
+      typeKey: 'on-the-air',
+      apiFunction: (api: ApiCallService) => api.getNewReleasedTV(),
     },
   ],
 };

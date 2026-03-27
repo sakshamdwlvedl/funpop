@@ -3,7 +3,9 @@ import {
   Component,
   ContentChildren,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
   QueryList,
   ViewChild,
 } from '@angular/core';
@@ -21,6 +23,9 @@ import { CommonService } from '../../../core/services/common.service';
 })
 export class CarouselComponent implements AfterContentInit {
   @Input() title: string = '';
+  @Input() keyToEmit: string = '';
+  @Output() onSeeMore: EventEmitter<string> = new EventEmitter<string>();
+
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   @ContentChildren(MovieCardComponent)
@@ -56,5 +61,9 @@ export class CarouselComponent implements AfterContentInit {
 
     this.showLeftFade = el?.scrollLeft > 0;
     this.showRightFade = el?.scrollLeft + el?.clientWidth < el?.scrollWidth - 1;
+  }
+
+  emitKey() {
+    this.onSeeMore.emit(this.keyToEmit);
   }
 }

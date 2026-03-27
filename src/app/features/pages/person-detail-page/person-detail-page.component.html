@@ -1,0 +1,299 @@
+<!-- src/app/features/pages/person-detail-page/person-detail-page.component.html -->
+
+<div class="person-page">
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════════════════════════════ -->
+  <section class="person-hero">
+    <div class="hero-bg">
+      <div
+        class="hero-bg-blur"
+        [style.backgroundImage]="
+          'url(' + imageBase + '/w342' + details.profile_path + ')'
+        "
+      ></div>
+      <div class="hero-bg-overlay"></div>
+    </div>
+
+    <div class="hero-inner container">
+      <!-- Profile photo -->
+      <div class="profile-photo-wrap">
+        <div class="profile-photo">
+          <img
+            [src]="
+              details.profile_path
+                ? imageBase + '/w342' + details.profile_path
+                : 'assets/images/dummy-person.webp'
+            "
+            [alt]="details.name"
+          />
+          <!-- Popularity badge -->
+          <div class="popularity-badge">
+            <i class="pi pi-fire"></i>
+            {{ details.popularity | number: "1.0-0" }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero text -->
+      <div class="hero-text">
+        <div class="department-tag">{{ details.known_for_department }}</div>
+
+        <h1 class="person-name">{{ details.name }}</h1>
+
+        <div class="also-known" *ngIf="details.also_known_as?.length">
+          <span class="aka-label">Also known as</span>
+          <span class="aka-list">{{
+            details.also_known_as.slice(0, 3).join(" · ")
+          }}</span>
+        </div>
+
+        <!-- Quick stats row -->
+        <div class="quick-stats">
+          <div class="stat" *ngIf="details.birthday">
+            <i class="pi pi-calendar"></i>
+            <span>
+              {{ details.birthday | date: "dd MMM yyyy" }}
+              <ng-container *ngIf="age">
+                <span class="stat-sub" *ngIf="!details.deathday"
+                  >({{ age }} yrs)</span
+                >
+                <span class="stat-sub" *ngIf="details.deathday"
+                  >· Passed away at {{ age }}</span
+                >
+              </ng-container>
+            </span>
+          </div>
+
+          <div class="stat" *ngIf="details.deathday">
+            <i class="pi pi-heart-fill" style="color: #e53e3e"></i>
+            <span>{{ details.deathday | date: "dd MMM yyyy" }}</span>
+          </div>
+
+          <div class="stat" *ngIf="details.place_of_birth">
+            <i class="pi pi-map-marker"></i>
+            <span>{{ details.place_of_birth }}</span>
+          </div>
+
+          <div class="stat" *ngIf="genderLabel">
+            <i class="pi pi-user"></i>
+            <span>{{ genderLabel }}</span>
+          </div>
+        </div>
+
+        <!-- Social links -->
+        <div class="social-links" *ngIf="socialLinks.length">
+          <a
+            *ngFor="let link of socialLinks"
+            [href]="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-btn"
+            [title]="link.label"
+          >
+            <i [class]="getSocialIconClass(link.icon)"></i>
+            <span>{{ link.label }}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       BODY
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div class="person-body container">
+    <!-- ── Biography ──────────────────────────────────────────────────────── -->
+    <section
+      class="body-section bio-section"
+      #fadeItem
+      *ngIf="details.biography"
+    >
+      <h2 class="section-label">Biography</h2>
+      <div class="bio-text" [class.expanded]="bioExpanded">
+        {{ details.biography }}
+      </div>
+      <button
+        class="read-toggle"
+        *ngIf="details.biography.length > 400"
+        (click)="bioExpanded = !bioExpanded"
+      >
+        {{ bioExpanded ? "Read less" : "Read more" }}
+        <i
+          class="pi"
+          [ngClass]="bioExpanded ? 'pi-angle-up' : 'pi-angle-down'"
+        ></i>
+      </button>
+    </section>
+
+    <!-- ── Known For ──────────────────────────────────────────────────────── -->
+    <section class="body-section" #fadeItem *ngIf="knownFor.length">
+      <h2 class="section-label">Known For</h2>
+      <div class="known-for-grid">
+        <div
+          class="known-for-card"
+          *ngFor="let item of knownFor; trackBy: trackById"
+          (click)="navigateToMedia(item)"
+        >
+          <div class="kf-poster">
+            <img
+              [src]="
+                item.poster_path
+                  ? imageBase + '/w185' + item.poster_path
+                  : 'assets/images/dummy-poster.webp'
+              "
+              [alt]="getDisplayTitle(item)"
+              loading="lazy"
+            />
+            <div class="kf-media-badge">
+              {{ item.media_type === "movie" ? "Movie" : "TV" }}
+            </div>
+          </div>
+          <div class="kf-info">
+            <div class="kf-title">{{ getDisplayTitle(item) }}</div>
+            <div class="kf-year">{{ getYear(item) }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Filmography ────────────────────────────────────────────────────── -->
+    <section class="body-section filmography-section" #fadeItem>
+      <div class="section-title-row">
+        <h2 class="section-label">Filmography</h2>
+        <div class="filter-tabs">
+          <button
+            class="filter-tab"
+            [class.active]="filmographyFilter === 'all'"
+            (click)="setFilter('all')"
+          >
+            All ({{ sortedFilmography.length }})
+          </button>
+          <button
+            class="filter-tab"
+            [class.active]="filmographyFilter === 'movie'"
+            (click)="setFilter('movie')"
+          >
+            Movies ({{ movieCount }})
+          </button>
+          <button
+            class="filter-tab"
+            [class.active]="filmographyFilter === 'tv'"
+            (click)="setFilter('tv')"
+          >
+            TV ({{ tvCount }})
+          </button>
+        </div>
+      </div>
+
+      <div class="filmography-list">
+        <div
+          class="film-row"
+          *ngFor="let item of filteredFilmography; trackBy: trackById"
+          (click)="navigateToMedia(item)"
+        >
+          <div class="film-year">{{ getYear(item) }}</div>
+
+          <div class="film-poster">
+            <img
+              [src]="
+                item.poster_path
+                  ? imageBase + '/w92' + item.poster_path
+                  : 'assets/images/dummy-poster.webp'
+              "
+              [alt]="getDisplayTitle(item)"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="film-info">
+            <div class="film-title">{{ getDisplayTitle(item) }}</div>
+            <div class="film-role">{{ getRoleLabel(item) }}</div>
+            <div class="film-episode-count" *ngIf="item.episode_count">
+              {{ item.episode_count }} episodes
+            </div>
+          </div>
+
+          <div class="film-meta">
+            <span
+              class="media-pill"
+              [class.movie]="item.media_type === 'movie'"
+            >
+              {{ item.media_type === "movie" ? "Movie" : "TV" }}
+            </span>
+            <app-rating
+              *ngIf="item.vote_average > 0"
+              [rating]="item.vote_average"
+            ></app-rating>
+          </div>
+
+          <i class="pi pi-angle-right film-arrow"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Photo Gallery ──────────────────────────────────────────────────── -->
+    <section
+      class="body-section gallery-section"
+      #fadeItem
+      *ngIf="profileImages.length > 1"
+    >
+      <h2 class="section-label">Photos</h2>
+      <div class="gallery-grid">
+        <div
+          class="gallery-item"
+          *ngFor="let img of profileImages; let i = index; trackBy: trackById"
+          (click)="openImage(i)"
+        >
+          <img
+            [src]="imageBase + '/w185' + img.file_path"
+            [alt]="details.name + ' photo ' + (i + 1)"
+            loading="lazy"
+          />
+          <div class="gallery-overlay">
+            <i class="pi pi-search-plus"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- /person-body -->
+</div>
+<!-- /person-page -->
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     LIGHTBOX
+════════════════════════════════════════════════════════════════════════════ -->
+<div
+  class="lightbox"
+  *ngIf="selectedImageIndex !== null"
+  (click)="closeImage()"
+>
+  <button class="lb-close" (click)="closeImage()">
+    <i class="pi pi-times"></i>
+  </button>
+
+  <button
+    class="lb-nav lb-prev"
+    (click)="$event.stopPropagation(); prevImage()"
+  >
+    <i class="pi pi-angle-left"></i>
+  </button>
+
+  <div class="lb-image-wrap" (click)="$event.stopPropagation()">
+    <img
+      [src]="imageBase + '/w780' + profileImages[selectedImageIndex!].file_path"
+      [alt]="details.name"
+    />
+    <div class="lb-counter">
+      {{ selectedImageIndex! + 1 }} / {{ profileImages.length }}
+    </div>
+  </div>
+
+  <button
+    class="lb-nav lb-next"
+    (click)="$event.stopPropagation(); nextImage()"
+  >
+    <i class="pi pi-angle-right"></i>
+  </button>
+</div>

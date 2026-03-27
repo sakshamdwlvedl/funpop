@@ -14,10 +14,11 @@ import { HeroCarouselComponent } from '../../../shared/components/hero-carousel/
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card.component';
 import { DASHBOARD_CONFIG } from './dashboard.config';
 import { sortByPopularity } from '../../../core/utilities/common.util';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CommonService } from '../../../core/services/common.service';
+import { SECTION_TYPE_KEY_MAP } from '../explore/explore.config';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,6 +37,7 @@ gsap.registerPlugin(ScrollTrigger);
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   data: any = {};
+  activeFilter: 'movie' | 'tv' | null = null;
   sections = DASHBOARD_CONFIG.sections;
 
   DASHBOARD_CONFIG: typeof DASHBOARD_CONFIG = DASHBOARD_CONFIG;
@@ -46,10 +48,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private readonly apiService: ApiCallService,
     private readonly commonService: CommonService,
     private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
+    this.route.queryParamMap.subscribe((params) => {
+      const filter = params.get('filter') as 'movie' | 'tv' | null;
+      this.activeFilter = filter;
+    });
     this.getSectionsData();
+  }
+
+  seeMore(sectionKey: string): void {
+    const typeKey = SECTION_TYPE_KEY_MAP[sectionKey];
+    if (typeKey) {
+      this.router.navigate(['/explore'], { queryParams: { type: typeKey } });
+    }
+  }
+
+  isVisible(section: any): boolean {
+    if (!this.activeFilter) return true;
+    return section.mediaType === this.activeFilter;
   }
 
   ngAfterViewInit() {

@@ -1,14 +1,53 @@
-<div class="header">
-  <h1 class="heading text-nowrap mb-0">MOVIE BANK</h1>
-  <form [formGroup]="form" class="header-form">
-    <app-input
-      [form]="form"
-      controlName="search"
-      [config]="{
-        staticPlaceholder: 'Search for',
-        keywords: ['Movies', 'Series', 'Actors', 'Directors'],
-        icon: 'pi pi-search',
-      }"
-    ></app-input>
-  </form>
-</div>
+<!-- src/app/core/components/header/header.component.html -->
+
+<header class="header">
+  <!-- ── Logo ──────────────────────────────────────────────────────────────── -->
+  <a class="logo" (click)="navigateTo('/dashboard')">
+    <span class="logo-mark">▶</span>
+    <span class="logo-text">MOVIE<span class="logo-accent">BANK</span></span>
+  </a>
+
+  <!-- ── Search bar — grows to fill center ─────────────────────────────────── -->
+  <div class="search-wrap">
+    <form [formGroup]="form">
+      <app-input
+        [form]="form"
+        controlName="search"
+        [config]="{
+          staticPlaceholder: 'Search for',
+          keywords: ['Movies', 'Series', 'Actors', 'Directors'],
+          icon: 'pi pi-search',
+        }"
+      ></app-input>
+    </form>
+  </div>
+
+  <!-- ── Desktop nav — pinned right ────────────────────────────────────────── -->
+  <nav class="desktop-nav">
+    <button
+      *ngFor="let link of navLinks"
+      class="nav-btn"
+      [class.active]="activeFilter === link.filter"
+      (click)="navigateToDashboard(link.filter)"
+    >
+      <i [class]="link.icon"></i>
+      <span>{{ link.label }}</span>
+    </button>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     MOBILE BOTTOM TAB BAR
+     Shown only on mobile via CSS. Sits fixed at bottom of viewport.
+════════════════════════════════════════════════════════════════════════════ -->
+<nav class="bottom-bar">
+  <button
+    *ngFor="let link of allNavLinks"
+    class="tab-item"
+    [class.active]="isTabActive(link)"
+    (click)="onTabClick(link)"
+  >
+    <span class="tab-icon"><i [class]="link.icon"></i></span>
+    <span class="tab-label">{{ link.label }}</span>
+  </button>
+</nav>

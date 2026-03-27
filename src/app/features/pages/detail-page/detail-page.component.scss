@@ -8,6 +8,26 @@
   @include horizontal-scroll;
 }
 
+.see-more-cast-btn {
+  margin-top: 16px;
+  background: transparent;
+  border: 1px solid var(--gray-200);
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: black;
+    border-color: black;
+    color: white;
+  }
+}
+
 .common-container {
   background: linear-gradient(to top, #e6e6e6 0%, rgba(230, 230, 230, 0) 100%);
   padding: 16px;

@@ -6,16 +6,18 @@
       #heroRef
     ></app-hero-carousel>
 
-    <ng-container *ngFor="let section of sections; let i = index">
-      <div class="section" #sectionRef [class.first-section]="i === 0">
-        <app-carousel [title]="section.label">
+    <ng-container *ngFor="let section of sections">
+      <div #sectionRef class="section-wrapper" *ngIf="isVisible(section)">
+        <app-carousel
+          [title]="section.title"
+          [keyToEmit]="section.key"
+          (onSeeMore)="seeMore($event)"
+        >
           <app-movie-card
-            *ngFor="let item of data[section.key]; trackBy: trackById"
+            *ngFor="let item of data[section.key] ?? []; trackBy: trackById"
             [movie]="item"
-            [type]="item.media_type"
             (click)="navigateToDetailsPage(item)"
-          >
-          </app-movie-card>
+          ></app-movie-card>
         </app-carousel>
       </div>
     </ng-container>

@@ -5,7 +5,7 @@ import {
   ElementRef,
   OnDestroy,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieDetails } from '../../interfaces/movie-detail.interface';
 import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
@@ -52,6 +52,7 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
   constructor(
     private activateRoute: ActivatedRoute,
     public commonService: CommonService,
+    private readonly router: Router,
   ) {}
 
   ngOnInit() {
@@ -300,6 +301,20 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       },
       1.6,
     );
+  }
+
+  navigateToGenre(genreId: number): void {
+    this.router.navigate(['/explore'], { queryParams: { genre: genreId } });
+  }
+
+  navigateToKeyword(keywordId: number): void {
+    this.router.navigate(['/explore'], { queryParams: { keyword: keywordId } });
+  }
+
+  navigateToFullCast(): void {
+    // param format expected by PEOPLE strategy: "<mediaType>-<id>"
+    const param = `${this.mediaType}-${this.details.id}`;
+    this.router.navigate(['/explore'], { queryParams: { people: param } });
   }
 
   toggleAccordion(key: any) {

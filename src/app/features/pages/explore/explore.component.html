@@ -1,0 +1,70 @@
+<div class="explore-wrapper">
+  <div class="explore-header container">
+    <h2 class="explore-heading">{{ heading }}</h2>
+
+    <div class="tab-switcher" *ngIf="showTabs && tabs.length > 1">
+      <button
+        *ngFor="let tab of tabs"
+        class="tab-btn"
+        [class.active]="activeTab.key === tab.key"
+        (click)="switchTab(tab.key)"
+      >
+        {{ tab.label }}
+      </button>
+    </div>
+  </div>
+
+  <div class="explore-content container">
+    <!-- Initial skeleton -->
+    <ng-container *ngIf="initialLoad && loading">
+      <div class="results-grid">
+        <div
+          class="skeleton-card"
+          *ngFor="let n of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+        ></div>
+      </div>
+    </ng-container>
+
+    <!-- Movie / TV grid -->
+    <ng-container *ngIf="!initialLoad && isMovieOrTvTab()">
+      <div class="results-grid" *ngIf="results.length; else emptyState">
+        <app-movie-card
+          *ngFor="let item of results; trackBy: trackById"
+          [movie]="item"
+          (click)="navigateToDetails(item)"
+        ></app-movie-card>
+      </div>
+    </ng-container>
+
+    <!-- People grid -->
+    <ng-container *ngIf="!initialLoad && isPeopleTab()">
+      <div class="people-grid" *ngIf="results.length; else emptyState">
+        <app-profile-card
+          *ngFor="let person of results; trackBy: trackById"
+          [profile]="person"
+        ></app-profile-card>
+      </div>
+    </ng-container>
+
+    <!-- Empty state -->
+    <ng-template #emptyState>
+      <div class="empty-state" *ngIf="!loading">
+        <i class="pi pi-search" style="font-size: 2rem; opacity: 0.3"></i>
+        <p>No results found</p>
+      </div>
+    </ng-template>
+
+    <!-- ── Infinite scroll sentinel ─────────────────────────────────────── -->
+    <div #sentinel class="sentinel" *ngIf="hasMore()"></div>
+
+    <!-- Loading spinner (subsequent pages) -->
+    <div class="loading-spinner" *ngIf="loading && !initialLoad">
+      <i class="pi pi-spin pi-spinner"></i>
+    </div>
+
+    <!-- End of results -->
+    <div class="end-message" *ngIf="!hasMore() && !loading && results.length">
+      <span>You've reached the end</span>
+    </div>
+  </div>
+</div>

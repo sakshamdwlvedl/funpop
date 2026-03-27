@@ -83,6 +83,7 @@
                       <app-chip
                         *ngFor="let genre of details.genres"
                         [label]="genre.name"
+                        (click)="navigateToGenre(genre.id)"
                         [styles]="{
                           padding: '4px 10px',
                           borderColor: 'var(--gray-200)',
@@ -105,6 +106,7 @@
                             details.keywords.results
                         "
                         [label]="tag.name"
+                        (click)="navigateToKeyword(tag.id)"
                         [styles]="{
                           padding: '2px 8px',
                           borderColor: 'var(--gray-200)',
@@ -333,6 +335,14 @@
                   <app-profile-card [profile]="cast"></app-profile-card>
                 </ng-container>
               </div>
+
+              <button
+                class="see-more-cast-btn"
+                *ngIf="details.credits.cast.length > 10"
+                (click)="navigateToFullCast()"
+              >
+                See All Cast <i class="pi pi-arrow-right"></i>
+              </button>
             </div>
 
             <div

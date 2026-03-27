@@ -27,6 +27,53 @@ export const ENDPOINTS = {
     SEARCH: (mediaType: 'movie' | 'tv') => tmdb(`/search/${mediaType}`),
 
     VIDEOS: (type: 'movie' | 'tv', id: number) => tmdb(`/${type}/${id}/videos`),
+
+    MULTI_SEARCH: (query: string) => tmdb(`/search/multi?query=${query}`),
+
+    SEARCH_MOVIE: (query: string, page = 1) =>
+      tmdb(`/search/movie?query=${encodeURIComponent(query)}&page=${page}`),
+
+    SEARCH_TV: (query: string, page = 1) =>
+      tmdb(`/search/tv?query=${encodeURIComponent(query)}&page=${page}`),
+
+    SEARCH_PEOPLE: (query: string, page = 1) =>
+      tmdb(`/search/person?query=${encodeURIComponent(query)}&page=${page}`),
+
+    DISCOVER_BY_GENRE: (mediaType: 'movie' | 'tv', genreId: number, page = 1) =>
+      tmdb(`/discover/${mediaType}?with_genres=${genreId}&page=${page}`),
+
+    DISCOVER_BY_KEYWORD: (
+      mediaType: 'movie' | 'tv',
+      keywordId: number,
+      page = 1,
+    ) => tmdb(`/discover/${mediaType}?with_keywords=${keywordId}&page=${page}`),
+
+    CAST_BY_MEDIA: (mediaType: 'movie' | 'tv', id: string) =>
+      tmdb(`/${mediaType}/${id}/credits`),
+
+    SEARCH_PEOPLE_BY_KEYWORD: (keywordId: number, page = 1) =>
+      tmdb(`/discover/person?with_keywords=${keywordId}&page=${page}`),
+
+    POPULAR_PEOPLE: (page = 1) => tmdb(`/person/popular?page=${page}`),
+
+    TRENDING_PAGINATED: (mediaType: 'movie' | 'tv', page = 1) =>
+      tmdb(`/trending/${mediaType}/week?page=${page}`),
+
+    TOP_RATED_PAGINATED: (mediaType: 'movie' | 'tv', page = 1) =>
+      tmdb(`/${mediaType}/top_rated?page=${page}`),
+
+    POPULAR_PAGINATED: (mediaType: 'movie' | 'tv', page = 1) =>
+      tmdb(`/${mediaType}/popular?page=${page}`),
+
+    NOW_PLAYING_PAGINATED: (page = 1) =>
+      tmdb(`/movie/now_playing?page=${page}`),
+
+    ON_THE_AIR_PAGINATED: (page = 1) => tmdb(`/tv/on_the_air?page=${page}`),
+
+    PERSON_DETAILS: (id: string) =>
+      tmdb(
+        `/person/${id}?append_to_response=combined_credits,images,external_ids`,
+      ),
   },
 
   BACKEND: {

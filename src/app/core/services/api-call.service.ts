@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { ENDPOINTS } from '../api/endpoints';
-import { forkJoin, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { MovieDetails } from '../../features/interfaces/movie-detail.interface';
+import { PersonDetail } from '../../features/interfaces/person-detail.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -86,5 +87,156 @@ export class ApiCallService {
 
   getVideos(id: number, type: 'movie' | 'tv') {
     return this.http.get(ENDPOINTS.TMDB.VIDEOS(type, id));
+  }
+
+  searchAll(query: string) {
+    return this.http.get(ENDPOINTS.TMDB.MULTI_SEARCH(query)).pipe(
+      map((res: any) => ({
+        movies: res.results.filter((x: any) => x.media_type === 'movie'),
+
+        tv: res.results.filter((x: any) => x.media_type === 'tv'),
+
+        people: res.results.filter((x: any) => x.media_type === 'person'),
+      })),
+    );
+  }
+
+  getTrendingPaginated(mediaType: 'movie' | 'tv', page = 1) {
+    return this.http
+      .get(ENDPOINTS.TMDB.TRENDING_PAGINATED(mediaType, page))
+      .pipe(
+        map((res) => ({
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: mediaType,
+          })),
+        })),
+      );
+  }
+
+  getTopRatedPaginated(mediaType: 'movie' | 'tv', page = 1) {
+    return this.http
+      .get(ENDPOINTS.TMDB.TOP_RATED_PAGINATED(mediaType, page))
+      .pipe(
+        map((res) => ({
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: mediaType,
+          })),
+        })),
+      );
+  }
+
+  getPopularPaginated(mediaType: 'movie' | 'tv', page = 1) {
+    return this.http
+      .get(ENDPOINTS.TMDB.POPULAR_PAGINATED(mediaType, page))
+      .pipe(
+        map((res) => ({
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: mediaType,
+          })),
+        })),
+      );
+  }
+
+  getNowPlayingPaginated(page = 1) {
+    return this.http.get(ENDPOINTS.TMDB.NOW_PLAYING_PAGINATED(page)).pipe(
+      map((res) => ({
+        ...res,
+        results: res.results.map((item: any) => ({
+          ...item,
+          media_type: 'movie',
+        })),
+      })),
+    );
+  }
+
+  getOnTheAirPaginated(page = 1) {
+    return this.http.get(ENDPOINTS.TMDB.ON_THE_AIR_PAGINATED(page)).pipe(
+      map((res) => ({
+        ...res,
+        results: res.results.map((item: any) => ({
+          ...item,
+          media_type: 'tv',
+        })),
+      })),
+    );
+  }
+
+  discoverByGenre(mediaType: 'movie' | 'tv', genreId: number, page = 1) {
+    return this.http
+      .get(ENDPOINTS.TMDB.DISCOVER_BY_GENRE(mediaType, genreId, page))
+      .pipe(
+        map((res) => ({
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: mediaType,
+          })),
+        })),
+      );
+  }
+
+  discoverByKeyword(mediaType: 'movie' | 'tv', keywordId: number, page = 1) {
+    return this.http
+      .get(ENDPOINTS.TMDB.DISCOVER_BY_KEYWORD(mediaType, keywordId, page))
+      .pipe(
+        map((res) => ({
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: mediaType,
+          })),
+        })),
+      );
+  }
+
+  searchMovie(query: string, page = 1) {
+    return this.http.get(ENDPOINTS.TMDB.SEARCH_MOVIE(query, page)).pipe(
+      map((res) => ({
+        ...res,
+        results: res.results.map((item: any) => ({
+          ...item,
+          media_type: 'movie',
+        })),
+      })),
+    );
+  }
+
+  searchTV(query: string, page = 1) {
+    return this.http.get(ENDPOINTS.TMDB.SEARCH_TV(query, page)).pipe(
+      map((res) => ({
+        ...res,
+        results: res.results.map((item: any) => ({
+          ...item,
+          media_type: 'tv',
+        })),
+      })),
+    );
+  }
+
+  searchPeople(query: string, page = 1) {
+    return this.http.get(ENDPOINTS.TMDB.SEARCH_PEOPLE(query, page));
+  }
+
+  popularPeople(page = 1) {
+    return this.http.get(ENDPOINTS.TMDB.POPULAR_PEOPLE(page));
+  }
+
+  getPeopleByMedia(mediaType: 'movie' | 'tv', id: string) {
+    return this.http.get(ENDPOINTS.TMDB.CAST_BY_MEDIA(mediaType, id)).pipe(
+      map((res: any) => ({
+        results: [...(res?.cast ?? []), ...(res?.crew || [])],
+        total_pages: 1,
+      })),
+    );
+  }
+
+  getPersonDetails(id: string): Observable<PersonDetail> {
+    return this.http.get(ENDPOINTS.TMDB.PERSON_DETAILS(id));
   }
 }
