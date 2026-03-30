@@ -6,4 +6,13 @@
   <div class="router-outlet">
     <router-outlet></router-outlet>
   </div>
+
+  <button
+    *ngIf="showInstallButton"
+    id="pwa-install-btn"
+    class="pwa-install-btn"
+    (click)="installPwa()"
+  >
+    <i class="pi pi-download"></i> Install MovieBank
+  </button>
 </div>
