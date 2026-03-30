@@ -1,0 +1,111 @@
+{
+  "configVersion": 1,
+  "timestamp": 1774871254355,
+  "index": "/movie-bank/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/movie-bank/chunk-3K33QBLJ.js",
+        "/movie-bank/chunk-5W2V5DU3.js",
+        "/movie-bank/chunk-6WIXSAXI.js",
+        "/movie-bank/chunk-AIXV5ZKM.js",
+        "/movie-bank/chunk-IBEZ7PQ3.js",
+        "/movie-bank/chunk-K34AJPBZ.js",
+        "/movie-bank/chunk-OBVLAJY4.js",
+        "/movie-bank/chunk-PDE6UCX6.js",
+        "/movie-bank/chunk-SVZLKVGF.js",
+        "/movie-bank/chunk-TMGEZW2A.js",
+        "/movie-bank/chunk-TWWYPZCP.js",
+        "/movie-bank/chunk-UHBTGXD5.js",
+        "/movie-bank/chunk-WCWQA3FY.js",
+        "/movie-bank/favicon.ico",
+        "/movie-bank/index.html",
+        "/movie-bank/main-6ZJ7AMVF.js",
+        "/movie-bank/manifest.webmanifest",
+        "/movie-bank/polyfills-B6TNHZQ6.js",
+        "/movie-bank/styles-AZETQAQJ.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/movie-bank/assets/images/dummy-person.webp",
+        "/movie-bank/assets/images/movie-bank-logo.png",
+        "/movie-bank/assets/images/movie-bank.png",
+        "/movie-bank/icons/icon-152x152.png",
+        "/movie-bank/icons/icon-192x192.png",
+        "/movie-bank/icons/icon-384x384.png",
+        "/movie-bank/icons/icon-512x512.png",
+        "/movie-bank/media/primeicons-4GST5W3O.woff2",
+        "/movie-bank/media/primeicons-DHQU4SEP.svg",
+        "/movie-bank/media/primeicons-GEFHGEHP.ttf",
+        "/movie-bank/media/primeicons-P53SE5CV.woff"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/movie-bank/assets/images/dummy-person.webp": "c04e8d736f382e581d8b2c44d7d193d0662eff37",
+    "/movie-bank/assets/images/movie-bank-logo.png": "108a6e0cf234743c20c8b81dd8f4134540e8a1ca",
+    "/movie-bank/assets/images/movie-bank.png": "907b1a653146161a055b2a83e746eb0a6f32da69",
+    "/movie-bank/chunk-3K33QBLJ.js": "ca8e7f0c7525d08e58004ae029424d39c0ba945d",
+    "/movie-bank/chunk-5W2V5DU3.js": "5f19a982be909049b126625b74d92ce1b7c3de0b",
+    "/movie-bank/chunk-6WIXSAXI.js": "31b9806c993320ba884d2093369cabb92c358eb3",
+    "/movie-bank/chunk-AIXV5ZKM.js": "e59d377f913f32eb0ba089ab38366e859bcb9537",
+    "/movie-bank/chunk-IBEZ7PQ3.js": "121513148d6198bbcf8ac1d51412f8334b9cf2bd",
+    "/movie-bank/chunk-K34AJPBZ.js": "5bd58caabb67e46b1d7538af3c514cc73988bfba",
+    "/movie-bank/chunk-OBVLAJY4.js": "a1a9779f79245fa596636575e11800f6db523f11",
+    "/movie-bank/chunk-PDE6UCX6.js": "47d8809fd935b8fa33afa83ad1644cf69e2be78c",
+    "/movie-bank/chunk-SVZLKVGF.js": "29333ab39b4c1be7f9915d38db37b36e07d05b0c",
+    "/movie-bank/chunk-TMGEZW2A.js": "ef0cdce192c650ff3089c88e504f306f5de98013",
+    "/movie-bank/chunk-TWWYPZCP.js": "3628ef15cbb5c5c9397a8fd7a3162e93f3a6ddc3",
+    "/movie-bank/chunk-UHBTGXD5.js": "640e0352bc060c886d98dc07054f10bafa5dd21b",
+    "/movie-bank/chunk-WCWQA3FY.js": "2920da09cbaed10fe1d89393f15c1b7719579937",
+    "/movie-bank/favicon.ico": "108a6e0cf234743c20c8b81dd8f4134540e8a1ca",
+    "/movie-bank/icons/icon-152x152.png": "ea24d3e44e1b82ec68b7f88949487b902ca86ebf",
+    "/movie-bank/icons/icon-192x192.png": "dae829e5075425432d05f597c5c817a69aa604da",
+    "/movie-bank/icons/icon-384x384.png": "7a92381c134d09adcd3eb353c01dc4732ca163cb",
+    "/movie-bank/icons/icon-512x512.png": "06f7405ea4c45a652a29e3f6b09f27fddb125fa8",
+    "/movie-bank/index.html": "dbc835c79858ec4cc3a4025c2f67596ce964ae5c",
+    "/movie-bank/main-6ZJ7AMVF.js": "689024a3b4f4b799d7e9f28df98a6a6df0608c81",
+    "/movie-bank/manifest.webmanifest": "63a6d479b05384d912fe5aa0d0e7256cf401b91b",
+    "/movie-bank/media/primeicons-4GST5W3O.woff2": "837c1279b6af9d297f34fdb43e6fcc9206a79f32",
+    "/movie-bank/media/primeicons-DHQU4SEP.svg": "a07ae39027c1a780b42fd82fad7575c2924d9d28",
+    "/movie-bank/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
+    "/movie-bank/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158",
+    "/movie-bank/polyfills-B6TNHZQ6.js": "bf76ac291d7f51c1139b7edcf86b359a30c08c64",
+    "/movie-bank/styles-AZETQAQJ.css": "40bbf87a1a0ade0fcb2e78ac0506da8575dc5a24"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
