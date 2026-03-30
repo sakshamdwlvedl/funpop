@@ -13,11 +13,13 @@
       [src]="imageBase + '/w1920' + details.backdrop_path"
       loading="lazy"
       *ngIf="!commonService.isMobile"
+      [alt]="(details.title || details.name) + ' Backdrop'"
     />
     <img
       [src]="imageBase + '/w1280' + details.poster_path"
       loading="lazy"
       *ngIf="commonService.isMobile"
+      [alt]="(details.title || details.name) + ' Poster'"
     />
 
     <h1
@@ -153,7 +155,7 @@
                           ? imageBase + '/w92' + director?.[0]?.profile_path
                           : 'assets/images/dummy-person.webp'
                       "
-                      alt="director"
+                      [alt]="director?.[0]?.name || 'Director'"
                     />
                   </div>
 
@@ -311,6 +313,7 @@
                   class="see-more-cast-btn text-nowrap"
                   *ngIf="details.credits.cast.length > 10"
                   (click)="navigateToFullCast()"
+                  aria-label="See all cast members"
                 >
                   See All Cast <i class="pi pi-arrow-right"></i>
                 </button>
@@ -338,6 +341,7 @@
                     <img
                       [src]="imageBase + '/w92' + house.logo_path"
                       loading="lazy"
+                      [alt]="house.name + ' logo'"
                     />
                     <div class="name text-nowrap">
                       {{ house.name }}

@@ -21,6 +21,7 @@ import {
   CreditItem,
   PersonDetail,
 } from '../../interfaces/person-detail.interface';
+import { SeoService } from '../../../core/services/seo.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,6 +60,7 @@ export class PersonDetailPageComponent
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private seo: SeoService,
   ) {}
 
   // ── Lifecycle ──────────────────────────────────────────────────────────────
@@ -66,6 +68,12 @@ export class PersonDetailPageComponent
   ngOnInit(): void {
     this.details = this.route.snapshot.data['details'];
     this.computeDerived();
+
+    this.seo.updateMeta(
+      this.details.name,
+      this.details.biography?.substring(0, 160) ||
+        `Learn more about ${this.details.name}.`,
+    );
   }
 
   ngAfterViewInit(): void {

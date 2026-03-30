@@ -49,6 +49,7 @@
       [disabled]="config.disabled || false"
       [attr.maxlength]="config.maxLength"
       [attr.minlength]="config.minLength"
+      [attr.aria-label]="config.label || config.placeholder || config.staticPlaceholder || 'Search'"
       class="w-full"
       (keydown)="blockInvalidNumberKeys($event)"
       (input)="onInput($event)"

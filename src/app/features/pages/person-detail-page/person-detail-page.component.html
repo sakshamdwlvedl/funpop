@@ -117,6 +117,8 @@
         class="read-toggle"
         *ngIf="details.biography.length > 400"
         (click)="bioExpanded = !bioExpanded"
+        [attr.aria-label]="bioExpanded ? 'Read less biography' : 'Read more biography'"
+        [attr.aria-expanded]="bioExpanded"
       >
         {{ bioExpanded ? "Read less" : "Read more" }}
         <i
@@ -269,13 +271,14 @@
   *ngIf="selectedImageIndex !== null"
   (click)="closeImage()"
 >
-  <button class="lb-close" (click)="closeImage()">
+  <button class="lb-close" (click)="closeImage()" aria-label="Close Lightbox">
     <i class="pi pi-times"></i>
   </button>
 
   <button
     class="lb-nav lb-prev"
     (click)="$event.stopPropagation(); prevImage()"
+    aria-label="Previous Image"
   >
     <i class="pi pi-angle-left"></i>
   </button>
@@ -293,6 +296,7 @@
   <button
     class="lb-nav lb-next"
     (click)="$event.stopPropagation(); nextImage()"
+    aria-label="Next Image"
   >
     <i class="pi pi-angle-right"></i>
   </button>

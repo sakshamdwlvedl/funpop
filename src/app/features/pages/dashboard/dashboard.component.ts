@@ -19,6 +19,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CommonService } from '../../../core/services/common.service';
 import { SECTION_TYPE_KEY_MAP } from '../explore/explore.config';
+import { SeoService } from '../../../core/services/seo.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,9 +50,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private readonly commonService: CommonService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
+    private readonly seo: SeoService,
   ) {}
 
   ngOnInit() {
+    this.seo.resetMeta();
     this.route.queryParamMap.subscribe((params) => {
       const filter = params.get('filter') as 'movie' | 'tv' | null;
       this.activeFilter = filter;

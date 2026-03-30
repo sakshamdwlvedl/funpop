@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { DetailPageComponent } from './features/pages/detail-page/detail-page.component';
 import { movieResolver } from './features/resolvers/movie-details.resolver';
 import { personDetailResolver } from './features/resolvers/person-details.resolver';
 
@@ -23,7 +22,10 @@ export const routes: Routes = [
   },
   {
     path: 'details/:type/:id',
-    component: DetailPageComponent,
+    loadComponent: () =>
+      import('./features/pages/detail-page/detail-page.component').then(
+        (m) => m.DetailPageComponent,
+      ),
     resolve: {
       details: movieResolver,
     },

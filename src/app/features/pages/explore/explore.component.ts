@@ -21,6 +21,7 @@ import {
   ExploreTab,
   TabConfig,
 } from '../explore/explore.config';
+import { SeoService } from '../../../core/services/seo.service';
 
 @Component({
   selector: 'app-explore',
@@ -58,6 +59,7 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private api: ApiCallService,
     private ngZone: NgZone,
+    private seo: SeoService,
   ) {}
 
   ngOnInit(): void {
@@ -82,6 +84,11 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
         // For `type` strategy, derive tab from the param suffix (movie/tv)
         const defaultTab = this.pickDefaultTab(strategyKey, param);
         this.switchTab(defaultTab, false);
+
+        this.seo.updateMeta(
+          this.heading,
+          `Explore ${this.heading} on MovieBank. Find the best movies, TV shows, and celebrities.`,
+        );
       });
   }
 

@@ -1,8 +1,13 @@
 <div
+  #chipRef
   class="chip"
   [ngStyle]="styling"
   (mouseenter)="onEnter()"
   (mouseleave)="onLeave()"
+  role="button"
+  tabindex="0"
+  (keydown.enter)="chipRef.click()"
+  (keydown.space)="chipRef.click(); $event.preventDefault()"
 >
   {{ label }}
 </div>

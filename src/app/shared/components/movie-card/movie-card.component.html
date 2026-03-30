@@ -1,9 +1,9 @@
 <div class="card">
   <img
-    [src]="imageBase + movie.poster_path"
-    width="180"
-    height="270"
-    loading="lazy"
+    [ngSrc]="movie.poster_path"
+    [alt]="movie.title || movie.name || 'Movie Poster'"
+    [width]="commonService.isMobile ? 110 : 180"
+    [height]="commonService.isMobile ? 165 : 270"
   />
 
   <div class="title">

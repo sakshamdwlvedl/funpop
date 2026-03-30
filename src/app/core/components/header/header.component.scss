@@ -1,6 +1,7 @@
 // src/app/core/components/header/header.component.scss
 
 @use "mixins" as *;
+@use "variables" as *;
 
 // ── Deep overrides ────────────────────────────────────────────────────────────
 ::ng-deep {
@@ -179,11 +180,11 @@
     align-items: center;
     justify-content: center;
     gap: 3px;
-    padding: 10px 4px 8px;
+    padding: 8px 4px;
     border: none;
     background: transparent;
     cursor: pointer;
-    color: #aaa;
+    color: $gray-600;
     transition: color 0.18s ease;
     -webkit-tap-highlight-color: transparent;
 

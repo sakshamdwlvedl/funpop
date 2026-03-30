@@ -7,7 +7,7 @@
           : 'assets/images/dummy-person.webp'
       "
       loading="lazy"
-      alt="profile"
+      [alt]="profile.name || 'Profile Picture'"
       (click)="navigateToPerson()"
     />
   </div>

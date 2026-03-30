@@ -10,25 +10,13 @@
       >
         <img
           *ngIf="hoveredId !== item.id"
-          fetchpriority="high"
-          [src]="imageBase + '/w1280' + item.backdrop_path"
-          [attr.srcset]="
-            imageBase +
-            '/w780' +
-            item.backdrop_path +
-            ' 780w, ' +
-            imageBase +
-            '/w1280' +
-            item.backdrop_path +
-            ' 1280w, ' +
-            imageBase +
-            '/w1920' +
-            item.backdrop_path +
-            ' 1920w'
-          "
+          [priority]="i === 0"
+          [ngSrc]="item.backdrop_path"
+          ngSrcset="780w, 1280w, 1920w"
           sizes="(max-width: 768px) 100vw, 60vw"
           width="1280"
           height="720"
+          [alt]="item.title || item.name || 'Hero Backdrop'"
         />
         <iframe
           *ngIf="hoveredId === item.id && trailers[item.id]"
@@ -52,10 +40,10 @@
       </div>
     </div>
 
-    <button class="nav left" (click)="prev()">
+    <button class="nav left" (click)="prev()" aria-label="Previous Slide">
       <i class="pi pi-angle-left"></i>
     </button>
-    <button class="nav right" (click)="next()">
+    <button class="nav right" (click)="next()" aria-label="Next Slide">
       <i class="pi pi-angle-right"></i>
     </button>
   </div>
@@ -65,6 +53,9 @@
       *ngFor="let item of items; let i = index"
       [class.active]="i === currentIndex"
       (click)="setSlide(i)"
+      role="button"
+      [attr.aria-label]="'Go to slide ' + (i + 1)"
+      [attr.aria-current]="i === currentIndex"
     ></span>
   </div>
 </div>

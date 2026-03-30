@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ApiCallService } from '../../../core/services/api-call.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../../environments/environment';
@@ -9,7 +9,7 @@ import { CommonService } from '../../../core/services/common.service';
 @Component({
   selector: 'app-hero-carousel',
   standalone: true,
-  imports: [CommonModule, SkeletonLoaderComponent],
+  imports: [CommonModule, SkeletonLoaderComponent, NgOptimizedImage],
   templateUrl: './hero-carousel.component.html',
   styleUrls: ['./hero-carousel.component.scss'],
 })

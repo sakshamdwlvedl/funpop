@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieDetails } from '../../interfaces/movie-detail.interface';
 import { environment } from '../../../../environments/environment';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { CommonService } from '../../../core/services/common.service';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -17,6 +17,7 @@ import { RatingComponent } from '../../../shared/components/rating/rating.compon
 import { ScrollIndicatorComponent } from '../../../shared/components/scroll-indicator/scroll-indicator.component';
 import { ProfileCardComponent } from '../../../shared/components/profile-card/profile-card.component';
 import { ChipComponent } from '../../../shared/components/chip/chip.component';
+import { SeoService } from '../../../core/services/seo.service';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -53,6 +54,7 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     public commonService: CommonService,
     private readonly router: Router,
+    private seo: SeoService,
   ) {}
 
   ngOnInit() {
@@ -78,6 +80,11 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
     );
 
     this.getDirector();
+
+    this.seo.updateMeta(
+      this.details.title || this.details.name,
+      this.details.overview.substring(0, 160),
+    );
   }
 
   getDirector() {

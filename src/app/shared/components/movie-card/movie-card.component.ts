@@ -1,10 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { environment } from '../../../../environments/environment';
+import { CommonService } from '../../../core/services/common.service';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [CommonModule],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss',
 })
@@ -15,7 +16,5 @@ export class MovieCardComponent {
   hoveredId: number | null = null;
   trailers: { [key: number]: string } = {};
 
-  imageBase = environment.TMDB_IMG_BASE + '/w342';
-
-  constructor() {}
+  constructor(public commonService: CommonService) {}
 }
