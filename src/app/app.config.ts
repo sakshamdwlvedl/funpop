@@ -7,9 +7,14 @@ import {
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { tmdbInterceptor } from './core/interceptors/tmdb.interceptor';
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideZoneChangeDetection,
+  isDevMode,
+} from '@angular/core';
 import { IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { environment } from '../environments/environment';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -42,5 +47,9 @@ export const appConfig: ApplicationConfig = {
         return `${environment.TMDB_IMG_BASE}/${tmdbWidth}${config.src}`;
       },
     },
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerImmediately',
+    }),
   ],
 };

@@ -8,6 +8,7 @@
     "deploy": "ng deploy --base-href=/movie-bank/",
     "check-ip": "hostname -I",
     "dev-server": "ng serve --host 0.0.0.0 --port 4200",
+    "prod-server": "http://localhost:3000",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -20,6 +21,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@angular/service-worker": "^19.2.0",
     "bootstrap": "^5.3.8",
     "gsap": "^3.14.2",
     "primeicons": "^7.0.0",
