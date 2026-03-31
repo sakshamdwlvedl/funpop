@@ -1,0 +1,65 @@
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #ffe5e8 25%,
+    #ff4d5a 65%,
+    #d90429 100%
+  );
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 99999;
+  overflow: hidden;
+  padding: 0 40px;
+}
+
+/* wrapper */
+.logo-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* logo */
+.logo-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* shine */
+.shine-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 65%
+  );
+
+  transform: translateX(-120%);
+  opacity: 0;
+
+  mix-blend-mode: screen;
+
+  pointer-events: none;
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { fromEvent, map, startWith } from 'rxjs';
+import { debounceTime, fromEvent, map, startWith } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +11,7 @@ export class CommonService {
   constructor() {
     fromEvent(window, 'resize')
       .pipe(
+        debounceTime(150),
         map(() => window.innerWidth),
         startWith(window.innerWidth),
       )
@@ -18,6 +19,19 @@ export class CommonService {
         this.isMobile = width < 576;
         this.isTablet = width >= 576 && width < 1024;
       });
+  }
+
+  isAndroidOrIOS(): boolean {
+    const ua = navigator.userAgent || navigator.vendor || (window as any).opera;
+    return /android|iphone|ipad|ipod/i.test(ua);
+  }
+
+  isPwa(): boolean {
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as any).standalone ||
+      document.referrer.includes('android-app://');
+    return this.isAndroidOrIOS() && isStandalone;
   }
 
   set isMobile(val: boolean) {

@@ -13,7 +13,7 @@ export class SeoService {
    * @param description New page description
    */
   updateMeta(title: string, description: string = '') {
-    const fullTitle = `${title} | MovieBank`;
+    const fullTitle = `${title} | FunPop`;
     this.title.setTitle(fullTitle);
 
     this.meta.updateTag({ name: 'description', content: description });
@@ -27,11 +27,11 @@ export class SeoService {
    * Resets meta tags to default values.
    */
   resetMeta() {
-    this.title.setTitle('MovieBank - Explore Movies, Series and Celebrities');
+    this.title.setTitle('FunPop - Explore Movies, Series and Celebrities');
     this.meta.updateTag({
       name: 'description',
       content:
-        'MovieBank is your ultimate destination to explore the latest movies, trending TV series, and your favorite celebrities.',
+        'FunPop is your ultimate destination to explore the latest movies, trending TV series, and your favorite celebrities.',
     });
   }
 }

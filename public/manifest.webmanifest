@@ -1,8 +1,8 @@
 {
-  "name": "MovieBank - Explore Movies, Series and Celebrities",
-  "short_name": "MovieBank",
-  "theme_color": "#121212",
-  "background_color": "#121212",
+  "name": "FunPop - Explore Movies, Series and Celebrities",
+  "short_name": "FunPop",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

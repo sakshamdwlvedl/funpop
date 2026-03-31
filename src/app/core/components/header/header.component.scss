@@ -42,7 +42,7 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   cursor: pointer;
   text-decoration: none;
   flex-shrink: 0;
@@ -50,10 +50,10 @@
 }
 
 .logo-mark {
-  margin-bottom: 2px;
-  font-size: 14px;
-  color: #111;
-  opacity: 0.7;
+  img {
+    height: 30px;
+    margin-bottom: 3px;
+  }
 }
 
 .logo-text {
@@ -231,6 +231,14 @@
 }
 
 @include breakpoint(sm) {
+  .logo {
+    gap: 2px;
+    .logo-mark {
+      img {
+        height: 25px;
+      }
+    }
+  }
   .header {
     padding: 8px 12px;
   }
