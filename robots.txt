@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://sakshamdwlvedl.github.io/movie-bank/sitemap.xml
+Sitemap: https://sakshamdwlvedl.github.io/fun-pop/sitemap.xml

@@ -1,7 +1,7 @@
 {
   "configVersion": 1,
-  "timestamp": 1774872155910,
-  "index": "/movie-bank/index.html",
+  "timestamp": 1774947326691,
+  "index": "/fun-pop/index.html",
   "assetGroups": [
     {
       "name": "app",
@@ -21,34 +21,40 @@
         "ignoreVary": true
       },
       "urls": [
-        "/movie-bank/assets/images/dummy-person.webp",
-        "/movie-bank/assets/images/movie-bank-logo.png",
-        "/movie-bank/assets/images/movie-bank.png",
-        "/movie-bank/icons/icon-152x152.png",
-        "/movie-bank/icons/icon-192x192.png",
-        "/movie-bank/icons/icon-384x384.png",
-        "/movie-bank/icons/icon-512x512.png",
-        "/movie-bank/media/primeicons-4GST5W3O.woff2",
-        "/movie-bank/media/primeicons-DHQU4SEP.svg",
-        "/movie-bank/media/primeicons-GEFHGEHP.ttf",
-        "/movie-bank/media/primeicons-P53SE5CV.woff"
+        "/fun-pop/assets/images/dummy-person.webp",
+        "/fun-pop/assets/images/funpop-logo.png",
+        "/fun-pop/icons/icon-128x128.png",
+        "/fun-pop/icons/icon-144x144.png",
+        "/fun-pop/icons/icon-152x152.png",
+        "/fun-pop/icons/icon-192x192.png",
+        "/fun-pop/icons/icon-384x384.png",
+        "/fun-pop/icons/icon-512x512.png",
+        "/fun-pop/icons/icon-72x72.png",
+        "/fun-pop/icons/icon-96x96.png",
+        "/fun-pop/media/primeicons-4GST5W3O.woff2",
+        "/fun-pop/media/primeicons-DHQU4SEP.svg",
+        "/fun-pop/media/primeicons-GEFHGEHP.ttf",
+        "/fun-pop/media/primeicons-P53SE5CV.woff"
       ],
       "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
-    "/movie-bank/assets/images/dummy-person.webp": "c04e8d736f382e581d8b2c44d7d193d0662eff37",
-    "/movie-bank/assets/images/movie-bank-logo.png": "108a6e0cf234743c20c8b81dd8f4134540e8a1ca",
-    "/movie-bank/assets/images/movie-bank.png": "907b1a653146161a055b2a83e746eb0a6f32da69",
-    "/movie-bank/icons/icon-152x152.png": "ea24d3e44e1b82ec68b7f88949487b902ca86ebf",
-    "/movie-bank/icons/icon-192x192.png": "dae829e5075425432d05f597c5c817a69aa604da",
-    "/movie-bank/icons/icon-384x384.png": "7a92381c134d09adcd3eb353c01dc4732ca163cb",
-    "/movie-bank/icons/icon-512x512.png": "06f7405ea4c45a652a29e3f6b09f27fddb125fa8",
-    "/movie-bank/media/primeicons-4GST5W3O.woff2": "837c1279b6af9d297f34fdb43e6fcc9206a79f32",
-    "/movie-bank/media/primeicons-DHQU4SEP.svg": "a07ae39027c1a780b42fd82fad7575c2924d9d28",
-    "/movie-bank/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
-    "/movie-bank/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158"
+    "/fun-pop/assets/images/dummy-person.webp": "c04e8d736f382e581d8b2c44d7d193d0662eff37",
+    "/fun-pop/assets/images/funpop-logo.png": "81cc8182729a71313187cacfbe85ca7ea0847e0d",
+    "/fun-pop/icons/icon-128x128.png": "195211989bfdad11dd3639031f50b7ffea317c3f",
+    "/fun-pop/icons/icon-144x144.png": "df72aedeedc08064c76c29f29d1ad063a0ab7b5d",
+    "/fun-pop/icons/icon-152x152.png": "cb4ca12c68544fc02399fa2e7707c1be4406bf11",
+    "/fun-pop/icons/icon-192x192.png": "689905a3add55ec5ad28f997a3e22505bcddc403",
+    "/fun-pop/icons/icon-384x384.png": "dad992702e750956a586518a0da446f058fee87c",
+    "/fun-pop/icons/icon-512x512.png": "c617994d567d19443af96fb7130195dc93d4f9ea",
+    "/fun-pop/icons/icon-72x72.png": "58eb3ae21550c1181e08a72d9847f868c1fc9a87",
+    "/fun-pop/icons/icon-96x96.png": "2b186eb1c27649287cff5bd645a9914cec10674d",
+    "/fun-pop/media/primeicons-4GST5W3O.woff2": "837c1279b6af9d297f34fdb43e6fcc9206a79f32",
+    "/fun-pop/media/primeicons-DHQU4SEP.svg": "a07ae39027c1a780b42fd82fad7575c2924d9d28",
+    "/fun-pop/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
+    "/fun-pop/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158"
   },
   "navigationUrls": [
     {
