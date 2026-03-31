@@ -1,15 +1,15 @@
 {
-  "name": "fun-pop",
+  "name": "funpop",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
     "build": "ng build",
-    "deploy": "ng deploy --base-href=/fun-pop/",
+    "deploy": "ng deploy --base-href=/funpop/",
     "check-ip": "hostname -I",
     "build-prod": "ng build --configuration production",
     "dev-server": "ng serve --host 0.0.0.0 --port 4200",
-    "prod-server": "ng build --configuration production && npx serve dist/fun-pop/browser --listen 3000",
+    "prod-server": "ng build --configuration production && npx serve dist/funpop/browser --listen 3000",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

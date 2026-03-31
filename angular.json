@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fun-pop": {
+    "funpop": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/fun-pop",
+            "outputPath": "dist/funpop",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -89,10 +89,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "fun-pop:build:production"
+              "buildTarget": "funpop:build:production"
             },
             "development": {
-              "buildTarget": "fun-pop:build:development"
+              "buildTarget": "funpop:build:development"
             }
           },
           "defaultConfiguration": "development"
