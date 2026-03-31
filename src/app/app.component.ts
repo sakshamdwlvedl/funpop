@@ -30,7 +30,6 @@ export class AppComponent {
     e.preventDefault();
     // Stash the event so it can be triggered later.
     this.deferredPrompt = e;
-    // Show the install button
     this.showInstallButton = true;
   }
 

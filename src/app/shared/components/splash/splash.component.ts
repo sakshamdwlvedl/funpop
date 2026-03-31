@@ -18,7 +18,6 @@ import { gsap } from 'gsap';
 })
 export class SplashComponent implements AfterViewInit {
   @ViewChild('logoImg') logoImg!: ElementRef<HTMLImageElement>;
-  @ViewChild('shineOverlay') shineOverlay!: ElementRef<HTMLDivElement>;
   @ViewChild('splashContainer') splashContainer!: ElementRef<HTMLDivElement>;
 
   @Output() finished = new EventEmitter<void>();
@@ -29,32 +28,11 @@ export class SplashComponent implements AfterViewInit {
 
   playIntroAnimation() {
     const logo = this.logoImg.nativeElement;
-    const shine = this.shineOverlay.nativeElement;
     const container = this.splashContainer.nativeElement;
 
     const tl = gsap.timeline({
       onComplete: () => this.finished.emit(),
     });
-
-    /* logo pop */
-    tl.to(logo, {
-      scale: 1,
-      opacity: 1,
-      duration: 0.9,
-      ease: 'back.out(1.8)',
-    });
-
-    /* shine sweep */
-    tl.to(
-      shine,
-      {
-        x: '120%',
-        opacity: 1,
-        duration: 0.9,
-        ease: 'power2.inOut',
-      },
-      '-=0.3',
-    );
 
     /* slight hold */
     tl.to({}, { duration: 0.3 });
