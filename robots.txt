@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://sakshamdwlvedl.github.io/fun-pop/sitemap.xml
+Sitemap: https://sakshamdwlvedl.github.io/funpop/sitemap.xml
