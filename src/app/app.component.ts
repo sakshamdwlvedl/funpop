@@ -4,11 +4,18 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './core/components/header/header.component';
 import { SplashComponent } from './shared/components/splash/splash.component';
 import { CommonService } from './core/services/common.service';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, CommonModule, SplashComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    CommonModule,
+    SplashComponent,
+    LoaderComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

@@ -7,6 +7,7 @@ import { debounceTime, fromEvent, map, startWith } from 'rxjs';
 export class CommonService {
   private _isMobile = window.innerWidth < 576;
   private _isTablet = window.innerWidth >= 576 && window.innerWidth < 1024;
+  private _showLoader: boolean = false;
 
   constructor() {
     fromEvent(window, 'resize')
@@ -48,5 +49,17 @@ export class CommonService {
 
   get isTablet(): boolean {
     return this._isTablet;
+  }
+
+  showLoader() {
+    this._showLoader = true;
+  }
+
+  hideLoader() {
+    this._showLoader = false;
+  }
+
+  get isLoading(): boolean {
+    return this._showLoader;
   }
 }

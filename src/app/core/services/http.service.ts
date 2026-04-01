@@ -1,12 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, finalize, throwError } from 'rxjs';
+import { CommonService } from './common.service';
+
+interface HttpOptions {
+  showLoader?: boolean;
+  params?: any;
+  headers?: any;
+  body?: any;
+  url: string;
+  isFormData?: boolean;
+  isBlobResponse?: boolean;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private readonly commonService: CommonService,
+  ) {}
 
   private createHeaders(headers?: any): HttpHeaders {
     let httpHeaders = new HttpHeaders();
@@ -34,38 +48,74 @@ export class HttpService {
     return httpParams;
   }
 
-  get(url: string, params?: any, headers?: any): Observable<any> {
+  get(options: HttpOptions): Observable<any> {
+    if (options.showLoader !== false) {
+      this.commonService.showLoader();
+    }
+
     return this.http
-      .get(url, {
-        headers: this.createHeaders(headers),
-        params: this.createParams(params),
+      .get(options.url, {
+        headers: this.createHeaders(options?.headers),
+        params: this.createParams(options?.params),
       })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        finalize(() => {
+          this.commonService.hideLoader();
+        }),
+      );
   }
 
-  post(url: string, body: any, headers?: any): Observable<any> {
+  post(options: HttpOptions): Observable<any> {
+    if (options.showLoader !== false) {
+      this.commonService.showLoader();
+    }
+
     return this.http
-      .post(url, body, {
-        headers: this.createHeaders(headers),
+      .post(options.url, options?.body, {
+        headers: this.createHeaders(options?.headers),
       })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        finalize(() => {
+          this.commonService.hideLoader();
+        }),
+      );
   }
 
-  put(url: string, body: any, headers?: any): Observable<any> {
+  put(options: HttpOptions): Observable<any> {
+    if (options.showLoader !== false) {
+      this.commonService.showLoader();
+    }
+
     return this.http
-      .put(url, body, {
-        headers: this.createHeaders(headers),
+      .put(options.url, options?.body, {
+        headers: this.createHeaders(options?.headers),
       })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        finalize(() => {
+          this.commonService.hideLoader();
+        }),
+      );
   }
 
-  delete(url: string, params?: any, headers?: any): Observable<any> {
+  delete(options: HttpOptions): Observable<any> {
+    if (options.showLoader !== false) {
+      this.commonService.showLoader();
+    }
+
     return this.http
-      .delete(url, {
-        headers: this.createHeaders(headers),
-        params: this.createParams(params),
+      .delete(options.url, {
+        headers: this.createHeaders(options?.headers),
+        params: this.createParams(options?.params),
       })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError(this.handleError),
+        finalize(() => {
+          this.commonService.hideLoader();
+        }),
+      );
   }
 
   private handleError(error: any) {
