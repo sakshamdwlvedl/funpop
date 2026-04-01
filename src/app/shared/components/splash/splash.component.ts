@@ -34,21 +34,22 @@ export class SplashComponent implements AfterViewInit {
       onComplete: () => this.finished.emit(),
     });
 
-    /* slight hold */
-    tl.to({}, { duration: 0.3 });
-
     /* logo exit */
-    tl.to(logo, {
-      scale: 0,
-      opacity: 0,
-      duration: 0.45,
-      ease: 'power3.in',
-    });
+    tl.to(
+      logo,
+      {
+        scale: 5,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power3.in',
+      },
+      1,
+    );
 
     /* screen fade */
     tl.to(container, {
       opacity: 0,
-      duration: 0.5,
+      duration: 0.6,
       ease: 'power1.out',
     });
   }
