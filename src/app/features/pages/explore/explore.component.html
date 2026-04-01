@@ -59,7 +59,10 @@
     <!-- ── Infinite scroll sentinel ─────────────────────────────────────── -->
     <div #sentinel class="sentinel" *ngIf="hasMore()"></div>
 
-    <app-loader [showOnFullScreen]="false" *ngIf="page !== 1"></app-loader>
+    <app-loader
+      *ngIf="page !== 1 && page < totalPages"
+      [showOnFullScreen]="false"
+    ></app-loader>
 
     <!-- End of results -->
     <div class="end-message" *ngIf="!hasMore() && !loading && results.length">

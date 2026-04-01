@@ -9,9 +9,9 @@ import {
   ViewChild,
   NgZone,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Subject, takeUntil } from 'rxjs';
+import { filter, Subject, takeUntil } from 'rxjs';
 import { ApiCallService } from '../../../core/services/api-call.service';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card.component';
 import { ProfileCardComponent } from '../../../shared/components/profile-card/profile-card.component';
@@ -24,6 +24,7 @@ import {
 import { SeoService } from '../../../core/services/seo.service';
 import { COMMON } from '../../../core/constants/common.constant';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { CommonService } from '../../../core/services/common.service';
 
 @Component({
   selector: 'app-explore',
@@ -64,9 +65,12 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
     private api: ApiCallService,
     private ngZone: NgZone,
     private seo: SeoService,
+    private readonly commonService: CommonService,
   ) {}
 
   ngOnInit(): void {
+    this.subscribeToBackNavigation();
+
     this.route.queryParamMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
@@ -100,10 +104,18 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
     this.setupIntersectionObserver();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.observer?.disconnect();
+  subscribeToBackNavigation() {
+    this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationStart => event instanceof NavigationStart,
+        ),
+      )
+      .subscribe((event) => {
+        if (event.navigationTrigger === 'popstate') {
+          this.commonService.clearSearchFilter();
+        }
+      });
   }
 
   // ── Strategy resolution ────────────────────────────────────────────────────
@@ -220,5 +232,11 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
 
   trackById(_: number, item: any): any {
     return item.id;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.observer?.disconnect();
   }
 }

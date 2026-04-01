@@ -19,7 +19,9 @@
           staticPlaceholder: 'Search for',
           keywords: ['Movies', 'Series', 'Actors', 'Directors'],
           icon: 'pi pi-search',
+          showCrossIcon: true,
         }"
+        (onClear)="onSearchClear()"
       ></app-input>
     </form>
   </div>

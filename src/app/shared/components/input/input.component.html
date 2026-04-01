@@ -49,7 +49,12 @@
       [disabled]="config.disabled || false"
       [attr.maxlength]="config.maxLength"
       [attr.minlength]="config.minLength"
-      [attr.aria-label]="config.label || config.placeholder || config.staticPlaceholder || 'Search'"
+      [attr.aria-label]="
+        config.label ||
+        config.placeholder ||
+        config.staticPlaceholder ||
+        'Search'
+      "
       class="w-full"
       (keydown)="blockInvalidNumberKeys($event)"
       (input)="onInput($event)"
@@ -61,6 +66,12 @@
       class="password-toggle pi"
       [ngClass]="isPasswordVisible ? 'pi-eye' : 'pi-eye-slash'"
       (click)="togglePasswordVisibility()"
+    ></i>
+
+    <i
+      *ngIf="(config.showCrossIcon ?? false) && control.value"
+      class="cross-icon pi pi-times-circle"
+      (click)="clearInput()"
     ></i>
   </div>
 </div>

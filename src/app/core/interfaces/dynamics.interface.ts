@@ -9,6 +9,7 @@ export interface InputConfig extends ControlsCommonConfig {
   keywords?: string[];
   type?: 'text' | 'number' | 'email' | 'password';
   icon?: string;
+  showCrossIcon?: boolean;
   readonly?: boolean;
   label?: string;
   disabled?: boolean;

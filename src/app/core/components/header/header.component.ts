@@ -17,6 +17,7 @@ import {
 } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../../shared/components/input/input.component';
+import { CommonService } from '../../services/common.service';
 
 interface NavLink {
   label: string;
@@ -62,9 +63,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
+    private readonly commonService: CommonService,
   ) {}
 
   ngOnInit(): void {
+    this.subscribeToSearchFilterClear();
+
     this.form = this.fb.group({ search: [''] });
 
     // Track active route for bottom bar highlight
@@ -93,9 +97,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (trimmed) {
           this.router.navigate(['/explore'], {
             queryParams: { query: trimmed },
+            replaceUrl: this.router.url.startsWith('/explore'),
           });
         }
       });
+  }
+
+  subscribeToSearchFilterClear() {
+    this.commonService.onSearchFilterClear$.subscribe(() => {
+      this.form.get('search')?.reset();
+    });
   }
 
   navigateToDashboard(filter: any): void {
@@ -109,8 +120,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
+  navigateTo(route: string, replaceUrl: boolean = false): void {
+    this.router.navigate([route], { replaceUrl });
   }
 
   onTabClick(link: NavLink): void {
@@ -136,6 +147,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       return this.currentRoute.startsWith(link.route);
     }
     return false;
+  }
+
+  onSearchClear() {
+    this.commonService.navigateBack();
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,6 @@
+import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { debounceTime, fromEvent, map, startWith } from 'rxjs';
+import { debounceTime, fromEvent, map, startWith, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,10 @@ export class CommonService {
   private _isTablet = window.innerWidth >= 576 && window.innerWidth < 1024;
   private _showLoader: boolean = false;
 
-  constructor() {
+  private onSearchFilterClear = new Subject<void>();
+  onSearchFilterClear$ = this.onSearchFilterClear.asObservable();
+
+  constructor(private readonly location: Location) {
     fromEvent(window, 'resize')
       .pipe(
         debounceTime(150),
@@ -61,5 +65,13 @@ export class CommonService {
 
   get isLoading(): boolean {
     return this._showLoader;
+  }
+
+  navigateBack() {
+    this.location.back();
+  }
+
+  clearSearchFilter() {
+    this.onSearchFilterClear.next();
   }
 }

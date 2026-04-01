@@ -31,12 +31,21 @@
   padding-right: 32px;
 }
 
-.password-toggle {
+.password-toggle,
+.cross-icon {
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cross-icon {
+  &:hover {
+    scale: 1.1;
+    top: 53%;
+  }
 }
 
 .has-icon input {

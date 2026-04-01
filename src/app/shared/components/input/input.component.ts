@@ -36,6 +36,7 @@ export class InputComponent implements OnInit, OnDestroy {
 
   @Output() onchange = new EventEmitter<any>();
   @Output() onblur = new EventEmitter<any>();
+  @Output() onClear = new EventEmitter<any>();
 
   ngOnInit(): void {
     this.control = this.form.get(this.controlName) as AbstractControl;
@@ -82,5 +83,10 @@ export class InputComponent implements OnInit, OnDestroy {
 
   onBlur(event: Event) {
     this.onblur.emit(event);
+  }
+
+  clearInput() {
+    this.control.reset();
+    this.onClear.emit();
   }
 }
