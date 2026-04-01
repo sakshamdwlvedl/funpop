@@ -6,13 +6,14 @@
   <div class="router-outlet">
     <router-outlet></router-outlet>
   </div>
-  <app-splash *ngIf="showSplash" (finished)="onSplashFinished()"></app-splash>
+  <!-- *ngIf="showSplash"  -->
+  <app-splash (finished)="onSplashFinished()"></app-splash>
   <app-loader *ngIf="commonService.isLoading"></app-loader>
   <button
     *ngIf="showInstallButton && !showSplash && commonService.isAndroidOrIOS()"
     class="pwa-install-btn"
     (click)="installPwa()"
   >
-    <i class="pi pi-download"></i> Install FunPop
+    <i class="pi pi-download"></i> Install {{ COMMON.APP_NAME }}
   </button>
 </div>

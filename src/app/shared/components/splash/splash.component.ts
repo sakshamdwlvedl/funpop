@@ -8,6 +8,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { gsap } from 'gsap';
+import { COMMON } from '../../../core/constants/common.constant';
 
 @Component({
   selector: 'app-splash',
@@ -21,6 +22,8 @@ export class SplashComponent implements AfterViewInit {
   @ViewChild('splashContainer') splashContainer!: ElementRef<HTMLDivElement>;
 
   @Output() finished = new EventEmitter<void>();
+
+  COMMON: typeof COMMON = COMMON;
 
   ngAfterViewInit() {
     this.playIntroAnimation();

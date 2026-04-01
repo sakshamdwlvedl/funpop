@@ -1,8 +1,11 @@
 <div class="splash-screen" #splashContainer>
+  <p class="bg-text">{{ COMMON.APP_NAME }}</p>
+  <p class="app-name">#{{ COMMON.APP_NAME }}</p>
+
   <div class="logo-wrapper">
     <img
       src="assets/images/funpop-logo.png"
-      alt="FunPop"
+      [alt]="COMMON.APP_NAME"
       class="logo-img"
       #logoImg
     />

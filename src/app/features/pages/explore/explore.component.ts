@@ -22,6 +22,7 @@ import {
   TabConfig,
 } from '../explore/explore.config';
 import { SeoService } from '../../../core/services/seo.service';
+import { COMMON } from '../../../core/constants/common.constant';
 
 @Component({
   selector: 'app-explore',
@@ -87,7 +88,7 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.seo.updateMeta(
           this.heading,
-          `Explore ${this.heading} on FunPop. Find the best movies, TV shows, and celebrities.`,
+          `Explore ${this.heading} on ${COMMON.APP_NAME}. Find the best movies, TV shows, and celebrities.`,
         );
       });
   }

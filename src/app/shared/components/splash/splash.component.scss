@@ -3,13 +3,7 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-    135deg,
-    #ffffff 0%,
-    #ffe5e8 25%,
-    #ff4d5a 65%,
-    #d90429 100%
-  );
+  background: linear-gradient(135deg, #ffffff, #bba86e);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,18 +11,40 @@
   overflow: hidden;
   padding: 0 40px;
 
+  .bg-text {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    font-size: 200px;
+    font-weight: 600;
+    color: white;
+    opacity: 0.4;
+  }
+
+  .app-name {
+    position: absolute;
+    color: #00000080;
+    font-size: 14px;
+    bottom: 20px;
+    z-index: 10;
+  }
+
   .logo-wrapper {
     position: relative;
     width: 100%;
     max-width: 200px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 
     .logo-img {
       width: 100%;
       height: auto;
       object-fit: contain;
+      z-index: 10;
     }
   }
 }

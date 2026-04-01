@@ -5,6 +5,7 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { SplashComponent } from './shared/components/splash/splash.component';
 import { CommonService } from './core/services/common.service';
 import { LoaderComponent } from './shared/components/loader/loader.component';
+import { COMMON } from './core/constants/common.constant';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,8 @@ export class AppComponent {
   deferredPrompt: any;
   showInstallButton = false;
   showSplash = true;
+
+  COMMON: typeof COMMON = COMMON;
 
   constructor(public commonService: CommonService) {
     const splashPlayed = sessionStorage.getItem('splashPlayed');
