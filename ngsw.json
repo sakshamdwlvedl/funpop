@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1774949681089,
+  "timestamp": 1775023127631,
   "index": "/funpop/index.html",
   "assetGroups": [
     {
@@ -23,14 +23,8 @@
       "urls": [
         "/funpop/assets/images/dummy-person.webp",
         "/funpop/assets/images/funpop-logo.png",
-        "/funpop/icons/icon-128x128.png",
-        "/funpop/icons/icon-144x144.png",
-        "/funpop/icons/icon-152x152.png",
         "/funpop/icons/icon-192x192.png",
-        "/funpop/icons/icon-384x384.png",
         "/funpop/icons/icon-512x512.png",
-        "/funpop/icons/icon-72x72.png",
-        "/funpop/icons/icon-96x96.png",
         "/funpop/media/primeicons-4GST5W3O.woff2",
         "/funpop/media/primeicons-DHQU4SEP.svg",
         "/funpop/media/primeicons-GEFHGEHP.ttf",
@@ -43,14 +37,8 @@
   "hashTable": {
     "/funpop/assets/images/dummy-person.webp": "c04e8d736f382e581d8b2c44d7d193d0662eff37",
     "/funpop/assets/images/funpop-logo.png": "81cc8182729a71313187cacfbe85ca7ea0847e0d",
-    "/funpop/icons/icon-128x128.png": "195211989bfdad11dd3639031f50b7ffea317c3f",
-    "/funpop/icons/icon-144x144.png": "df72aedeedc08064c76c29f29d1ad063a0ab7b5d",
-    "/funpop/icons/icon-152x152.png": "cb4ca12c68544fc02399fa2e7707c1be4406bf11",
-    "/funpop/icons/icon-192x192.png": "689905a3add55ec5ad28f997a3e22505bcddc403",
-    "/funpop/icons/icon-384x384.png": "dad992702e750956a586518a0da446f058fee87c",
-    "/funpop/icons/icon-512x512.png": "c617994d567d19443af96fb7130195dc93d4f9ea",
-    "/funpop/icons/icon-72x72.png": "58eb3ae21550c1181e08a72d9847f868c1fc9a87",
-    "/funpop/icons/icon-96x96.png": "2b186eb1c27649287cff5bd645a9914cec10674d",
+    "/funpop/icons/icon-192x192.png": "00a486f798f7b7d1a3c9a50d70258c0bced31f8c",
+    "/funpop/icons/icon-512x512.png": "7f3093c6d9e47c3307d766b26ef84550b29029df",
     "/funpop/media/primeicons-4GST5W3O.woff2": "837c1279b6af9d297f34fdb43e6fcc9206a79f32",
     "/funpop/media/primeicons-DHQU4SEP.svg": "a07ae39027c1a780b42fd82fad7575c2924d9d28",
     "/funpop/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
