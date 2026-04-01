@@ -23,8 +23,6 @@ import {
 } from '../../interfaces/person-detail.interface';
 import { SeoService } from '../../../core/services/seo.service';
 
-gsap.registerPlugin(ScrollTrigger);
-
 type FilmographyFilter = 'all' | 'movie' | 'tv';
 
 @Component({

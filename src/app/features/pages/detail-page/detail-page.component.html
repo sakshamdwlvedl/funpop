@@ -32,7 +32,10 @@
   </div>
 
   <div class="content">
-    <div class="movie-details container">
+    <div
+      class="movie-details container"
+      [class.mobile]="commonService.isMobile"
+    >
       <div class="row flex-column sections">
         <!-- main top section -->
         <div class="col-12 main-section">

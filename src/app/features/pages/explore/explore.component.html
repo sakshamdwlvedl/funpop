@@ -1,6 +1,6 @@
 <div class="explore-wrapper">
   <div class="explore-header container">
-    <h2 class="explore-heading">{{ heading }}</h2>
+    <h2 class="m-0 default-heading-font-size">{{ heading }}</h2>
 
     <div class="tab-switcher" *ngIf="showTabs && tabs.length > 1">
       <button
@@ -28,11 +28,13 @@
     <!-- Movie / TV grid -->
     <ng-container *ngIf="!initialLoad && isMovieOrTvTab()">
       <div class="results-grid" *ngIf="results.length; else emptyState">
-        <app-movie-card
-          *ngFor="let item of results; trackBy: trackById"
-          [movie]="item"
-          (click)="navigateToDetails(item)"
-        ></app-movie-card>
+        <ng-container *ngFor="let item of results; trackBy: trackById">
+          <app-movie-card
+            *ngIf="item?.poster_path"
+            [movie]="item"
+            (click)="navigateToDetails(item)"
+          ></app-movie-card>
+        </ng-container>
       </div>
     </ng-container>
 
@@ -57,10 +59,7 @@
     <!-- ── Infinite scroll sentinel ─────────────────────────────────────── -->
     <div #sentinel class="sentinel" *ngIf="hasMore()"></div>
 
-    <!-- Loading spinner (subsequent pages) -->
-    <div class="loading-spinner" *ngIf="loading && !initialLoad">
-      <i class="pi pi-spin pi-spinner"></i>
-    </div>
+    <app-loader [showOnFullScreen]="false" *ngIf="page !== 1"></app-loader>
 
     <!-- End of results -->
     <div class="end-message" *ngIf="!hasMore() && !loading && results.length">

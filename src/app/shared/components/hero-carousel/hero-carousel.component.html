@@ -11,7 +11,7 @@
         <img
           *ngIf="hoveredId !== item.id"
           [priority]="i === 0"
-          [ngSrc]="item.backdrop_path"
+          [ngSrc]="item.backdrop_path ?? ''"
           ngSrcset="780w, 1280w, 1920w"
           sizes="(max-width: 768px) 100vw, 60vw"
           width="1280"

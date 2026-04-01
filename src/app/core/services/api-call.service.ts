@@ -106,7 +106,10 @@ export class ApiCallService {
 
   getTrendingPaginated(mediaType: 'movie' | 'tv', page = 1) {
     return this.http
-      .get({ url: ENDPOINTS.TMDB.TRENDING_PAGINATED(mediaType, page) })
+      .get({
+        url: ENDPOINTS.TMDB.TRENDING_PAGINATED(mediaType, page),
+        showLoader: page === 1,
+      })
       .pipe(
         map((res) => ({
           ...res,
@@ -120,7 +123,10 @@ export class ApiCallService {
 
   getTopRatedPaginated(mediaType: 'movie' | 'tv', page = 1) {
     return this.http
-      .get({ url: ENDPOINTS.TMDB.TOP_RATED_PAGINATED(mediaType, page) })
+      .get({
+        url: ENDPOINTS.TMDB.TOP_RATED_PAGINATED(mediaType, page),
+        showLoader: page === 1,
+      })
       .pipe(
         map((res) => ({
           ...res,
@@ -134,7 +140,10 @@ export class ApiCallService {
 
   getPopularPaginated(mediaType: 'movie' | 'tv', page = 1) {
     return this.http
-      .get({ url: ENDPOINTS.TMDB.POPULAR_PAGINATED(mediaType, page) })
+      .get({
+        url: ENDPOINTS.TMDB.POPULAR_PAGINATED(mediaType, page),
+        showLoader: page === 1,
+      })
       .pipe(
         map((res) => ({
           ...res,
@@ -148,7 +157,10 @@ export class ApiCallService {
 
   getNowPlayingPaginated(page = 1) {
     return this.http
-      .get({ url: ENDPOINTS.TMDB.NOW_PLAYING_PAGINATED(page) })
+      .get({
+        url: ENDPOINTS.TMDB.NOW_PLAYING_PAGINATED(page),
+        showLoader: page === 1,
+      })
       .pipe(
         map((res) => ({
           ...res,
@@ -162,7 +174,10 @@ export class ApiCallService {
 
   getOnTheAirPaginated(page = 1) {
     return this.http
-      .get({ url: ENDPOINTS.TMDB.ON_THE_AIR_PAGINATED(page) })
+      .get({
+        url: ENDPOINTS.TMDB.ON_THE_AIR_PAGINATED(page),
+        showLoader: page === 1,
+      })
       .pipe(
         map((res) => ({
           ...res,
@@ -176,7 +191,10 @@ export class ApiCallService {
 
   discoverByGenre(mediaType: 'movie' | 'tv', genreId: number, page = 1) {
     return this.http
-      .get({ url: ENDPOINTS.TMDB.DISCOVER_BY_GENRE(mediaType, genreId, page) })
+      .get({
+        url: ENDPOINTS.TMDB.DISCOVER_BY_GENRE(mediaType, genreId, page),
+        showLoader: page === 1,
+      })
       .pipe(
         map((res) => ({
           ...res,
@@ -192,6 +210,7 @@ export class ApiCallService {
     return this.http
       .get({
         url: ENDPOINTS.TMDB.DISCOVER_BY_KEYWORD(mediaType, keywordId, page),
+        showLoader: page === 1,
       })
       .pipe(
         map((res) => ({
@@ -206,7 +225,10 @@ export class ApiCallService {
 
   searchMovie(query: string, page = 1) {
     return this.http
-      .get({ url: ENDPOINTS.TMDB.SEARCH_MOVIE(query, page) })
+      .get({
+        url: ENDPOINTS.TMDB.SEARCH_MOVIE(query, page),
+        showLoader: page === 1,
+      })
       .pipe(
         map((res) => ({
           ...res,
@@ -219,23 +241,34 @@ export class ApiCallService {
   }
 
   searchTV(query: string, page = 1) {
-    return this.http.get({ url: ENDPOINTS.TMDB.SEARCH_TV(query, page) }).pipe(
-      map((res) => ({
-        ...res,
-        results: res.results.map((item: any) => ({
-          ...item,
-          media_type: 'tv',
+    return this.http
+      .get({
+        url: ENDPOINTS.TMDB.SEARCH_TV(query, page),
+        showLoader: page === 1,
+      })
+      .pipe(
+        map((res) => ({
+          ...res,
+          results: res.results.map((item: any) => ({
+            ...item,
+            media_type: 'tv',
+          })),
         })),
-      })),
-    );
+      );
   }
 
   searchPeople(query: string, page = 1) {
-    return this.http.get({ url: ENDPOINTS.TMDB.SEARCH_PEOPLE(query, page) });
+    return this.http.get({
+      url: ENDPOINTS.TMDB.SEARCH_PEOPLE(query, page),
+      showLoader: page === 1,
+    });
   }
 
   popularPeople(page = 1) {
-    return this.http.get({ url: ENDPOINTS.TMDB.POPULAR_PEOPLE(page) });
+    return this.http.get({
+      url: ENDPOINTS.TMDB.POPULAR_PEOPLE(page),
+      showLoader: page === 1,
+    });
   }
 
   getPeopleByMedia(mediaType: 'movie' | 'tv', id: string) {

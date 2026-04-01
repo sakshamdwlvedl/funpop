@@ -1,3 +1,4 @@
+@use "mixins" as *;
 @use "variables" as *;
 
 :root {
@@ -36,8 +37,8 @@
 }
 
 ::selection {
-  background: #000;
-  color: #fff;
+  background: $accent;
+  color: $white;
 }
 
 html {
@@ -48,4 +49,12 @@ html {
 
 p {
   margin-bottom: 0;
+}
+
+.default-heading-font-size {
+  font-size: 20px;
+  font-weight: 600;
+  @include breakpoint(sm) {
+    font-size: 16px;
+  }
 }

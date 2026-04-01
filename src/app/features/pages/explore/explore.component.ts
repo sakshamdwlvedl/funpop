@@ -23,17 +23,21 @@ import {
 } from '../explore/explore.config';
 import { SeoService } from '../../../core/services/seo.service';
 import { COMMON } from '../../../core/constants/common.constant';
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [CommonModule, MovieCardComponent, ProfileCardComponent],
+  imports: [
+    CommonModule,
+    MovieCardComponent,
+    ProfileCardComponent,
+    LoaderComponent,
+  ],
   templateUrl: './explore.component.html',
   styleUrls: ['./explore.component.scss'],
 })
 export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
-  // ── State ──────────────────────────────────────────────────────────────────
-
   heading = '';
   showTabs = false;
   tabs: TabConfig[] = [];
@@ -45,7 +49,6 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = false;
   initialLoad = true;
 
-  // Raw params
   private strategyKey = '';
   private param = '';
 

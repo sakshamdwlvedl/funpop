@@ -1,11 +1,12 @@
 @use "mixins" as *;
+@use "variables" as *;
 
 .rating {
   padding: 4px 10px;
   border-radius: 999px;
   font-weight: 700;
   font-size: 12px;
-  color: white;
+  color: $white;
   width: fit-content;
 
   &.good {

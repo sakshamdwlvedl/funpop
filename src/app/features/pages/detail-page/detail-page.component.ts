@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieDetails } from '../../interfaces/movie-detail.interface';
 import { environment } from '../../../../environments/environment';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { CommonService } from '../../../core/services/common.service';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -18,8 +18,6 @@ import { ScrollIndicatorComponent } from '../../../shared/components/scroll-indi
 import { ProfileCardComponent } from '../../../shared/components/profile-card/profile-card.component';
 import { ChipComponent } from '../../../shared/components/chip/chip.component';
 import { SeoService } from '../../../core/services/seo.service';
-
-gsap.registerPlugin(ScrollTrigger, SplitText);
 
 @Component({
   selector: 'app-detail-page',
@@ -178,14 +176,19 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
           stagger: 0.02,
         },
       );
+    } else {
+      gsap.to('.movie-details', {
+        opacity: 1,
+        duration: 2,
+      });
     }
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.hero-spacer',
         start: 'top top',
-        end: '160% top',
-        scrub: 2,
+        end: this.commonService.isMobile ? '20% top' : '160% top',
+        scrub: this.commonService.isMobile ? true : 2,
       },
     });
 
@@ -243,9 +246,9 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
         start: 'top 10%',
         end:
           this.commonService.isMobile || this.commonService.isTablet
-            ? '+=150%'
+            ? '+=30%'
             : '+=500%',
-        scrub: 2,
+        scrub: this.commonService.isMobile ? 1.5 : 2,
         pin: true,
       },
     });
@@ -303,7 +306,7 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       {
         y: 40,
         opacity: 0,
-        stagger: 0.08,
+        stagger: 0.5,
         duration: 0.8,
       },
       1.6,

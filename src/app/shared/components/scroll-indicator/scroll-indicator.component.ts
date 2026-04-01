@@ -3,8 +3,6 @@ import { AfterViewInit, Component, Input } from '@angular/core';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
-
 @Component({
   selector: 'app-scroll-indicator',
   standalone: true,

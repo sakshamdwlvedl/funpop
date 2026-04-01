@@ -7,7 +7,7 @@
     <router-outlet></router-outlet>
   </div>
   <app-splash *ngIf="showSplash" (finished)="onSplashFinished()"></app-splash>
-  <app-loader *ngIf="commonService.isLoading"></app-loader>
+  <app-loader *ngIf="commonService.isLoading && !showSplash"></app-loader>
   <button
     *ngIf="showInstallButton && !showSplash && commonService.isAndroidOrIOS()"
     class="pwa-install-btn"

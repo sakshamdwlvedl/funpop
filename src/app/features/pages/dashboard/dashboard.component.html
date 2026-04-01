@@ -13,11 +13,15 @@
           [keyToEmit]="section.key"
           (onSeeMore)="seeMore($event)"
         >
-          <app-movie-card
+          <ng-container
             *ngFor="let item of data[section.key] ?? []; trackBy: trackById"
-            [movie]="item"
-            (click)="navigateToDetailsPage(item)"
-          ></app-movie-card>
+          >
+            <app-movie-card
+              *ngIf="item?.poster_path"
+              [movie]="item"
+              (click)="navigateToDetailsPage(item)"
+            ></app-movie-card>
+          </ng-container>
         </app-carousel>
       </div>
     </ng-container>

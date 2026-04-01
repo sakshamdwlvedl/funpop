@@ -24,9 +24,9 @@
       transition: all 0.1s ease;
 
       &:hover {
-        background-color: black;
-        color: white;
-        border-color: black;
+        background-color: $black;
+        color: $white;
+        border-color: $black;
       }
 
       i {

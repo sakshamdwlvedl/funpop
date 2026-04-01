@@ -21,8 +21,6 @@ import { CommonService } from '../../../core/services/common.service';
 import { SECTION_TYPE_KEY_MAP } from '../explore/explore.config';
 import { SeoService } from '../../../core/services/seo.service';
 
-gsap.registerPlugin(ScrollTrigger);
-
 @Component({
   selector: 'app-dashboard',
   standalone: true,
