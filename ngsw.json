@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1775023301108,
+  "timestamp": 1775024668806,
   "index": "/funpop/index.html",
   "assetGroups": [
     {
@@ -38,7 +38,7 @@
     "/funpop/assets/images/dummy-person.webp": "c04e8d736f382e581d8b2c44d7d193d0662eff37",
     "/funpop/assets/images/funpop-logo.png": "81cc8182729a71313187cacfbe85ca7ea0847e0d",
     "/funpop/icons/icon-192x192.png": "00a486f798f7b7d1a3c9a50d70258c0bced31f8c",
-    "/funpop/icons/icon-512x512.png": "7f3093c6d9e47c3307d766b26ef84550b29029df",
+    "/funpop/icons/icon-512x512.png": "cc606a89d6f1ddf21dd1687d2349b9b005a3cfab",
     "/funpop/media/primeicons-4GST5W3O.woff2": "837c1279b6af9d297f34fdb43e6fcc9206a79f32",
     "/funpop/media/primeicons-DHQU4SEP.svg": "a07ae39027c1a780b42fd82fad7575c2924d9d28",
     "/funpop/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
