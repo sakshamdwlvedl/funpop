@@ -6,7 +6,7 @@
   <div class="router-outlet">
     <router-outlet></router-outlet>
   </div>
-  <!-- *ngIf="showSplash"  -->
+  <!-- *ngIf="showSplash" -->
   <app-splash (finished)="onSplashFinished()"></app-splash>
   <app-loader *ngIf="commonService.isLoading"></app-loader>
   <button

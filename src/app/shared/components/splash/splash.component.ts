@@ -23,6 +23,8 @@ export class SplashComponent implements AfterViewInit {
 
   @Output() finished = new EventEmitter<void>();
 
+  appNameLetters = COMMON.APP_NAME.split('');
+
   COMMON: typeof COMMON = COMMON;
 
   ngAfterViewInit() {
@@ -37,7 +39,18 @@ export class SplashComponent implements AfterViewInit {
       onComplete: () => this.finished.emit(),
     });
 
-    /* logo exit */
+    tl.from(
+      '.bg-text .letter',
+      {
+        y: 80,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+        stagger: 0.13,
+      },
+      0.5,
+    );
+
     tl.to(
       logo,
       {
@@ -46,10 +59,9 @@ export class SplashComponent implements AfterViewInit {
         duration: 0.5,
         ease: 'power3.in',
       },
-      1,
+      1.5,
     );
 
-    /* screen fade */
     tl.to(container, {
       opacity: 0,
       duration: 0.6,
