@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  HostListener,
+} from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ApiCallService } from '../../../core/services/api-call.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -104,5 +110,33 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.interval);
+  }
+
+  // --- Touch Swipe Support ---
+  private touchStartX = 0;
+  private touchEndX = 0;
+
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  @HostListener('touchend', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
+  private handleSwipe() {
+    const swipeThreshold = 50; // minimum distance for a swipe
+    const deltaX = this.touchEndX - this.touchStartX;
+
+    if (Math.abs(deltaX) > swipeThreshold) {
+      if (deltaX > 0) {
+        this.prev();
+      } else {
+        this.next();
+      }
+    }
   }
 }

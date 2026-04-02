@@ -31,6 +31,16 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'details/:type/:id/media-gallery',
+    loadComponent: () =>
+      import('./features/pages/media-gallery/media-gallery.component').then(
+        (m) => m.MediaGalleryComponent,
+      ),
+    resolve: {
+      details: movieResolver,
+    },
+  },
+  {
     path: 'explore',
     loadComponent: () =>
       import('./features/pages/explore/explore.component').then(

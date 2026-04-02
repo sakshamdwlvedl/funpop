@@ -1,0 +1,12 @@
+<p-button
+  #btnRef
+  [label]="label"
+  [icon]="styles.icon"
+  [loading]="loading"
+  [disabled]="disabled"
+  [ngStyle]="styling"
+  (mouseenter)="onEnter()"
+  (mouseleave)="onLeave()"
+  styleClass="dynamic-btn"
+  (onClick)="onBtnClick()"
+></p-button>

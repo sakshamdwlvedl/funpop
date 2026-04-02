@@ -1,14 +1,14 @@
 <div class="carousel">
-  <div class="header">
+  <div class="header" *ngIf="showTitle">
     <h2>{{ title }}</h2>
-    <button class="see-more-btn" (click)="emitKey()">
+    <button class="see-more-btn" (click)="emitKey()" *ngIf="showSeeMore">
       See More <i class="pi pi-arrow-right"></i>
     </button>
   </div>
 
   <div class="carousel-wrapper" *ngIf="hasContent; else skeletonLoader">
-    <div class="fade left" [class.active]="showLeftFade"></div>
-    <div class="fade right" [class.active]="showRightFade"></div>
+    <div class="fade left" [class.active]="showLeftFade" [ngClass]="fadeColor"></div>
+    <div class="fade right" [class.active]="showRightFade" [ngClass]="fadeColor"></div>
 
     <div class="carousel-container" #scrollContainer (scroll)="onScroll()">
       <ng-content></ng-content>

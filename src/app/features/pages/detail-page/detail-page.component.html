@@ -78,6 +78,34 @@
                       <div class="value">
                         {{ languageNames }}
                       </div>
+
+                      <span
+                        class="dot"
+                        *ngIf="details.videos.results.length > 0"
+                        >•</span
+                      >
+
+                      <app-button
+                        *ngIf="details.videos.results.length > 0"
+                        label="Watch Trailer"
+                        class="watch-trailer-custom-style"
+                        [styles]="{
+                          padding: '4px 10px',
+                          borderRadius: '20px',
+                          bgColor: '#888888',
+                          textColor: 'white',
+                          fontSize: '12px',
+                          icon: 'pi pi-play',
+                          hover: {
+                            bgColor: 'darkblue',
+                            textColor: 'white',
+                          },
+                          breakSM: {
+                            padding: '2px 8px',
+                          },
+                        }"
+                        (onClick)="watchTrailer()"
+                      />
                     </div>
                   </div>
 
@@ -304,28 +332,43 @@
           </div>
         </div>
 
-        <div class="col-12 cast-production-wrapper">
-          <div class="row">
-            <div class="col-lg-8 cast-section stagger-item">
+        <div
+          class="col-12 cast-production-col"
+          *ngIf="
+            details.credits.cast.length || details.production_companies.length
+          "
+        >
+          <div class="row cast-production-row">
+            <div
+              *ngIf="details.credits.cast.length"
+              class="cast-section stagger-item"
+              [ngClass]="{
+                'col-lg-8': details.production_companies.length,
+                'col-lg-12': !details.production_companies.length,
+              }"
+            >
               <div class="label">Cast</div>
               <div class="profile-container">
                 <ng-container *ngFor="let cast of details.credits.cast">
                   <app-profile-card [profile]="cast"></app-profile-card>
                 </ng-container>
-                <button
-                  class="see-more-cast-btn text-nowrap"
+
+                <app-button
                   *ngIf="details.credits.cast.length > 10"
-                  (click)="navigateToFullCast()"
-                  aria-label="See all cast members"
-                >
-                  See All Cast <i class="pi pi-arrow-right"></i>
-                </button>
+                  label="See All"
+                  [styles]="COMMON_CONFIG.BUTTON['SEE_MORE']"
+                  (onClick)="navigateToFullCast()"
+                />
               </div>
             </div>
 
             <div
-              class="col-lg-4 ps-lg-5 pt-md-4 production-house-section stagger-item"
-              [ngClass]="{ 'pt-4': commonService.isMobile }"
+              *ngIf="details.production_companies.length"
+              class="production-house-section stagger-item"
+              [ngClass]="{
+                'ps-lg-5 col-lg-4': details.credits.cast.length,
+                'col-lg-12': !details.credits.cast.length,
+              }"
             >
               <div class="label mb-3">Production Houses</div>
 
@@ -355,7 +398,131 @@
             </div>
           </div>
         </div>
+
+        <div class="col-12 media-section-col">
+          <div class="row media-section-row">
+            <!-- existing media grid -->
+            <div
+              class="col-lg-6 col-md-6 media-section stagger-item"
+              *ngIf="details.images.backdrops.length > 0"
+            >
+              <div class="media-header">
+                <div class="label">Images</div>
+
+                <app-button
+                  *ngIf="details.images.backdrops.length > 4"
+                  label="See More"
+                  [styles]="COMMON_CONFIG.BUTTON['SEE_MORE']"
+                  (onClick)="navigateToMediaGallery('images')"
+                />
+              </div>
+              <div class="media-grid-images">
+                <div
+                  class="image-card"
+                  *ngFor="
+                    let img of details.images.backdrops.slice(0, 4);
+                    let i = index
+                  "
+                  (click)="viewImage(i)"
+                >
+                  <img
+                    [src]="imageBase + '/w500' + img.file_path"
+                    alt="Media Image"
+                    loading="lazy"
+                  />
+                  <div class="image-overlay">
+                    <i class="pi pi-search-plus"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-6 col-md-6 media-section stagger-item"
+              *ngIf="details.videos.results.length > 0"
+            >
+              <div class="media-header">
+                <div class="label">Videos</div>
+                <app-button
+                  *ngIf="details.videos.results.length > 4"
+                  label="See More"
+                  [styles]="COMMON_CONFIG.BUTTON['SEE_MORE']"
+                  (onClick)="navigateToMediaGallery('videos')"
+                />
+              </div>
+              <div class="media-grid-videos">
+                <div
+                  class="video-card"
+                  *ngFor="let video of details.videos.results.slice(0, 4); let i = index"
+                  (click)="playVideo(i)"
+                >
+                  <div class="video-thumbnail">
+                    <img
+                      [src]="
+                        'https://img.youtube.com/vi/' +
+                        video.key +
+                        '/mqdefault.jpg'
+                      "
+                      [alt]="video.name"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="play-overlay">
+                    <i class="pi pi-play-circle"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12" *ngIf="details.similar.results.length">
+          <div class="label">Similar</div>
+          <app-carousel
+            [showSeeMore]="false"
+            [fadeColor]="'black'"
+            [showTitle]="false"
+          >
+            <ng-container *ngFor="let item of details.similar.results">
+              <app-movie-card
+                *ngIf="item.poster_path"
+                [movie]="item"
+                (click)="onMediaClick(item)"
+              ></app-movie-card>
+            </ng-container>
+          </app-carousel>
+        </div>
+
+        <div class="col-12" *ngIf="details.recommendations.results.length">
+          <div class="label">Recommendations</div>
+          <app-carousel
+            [showSeeMore]="false"
+            [fadeColor]="'black'"
+            [showTitle]="false"
+          >
+            <ng-container *ngFor="let item of details.recommendations.results">
+              <app-movie-card
+                *ngIf="item.poster_path"
+                [movie]="item"
+                (click)="onMediaClick(item)"
+              ></app-movie-card>
+            </ng-container>
+          </app-carousel>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<app-video-player
+  [(visible)]="videoPlayer.visible"
+  [videoKeys]="videoPlayer.keys"
+  [(currentIndex)]="videoPlayer.currentIndex"
+></app-video-player>
+
+<app-image-viewer
+  [(visible)]="imageViewer.visible"
+  [images]="imageViewer.images"
+  [(currentIndex)]="imageViewer.currentIndex"
+  [caption]="imageViewer.caption"
+></app-image-viewer>

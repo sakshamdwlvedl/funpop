@@ -3,6 +3,12 @@ interface ControlsCommonConfig {
   leaveSpaceForErrors?: boolean;
 }
 
+interface StateStyle {
+  borderColor?: string;
+  bgColor?: string;
+  textColor?: string;
+}
+
 export interface InputConfig extends ControlsCommonConfig {
   placeholder?: string;
   staticPlaceholder?: string;
@@ -19,4 +25,20 @@ export interface InputConfig extends ControlsCommonConfig {
   // for textarea
   rows?: number;
   cols?: number;
+}
+
+export interface ButtonConfig {
+  padding?: string;
+  borderRadius?: string;
+  borderColor?: string;
+  bgColor?: string;
+  textColor?: string;
+  fontSize?: string;
+  fontWeight?: number | string;
+  cursor?: string;
+  icon?: string;
+  iconPosition?: 'left' | 'right';
+  hover?: StateStyle;
+
+  breakSM?: ButtonConfig;
 }

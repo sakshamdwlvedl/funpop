@@ -1,0 +1,50 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [blockScroll]="true"
+  maskStyleClass="image-viewer-mask"
+  styleClass="image-viewer-dialog"
+  (onHide)="close()"
+  [dismissableMask]="true"
+>
+  <div class="image-viewer-wrapper" *ngIf="images.length > 0" (click)="close()">
+    <!-- Close Button -->
+    <button class="nav-btn close-btn" (click)="close(); $event.stopPropagation()" aria-label="Close">
+      <i class="pi pi-times"></i>
+    </button>
+
+    <!-- Navigation Arrows -->
+    <button 
+      *ngIf="images.length > 1"
+      class="nav-btn prev-btn" 
+      (click)="prev($event)" 
+      aria-label="Previous"
+    >
+      <i class="pi pi-angle-left"></i>
+    </button>
+
+    <div class="image-container" (click)="$event.stopPropagation()">
+      <img 
+        [src]="imageBase + '/original' + images[currentIndex]" 
+        class="full-image" 
+        loading="lazy" 
+      />
+      <div class="image-caption" *ngIf="caption">{{ caption }}</div>
+      
+      <div class="image-counter" *ngIf="images.length > 1">
+        {{ currentIndex + 1 }} / {{ images.length }}
+      </div>
+    </div>
+
+    <button 
+      *ngIf="images.length > 1"
+      class="nav-btn next-btn" 
+      (click)="next($event)" 
+      aria-label="Next"
+    >
+      <i class="pi pi-angle-right"></i>
+    </button>
+  </div>
+</p-dialog>

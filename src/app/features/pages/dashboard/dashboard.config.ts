@@ -59,4 +59,36 @@ export const DASHBOARD_CONFIG = {
       apiFunction: (api: ApiCallService) => api.getNewReleasedTV(),
     },
   ],
+  franchises: [
+    {
+      name: 'Marvel',
+      keywordId: 180547,
+      bgColor: '#ed1d24',
+    },
+    {
+      name: 'DC',
+      keywordId: 180552,
+      bgColor: '#0078f0',
+    },
+    {
+      name: 'Star Wars',
+      keywordId: 161176,
+      bgColor: '#000000',
+    },
+    {
+      name: 'Disney',
+      keywordId: 210024,
+      bgColor: '#113ccf',
+    },
+    {
+      name: 'Pixar',
+      keywordId: 179430,
+      bgColor: '#ff9c00',
+    },
+    {
+      name: 'Harry Potter',
+      keywordId: 198940,
+      bgColor: '#740001',
+    },
+  ],
 };

@@ -1,0 +1,84 @@
+<div class="gallery-wrapper">
+  <div class="gallery-container">
+    <div class="gallery-header">
+      <h2 class="m-0 default-heading-font-size">
+        {{ details.title || details.name }} - Media
+      </h2>
+    </div>
+
+    <div class="tab-switcher">
+      <button
+        [class.active]="galleryType === 'images'"
+        (click)="setGalleryType('images')"
+      >
+        Images ({{ details.images.backdrops.length || 0 }})
+      </button>
+      <button
+        [class.active]="galleryType === 'videos'"
+        (click)="setGalleryType('videos')"
+      >
+        Videos ({{ details.videos.results.length || 0 }})
+      </button>
+    </div>
+
+    <!-- Images Grid -->
+    <div class="media-grid images" *ngIf="galleryType === 'images'">
+      <div
+        class="image-card"
+        *ngFor="let img of details.images.backdrops; let i = index"
+        (click)="viewImage(i)"
+      >
+        <img
+          [src]="imageBase + '/w500' + img.file_path"
+          alt="Backdrop"
+          loading="lazy"
+        />
+        <div class="overlay">
+          <i class="pi pi-search-plus"></i>
+        </div>
+      </div>
+      <div class="no-data" *ngIf="!details.images.backdrops.length">
+        No images available.
+      </div>
+    </div>
+
+    <!-- Videos Grid -->
+    <div class="media-grid videos" *ngIf="galleryType === 'videos'">
+      <div
+        class="video-card"
+        *ngFor="let video of details.videos.results; let i = index"
+        (click)="playVideo(i)"
+      >
+        <div class="thumbnail">
+          <img
+            [src]="'https://img.youtube.com/vi/' + video.key + '/mqdefault.jpg'"
+            [alt]="video.name"
+            loading="lazy"
+          />
+        </div>
+        <div class="play-overlay">
+          <i class="pi pi-play-circle"></i>
+        </div>
+        <div class="info">
+          <div class="name">{{ video.name }}</div>
+          <div class="type">{{ video.type }}</div>
+        </div>
+      </div>
+      <div class="no-data" *ngIf="!details.videos.results.length">
+        No videos available.
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-video-player
+  [(visible)]="videoPlayer.visible"
+  [videoKeys]="videoPlayer.keys"
+  [(currentIndex)]="videoPlayer.currentIndex"
+></app-video-player>
+<app-image-viewer
+  [(visible)]="imageViewer.visible"
+  [images]="imageViewer.images"
+  [(currentIndex)]="imageViewer.currentIndex"
+  [caption]="imageViewer.caption"
+></app-image-viewer>

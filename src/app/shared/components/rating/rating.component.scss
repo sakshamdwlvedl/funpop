@@ -10,13 +10,13 @@
   width: fit-content;
 
   &.good {
-    background-color: #28a628;
+    background: linear-gradient(180deg, #43c943 0%, #28a628 45%, #1e7e1e 100%);
   }
   &.avg {
-    background-color: orangered;
+    background: linear-gradient(180deg, #ff8c42 0%, #ff4500 45%, #cc3700 100%);
   }
   &.bad {
-    background-color: crimson;
+    background: linear-gradient(180deg, #ff4d6d 0%, #dc143c 45%, #a10f2b 100%);
   }
 }
 

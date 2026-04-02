@@ -1,0 +1,13 @@
+:host {
+  display: inline-block;
+}
+
+::ng-deep {
+  .dynamic-btn {
+    white-space: nowrap !important;
+    gap: 4px !important;
+    font-size: var(--btn-font-size) !important;
+    font-weight: var(--btn-font-weight) !important;
+    flex-direction: var(--btn-flex-direction) !important;
+  }
+}

@@ -18,6 +18,12 @@ import { ScrollIndicatorComponent } from '../../../shared/components/scroll-indi
 import { ProfileCardComponent } from '../../../shared/components/profile-card/profile-card.component';
 import { ChipComponent } from '../../../shared/components/chip/chip.component';
 import { SeoService } from '../../../core/services/seo.service';
+import { VideoPlayerComponent } from '../../../shared/components/video-player/video-player.component';
+import { ImageViewerComponent } from '../../../shared/components/image-viewer/image-viewer.component';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { CarouselComponent } from '../../../shared/components/carousel/carousel.component';
+import { COMMON_CONFIG } from '../../../core/configs/common.config';
+import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card.component';
 
 @Component({
   selector: 'app-detail-page',
@@ -27,6 +33,11 @@ import { SeoService } from '../../../core/services/seo.service';
     ScrollIndicatorComponent,
     ProfileCardComponent,
     ChipComponent,
+    VideoPlayerComponent,
+    ImageViewerComponent,
+    ButtonComponent,
+    CarouselComponent,
+    MovieCardComponent,
   ],
   templateUrl: './detail-page.component.html',
   styleUrls: ['./detail-page.component.scss'],
@@ -44,6 +55,21 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
     plot: false,
     seasonPlot: false,
   };
+
+  videoPlayer = {
+    visible: false,
+    keys: [] as string[],
+    currentIndex: 0,
+  };
+
+  imageViewer = {
+    visible: false,
+    images: [] as string[],
+    currentIndex: 0,
+    caption: '',
+  };
+
+  COMMON_CONFIG: typeof COMMON_CONFIG = COMMON_CONFIG;
 
   @ViewChild('posterCard') posterCard!: ElementRef;
   @ViewChild('movieTitle') movieTitle!: ElementRef;
@@ -343,6 +369,48 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
 
   getCollectionClass() {
     return this.details.revenue > this.details.budget ? 'profit' : 'loss';
+  }
+
+  watchTrailer() {
+    const trailerIndex = this.details.videos.results.findIndex(
+      (v) => v.type === 'Trailer' && v.site === 'YouTube',
+    );
+    if (trailerIndex !== -1) {
+      this.playVideo(trailerIndex);
+    } else if (this.details.videos.results.length > 0) {
+      this.playVideo(0);
+    }
+  }
+
+  playVideo(index: number) {
+    this.videoPlayer.keys = this.details.videos.results.map((v) => v.key || '');
+    this.videoPlayer.currentIndex = index;
+    this.videoPlayer.visible = true;
+  }
+
+  viewImage(index: number, caption: string = '') {
+    this.imageViewer.images = this.details.images.backdrops.map(
+      (img) => img.file_path,
+    );
+    this.imageViewer.currentIndex = index;
+    this.imageViewer.caption = caption;
+    this.imageViewer.visible = true;
+  }
+
+  navigateToMediaGallery(mediaType: 'images' | 'videos') {
+    this.router.navigate(
+      ['/details', this.mediaType, this.details.id, 'media-gallery'],
+      {
+        queryParams: { galleryType: mediaType },
+      },
+    );
+  }
+
+  onMediaClick(item: any) {
+    this.router.navigate(['/details', this.mediaType, item.id]).then(() => {
+      window.scrollTo(0, 0);
+      window.location.reload();
+    });
   }
 
   ngOnDestroy(): void {

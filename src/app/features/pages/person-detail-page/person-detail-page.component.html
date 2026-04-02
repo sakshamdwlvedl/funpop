@@ -41,7 +41,7 @@
 
         <h1 class="person-name">{{ details.name }}</h1>
 
-        <div class="also-known" *ngIf="details.also_known_as?.length">
+        <div class="also-known" *ngIf="details.also_known_as.length">
           <span class="aka-label">Also known as</span>
           <span class="aka-list">{{
             details.also_known_as.slice(0, 3).join(" · ")
@@ -117,7 +117,9 @@
         class="read-toggle"
         *ngIf="details.biography.length > 400"
         (click)="bioExpanded = !bioExpanded"
-        [attr.aria-label]="bioExpanded ? 'Read less biography' : 'Read more biography'"
+        [attr.aria-label]="
+          bioExpanded ? 'Read less biography' : 'Read more biography'
+        "
         [attr.aria-expanded]="bioExpanded"
       >
         {{ bioExpanded ? "Read less" : "Read more" }}
@@ -263,41 +265,8 @@
 </div>
 <!-- /person-page -->
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     LIGHTBOX
-════════════════════════════════════════════════════════════════════════════ -->
-<div
-  class="lightbox"
-  *ngIf="selectedImageIndex !== null"
-  (click)="closeImage()"
->
-  <button class="lb-close" (click)="closeImage()" aria-label="Close Lightbox">
-    <i class="pi pi-times"></i>
-  </button>
-
-  <button
-    class="lb-nav lb-prev"
-    (click)="$event.stopPropagation(); prevImage()"
-    aria-label="Previous Image"
-  >
-    <i class="pi pi-angle-left"></i>
-  </button>
-
-  <div class="lb-image-wrap" (click)="$event.stopPropagation()">
-    <img
-      [src]="imageBase + '/w780' + profileImages[selectedImageIndex!].file_path"
-      [alt]="details.name"
-    />
-    <div class="lb-counter">
-      {{ selectedImageIndex! + 1 }} / {{ profileImages.length }}
-    </div>
-  </div>
-
-  <button
-    class="lb-nav lb-next"
-    (click)="$event.stopPropagation(); nextImage()"
-    aria-label="Next Image"
-  >
-    <i class="pi pi-angle-right"></i>
-  </button>
-</div>
+<app-image-viewer
+  [(visible)]="imageViewer.visible"
+  [images]="imageViewer.images"
+  [(currentIndex)]="imageViewer.currentIndex"
+></app-image-viewer>

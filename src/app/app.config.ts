@@ -15,6 +15,7 @@ import {
 import { IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { environment } from '../environments/environment';
 import { provideServiceWorker } from '@angular/service-worker';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
       }),
     ),
     provideHttpClient(withInterceptors([tmdbInterceptor])),
+    provideAnimationsAsync(),
     {
       provide: IMAGE_LOADER,
       useValue: (config: ImageLoaderConfig) => {
@@ -50,6 +52,6 @@ export const appConfig: ApplicationConfig = {
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerImmediately',
-    }),
-  ],
-};
+      }),
+    ],
+  };

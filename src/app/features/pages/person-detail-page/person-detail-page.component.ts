@@ -22,13 +22,14 @@ import {
   PersonDetail,
 } from '../../interfaces/person-detail.interface';
 import { SeoService } from '../../../core/services/seo.service';
+import { ImageViewerComponent } from '../../../shared/components/image-viewer/image-viewer.component';
 
 type FilmographyFilter = 'all' | 'movie' | 'tv';
 
 @Component({
   selector: 'app-person-detail-page',
   standalone: true,
-  imports: [CommonModule, RatingComponent],
+  imports: [CommonModule, RatingComponent, ImageViewerComponent],
   templateUrl: './person-detail-page.component.html',
   styleUrls: ['./person-detail-page.component.scss'],
 })
@@ -42,7 +43,11 @@ export class PersonDetailPageComponent
   age: number | null = null;
   bioExpanded = false;
   filmographyFilter: FilmographyFilter = 'all';
-  selectedImageIndex: number | null = null;
+  imageViewer = {
+    visible: false,
+    images: [] as string[],
+    currentIndex: 0,
+  };
 
   sortedFilmography: CreditItem[] = [];
   filteredFilmography: CreditItem[] = [];
@@ -205,25 +210,11 @@ export class PersonDetailPageComponent
   // ── Image lightbox ─────────────────────────────────────────────────────────
 
   openImage(index: number): void {
-    this.selectedImageIndex = index;
-    document.body.style.overflow = 'hidden';
-  }
-
-  closeImage(): void {
-    this.selectedImageIndex = null;
-    document.body.style.overflow = '';
-  }
-
-  prevImage(): void {
-    if (this.selectedImageIndex === null) return;
-    const total = this.details.images.profiles.length;
-    this.selectedImageIndex = (this.selectedImageIndex - 1 + total) % total;
-  }
-
-  nextImage(): void {
-    if (this.selectedImageIndex === null) return;
-    const total = this.details.images.profiles.length;
-    this.selectedImageIndex = (this.selectedImageIndex + 1) % total;
+    this.imageViewer.images = this.details.images.profiles.map(
+      (img) => img.file_path,
+    );
+    this.imageViewer.currentIndex = index;
+    this.imageViewer.visible = true;
   }
 
   // ── Animations ─────────────────────────────────────────────────────────────
