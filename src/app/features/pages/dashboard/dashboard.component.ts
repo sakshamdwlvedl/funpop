@@ -64,7 +64,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   seeMore(sectionKey: string): void {
     const typeKey = SECTION_TYPE_KEY_MAP[sectionKey];
     if (typeKey) {
-      this.router.navigate(['/explore'], { queryParams: { type: typeKey } });
+      this.commonService.navigateTo({
+        route: '/explore',
+        queryParams: { type: typeKey },
+      });
     }
   }
 
