@@ -2,27 +2,51 @@
 @use "variables" as *;
 
 ::ng-deep {
-  .watch-trailer-custom-style {
+  .watch-trailer-btn {
     p-button {
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
+      cursor: auto !important;
+      padding: 0 !important;
+      .p-button {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(to right, #250048 10%, #a855f7);
+        padding: 2px 8px;
+        border-radius: 18px;
+        color: white;
+        animation: trailer-pulse 3s ease-in-out infinite;
+        transition: all 0.25s ease !important;
+        gap: 6px !important;
 
-      &::before {
-        content: "";
-        position: absolute;
-        transform: skewX(-20deg);
-        animation: shine 5s linear infinite;
-      }
+        &::after {
+          content: "";
+          position: absolute;
+          top: -10%;
+          left: -120%;
+          width: 55%;
+          height: 120%;
+          background: linear-gradient(
+            105deg,
+            transparent 0% 10%,
+            rgb(255 255 255 / 26%) 110%,
+            transparent 0%
+          );
+          transform: skewX(-18deg);
+          animation: trailer-shine 3.5s ease-in-out infinite;
+          pointer-events: none;
+        }
 
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        // background: darkblue;
-      }
+        &:hover {
+          background: linear-gradient(to right, #250048 10%, #a855f7);
+          color: white;
+        }
 
-      &:active {
-        transform: translateY(0);
+        &:active {
+          transform: translateY(0) scale(0.8);
+        }
+
+        .p-button-icon {
+          color: #a855f7;
+        }
       }
     }
   }
@@ -458,7 +482,6 @@
                     }
                   }
                 }
-
               }
             }
 
@@ -751,23 +774,36 @@
   }
 }
 
-@keyframes shine {
+@keyframes trailer-shine {
   0% {
     left: -120%;
     opacity: 0;
   }
-
   10% {
     opacity: 1;
   }
-
-  20% {
-    left: 140%;
+  35% {
+    left: 130%;
     opacity: 0;
   }
-
   100% {
-    left: 140%;
+    left: 130%;
     opacity: 0;
+  }
+}
+
+@keyframes trailer-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(138, 43, 226, 0),
+      0 4px 20px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  50% {
+    box-shadow:
+      0 0 0 4px rgba(138, 43, 226, 0.2),
+      0 8px 32px rgba(138, 43, 226, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 }

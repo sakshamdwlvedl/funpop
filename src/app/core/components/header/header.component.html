@@ -1,5 +1,3 @@
-<!-- src/app/core/components/header/header.component.html -->
-
 <header class="header">
   <!-- ── Logo ──────────────────────────────────────────────────────────────── -->
   <a class="logo" routerLink="/dashboard">
@@ -49,7 +47,7 @@
     *ngFor="let link of allNavLinks"
     class="tab-item"
     [class.active]="isTabActive(link)"
-    (click)="onTabClick(link)"
+    (click)="!isTabActive(link) && onTabClick(link, true)"
   >
     <span class="tab-icon"><i [class]="link.icon"></i></span>
     <span class="tab-label">{{ link.label }}</span>

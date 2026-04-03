@@ -52,7 +52,6 @@ export class CarouselComponent implements AfterContentInit {
     setTimeout(() => {
       this.checkFade();
     });
-    this.showRightFade = true;
   }
 
   onScroll() {

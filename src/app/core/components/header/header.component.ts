@@ -95,7 +95,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((query: string) => {
         const trimmed = query?.trim();
         if (trimmed) {
-          this.router.navigate(['/explore'], {
+          this.commonService.navigateTo({
+            route: '/explore',
             queryParams: { query: trimmed },
             replaceUrl: this.router.url.startsWith('/explore'),
           });
@@ -109,26 +110,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  navigateToDashboard(filter: any): void {
+  navigateToDashboard(filter: any, replaceUrl: boolean = false): void {
     // Toggle off if already active
     if (this.activeFilter === filter) {
       this.activeFilter = null;
-      this.router.navigate(['/dashboard']);
+      this.commonService.navigateTo({ route: '/dashboard', replaceUrl });
     } else {
       this.activeFilter = filter;
-      this.router.navigate(['/dashboard'], { queryParams: { filter } });
+      this.commonService.navigateTo({
+        route: '/dashboard',
+        replaceUrl,
+        queryParams: { filter },
+      });
     }
   }
 
   navigateTo(route: string, replaceUrl: boolean = false): void {
-    this.router.navigate([route], { replaceUrl });
+    this.commonService.navigateTo({ route, replaceUrl });
   }
 
-  onTabClick(link: NavLink): void {
+  onTabClick(link: NavLink, replaceUrl: boolean = false): void {
     if (link.filter) {
-      this.navigateToDashboard(link.filter);
+      this.navigateToDashboard(link.filter, replaceUrl);
     } else if (link.route) {
-      this.navigateTo(link.route);
+      this.navigateTo(link.route, replaceUrl);
     }
   }
 

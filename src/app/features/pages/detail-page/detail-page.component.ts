@@ -134,7 +134,6 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      ScrollTrigger.refresh();
       if (!this.commonService.isMobile) {
         this.initPosterTilt();
       }
@@ -269,12 +268,12 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
     const tl2 = gsap.timeline({
       scrollTrigger: {
         trigger: '.movie-details',
-        start: 'top 10%',
+        start: 'top 8%',
         end:
           this.commonService.isMobile || this.commonService.isTablet
-            ? '+=30%'
+            ? '+=200%'
             : '+=500%',
-        scrub: this.commonService.isMobile ? 1.5 : 2,
+        scrub: this.commonService.isMobile ? true : 2,
         pin: true,
       },
     });
@@ -332,11 +331,13 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       {
         y: 40,
         opacity: 0,
-        stagger: 0.5,
+        stagger: 0.9,
         duration: 0.8,
       },
       1.6,
     );
+
+    ScrollTrigger.refresh();
   }
 
   navigateToGenre(genreId: number): void {

@@ -5,8 +5,9 @@
         class="slide"
         *ngFor="let item of items; let i = index"
         [ngClass]="getSlideClass(i)"
-        (mouseenter)="onHover(item, i)"
-        (mouseleave)="onLeave()"
+        (mouseenter)="!commonService.isMobile && onHover(item, i)"
+        (mouseleave)="!commonService.isMobile && onLeave()"
+        (click)="commonService.isMobile && navigateToDetailPage(item)"
       >
         <img
           *ngIf="hoveredId !== item.id"
@@ -40,12 +41,14 @@
       </div>
     </div>
 
-    <button class="nav left" (click)="prev()" aria-label="Previous Slide">
-      <i class="pi pi-angle-left"></i>
-    </button>
-    <button class="nav right" (click)="next()" aria-label="Next Slide">
-      <i class="pi pi-angle-right"></i>
-    </button>
+    <ng-container *ngIf="!commonService.isMobile">
+      <button class="nav left" (click)="prev()" aria-label="Previous Slide">
+        <i class="pi pi-angle-left"></i>
+      </button>
+      <button class="nav right" (click)="next()" aria-label="Next Slide">
+        <i class="pi pi-angle-right"></i>
+      </button>
+    </ng-container>
   </div>
 
   <div class="dots">

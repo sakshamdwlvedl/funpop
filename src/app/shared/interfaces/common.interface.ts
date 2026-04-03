@@ -13,3 +13,10 @@ export interface SkeletonConfig {
   items: SkeletonItem[];
   direction?: 'row' | 'column';
 }
+
+export interface NavigationData {
+  route: string;
+  replaceUrl?: boolean;
+  state?: any;
+  queryParams?: any;
+}

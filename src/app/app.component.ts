@@ -40,7 +40,17 @@ export class AppComponent {
     e.preventDefault();
     // Stash the event so it can be triggered later.
     this.deferredPrompt = e;
-    this.showInstallButton = true;
+
+    setTimeout(() => {
+      this.showInstallButton = true;
+    });
+  }
+
+  @HostListener('window:appinstalled')
+  onAppInstalled() {
+    setTimeout(() => {
+      this.showInstallButton = false;
+    });
   }
 
   onSplashFinished() {
@@ -59,10 +69,5 @@ export class AppComponent {
         this.showInstallButton = false;
       });
     }
-  }
-
-  @HostListener('window:appinstalled')
-  onAppInstalled() {
-    this.showInstallButton = false;
   }
 }

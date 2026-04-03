@@ -35,6 +35,7 @@ export interface ButtonConfig {
   textColor?: string;
   fontSize?: string;
   fontWeight?: number | string;
+  iconSize?: string;
   cursor?: string;
   icon?: string;
   iconPosition?: 'left' | 'right';

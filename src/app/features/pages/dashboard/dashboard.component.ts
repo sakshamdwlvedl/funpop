@@ -20,6 +20,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CommonService } from '../../../core/services/common.service';
 import { SECTION_TYPE_KEY_MAP } from '../explore/explore.config';
 import { SeoService } from '../../../core/services/seo.service';
+import { NavigationData } from '../../../shared/interfaces/common.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -126,7 +127,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   navigateToDetailsPage(item: any) {
-    this.router.navigate(['/details', item.media_type, item.id]);
+    this.commonService.navigateTo({
+      route: `/details/${item.media_type}/${item.id}`,
+    } as NavigationData);
   }
 
   showSkeleton(): boolean {

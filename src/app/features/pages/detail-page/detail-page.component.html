@@ -88,20 +88,13 @@
                       <app-button
                         *ngIf="details.videos.results.length > 0"
                         label="Watch Trailer"
-                        class="watch-trailer-custom-style"
+                        class="watch-trailer-btn"
                         [styles]="{
-                          padding: '4px 10px',
-                          borderRadius: '20px',
-                          bgColor: '#888888',
-                          textColor: 'white',
-                          fontSize: '12px',
-                          icon: 'pi pi-play',
-                          hover: {
-                            bgColor: 'darkblue',
-                            textColor: 'white',
-                          },
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          icon: 'pi pi-play-circle',
                           breakSM: {
-                            padding: '2px 8px',
+                            fontSize: '12px',
                           },
                         }"
                         (onClick)="watchTrailer()"
@@ -403,7 +396,7 @@
           <div class="row media-section-row">
             <!-- existing media grid -->
             <div
-              class="col-lg-6 col-md-6 media-section stagger-item"
+              class="col-lg-6 col-md-6 media-section slight-up-scroll"
               *ngIf="details.images.backdrops.length > 0"
             >
               <div class="media-header">
@@ -438,7 +431,7 @@
             </div>
 
             <div
-              class="col-lg-6 col-md-6 media-section stagger-item"
+              class="col-lg-6 col-md-6 media-section slight-up-scroll"
               *ngIf="details.videos.results.length > 0"
             >
               <div class="media-header">
@@ -453,7 +446,10 @@
               <div class="media-grid-videos">
                 <div
                   class="video-card"
-                  *ngFor="let video of details.videos.results.slice(0, 4); let i = index"
+                  *ngFor="
+                    let video of details.videos.results.slice(0, 4);
+                    let i = index
+                  "
                   (click)="playVideo(i)"
                 >
                   <div class="video-thumbnail">
@@ -476,14 +472,17 @@
           </div>
         </div>
 
-        <div class="col-12" *ngIf="details.similar.results.length">
+        <div
+          class="col-12 slight-up-scroll"
+          *ngIf="details.recommendations.results.length"
+        >
           <div class="label">Similar</div>
           <app-carousel
             [showSeeMore]="false"
             [fadeColor]="'black'"
             [showTitle]="false"
           >
-            <ng-container *ngFor="let item of details.similar.results">
+            <ng-container *ngFor="let item of details.recommendations.results">
               <app-movie-card
                 *ngIf="item.poster_path"
                 [movie]="item"
@@ -493,14 +492,17 @@
           </app-carousel>
         </div>
 
-        <div class="col-12" *ngIf="details.recommendations.results.length">
+        <div
+          class="col-12 slight-up-scroll"
+          *ngIf="details.similar.results.length"
+        >
           <div class="label">Recommendations</div>
           <app-carousel
             [showSeeMore]="false"
             [fadeColor]="'black'"
             [showTitle]="false"
           >
-            <ng-container *ngFor="let item of details.recommendations.results">
+            <ng-container *ngFor="let item of details.similar.results">
               <app-movie-card
                 *ngIf="item.poster_path"
                 [movie]="item"

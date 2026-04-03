@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { debounceTime, fromEvent, map, startWith, Subject } from 'rxjs';
+import { NavigationData } from '../../shared/interfaces/common.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,10 @@ export class CommonService {
   private onSearchFilterClear = new Subject<void>();
   onSearchFilterClear$ = this.onSearchFilterClear.asObservable();
 
-  constructor(private readonly location: Location) {
+  constructor(
+    private readonly location: Location,
+    private readonly router: Router,
+  ) {
     fromEvent(window, 'resize')
       .pipe(
         debounceTime(150),
@@ -69,6 +74,10 @@ export class CommonService {
 
   navigateBack() {
     this.location.back();
+  }
+
+  navigateTo({ route, replaceUrl, queryParams, state }: NavigationData) {
+    this.router.navigate([route], { replaceUrl, queryParams, state });
   }
 
   clearSearchFilter() {

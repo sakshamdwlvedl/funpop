@@ -48,6 +48,9 @@ export class ButtonComponent {
       '--btn-font-size': !this.commonService.isMobile
         ? this.styles?.fontSize || '14px'
         : this.styles?.breakSM?.fontSize || '12px',
+      '--btn-icon-size': !this.commonService.isMobile
+        ? this.styles?.iconSize || '14px'
+        : this.styles?.breakSM?.iconSize || '12px',
       '--btn-font-weight': this.styles?.fontWeight || 400,
       '--btn-flex-direction':
         this.styles?.iconPosition === 'right' ? 'row-reverse' : 'row',

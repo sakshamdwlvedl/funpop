@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../../environments/environment';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 import { CommonService } from '../../../core/services/common.service';
+import { NavigationData } from '../../interfaces/common.interface';
 
 @Component({
   selector: 'app-hero-carousel',
@@ -27,6 +28,9 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
   trailers: { [key: number]: any } = {};
   imageBase = environment.TMDB_IMG_BASE;
   hoveredId: number | null = null;
+  // --- Touch Swipe Support ---
+  private touchStartX = 0;
+  private touchEndX = 0;
 
   constructor(
     private apiService: ApiCallService,
@@ -34,8 +38,32 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
     public commonService: CommonService,
   ) {}
 
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  @HostListener('touchend', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
   ngOnInit(): void {
     this.startAutoSlide();
+  }
+
+  private handleSwipe() {
+    const swipeThreshold = 30; // minimum distance for a swipe
+    const deltaX = this.touchEndX - this.touchStartX;
+
+    if (Math.abs(deltaX) > swipeThreshold) {
+      if (deltaX > 0) {
+        this.prev();
+      } else {
+        this.next();
+      }
+    }
   }
 
   startAutoSlide() {
@@ -108,35 +136,13 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
     return (this.currentIndex + 1) % this.items.length;
   }
 
+  navigateToDetailPage(item: any) {
+    this.commonService.navigateTo({
+      route: `/details/${item.media_type}/${item.id}`,
+    } as NavigationData);
+  }
+
   ngOnDestroy() {
     clearInterval(this.interval);
-  }
-
-  // --- Touch Swipe Support ---
-  private touchStartX = 0;
-  private touchEndX = 0;
-
-  @HostListener('touchstart', ['$event'])
-  onTouchStart(event: TouchEvent) {
-    this.touchStartX = event.changedTouches[0].screenX;
-  }
-
-  @HostListener('touchend', ['$event'])
-  onTouchEnd(event: TouchEvent) {
-    this.touchEndX = event.changedTouches[0].screenX;
-    this.handleSwipe();
-  }
-
-  private handleSwipe() {
-    const swipeThreshold = 50; // minimum distance for a swipe
-    const deltaX = this.touchEndX - this.touchStartX;
-
-    if (Math.abs(deltaX) > swipeThreshold) {
-      if (deltaX > 0) {
-        this.prev();
-      } else {
-        this.next();
-      }
-    }
   }
 }
