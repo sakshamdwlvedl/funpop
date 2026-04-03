@@ -271,7 +271,7 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
         start: 'top 8%',
         end:
           this.commonService.isMobile || this.commonService.isTablet
-            ? '+=200%'
+            ? '+=80%'
             : '+=500%',
         scrub: this.commonService.isMobile ? true : 2,
         pin: true,
