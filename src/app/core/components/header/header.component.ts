@@ -22,6 +22,9 @@ import { CommonService } from '../../services/common.service';
 interface NavLink {
   label: string;
   icon: string;
+  activeIcon?: string;
+  activeColor?: string;
+  activeBg?: string;
   filter?: string; // for dashboard links
   route?: string; // for direct route links
 }
@@ -46,18 +49,52 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  // Desktop nav — filter links only
+  // Desktop nav — direct route links
   navLinks: NavLink[] = [
-    { label: 'Movies', icon: 'pi pi-video', filter: 'movie' },
-    { label: 'TV Shows', icon: 'pi pi-desktop', filter: 'tv' },
+    {
+      label: 'Wishlist',
+      icon: 'pi pi-bookmark',
+      activeIcon: 'pi pi-bookmark-fill',
+      activeColor: 'blue',
+      activeBg: 'rgb(9 0 255 / 8%)',
+      route: '/wishlist',
+    },
+    {
+      label: 'Favourites',
+      icon: 'pi pi-heart',
+      activeIcon: 'pi pi-heart-fill',
+      activeColor: 'red',
+      activeBg: 'rgb(255 0 0 / 8%)',
+      route: '/favourites',
+    },
   ];
 
   // Bottom bar — all destinations including Home
   allNavLinks: NavLink[] = [
-    { label: 'Home', icon: 'pi pi-home', route: '/dashboard' },
-    { label: 'Movies', icon: 'pi pi-video', filter: 'movie' },
-    { label: 'TV Shows', icon: 'pi pi-desktop', filter: 'tv' },
-    // { label: 'Explore', icon: 'pi pi-compass', route: '/explore' },
+    {
+      label: 'Home',
+      icon: 'pi pi-home',
+      activeIcon: 'pi pi-home',
+      activeColor: 'blue',
+      activeBg: 'rgb(9 0 255 / 8%)',
+      route: '/dashboard',
+    },
+    {
+      label: 'Wishlist',
+      icon: 'pi pi-bookmark',
+      activeIcon: 'pi pi-bookmark-fill',
+      activeColor: 'blue',
+      activeBg: 'rgb(9 0 255 / 8%)',
+      route: '/wishlist',
+    },
+    {
+      label: 'Favourites',
+      icon: 'pi pi-heart',
+      activeIcon: 'pi pi-heart-fill',
+      activeColor: 'red',
+      activeBg: 'rgb(255 0 0 / 8%)',
+      route: '/favourites',
+    },
   ];
 
   constructor(

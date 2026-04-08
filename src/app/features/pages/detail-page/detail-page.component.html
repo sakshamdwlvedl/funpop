@@ -59,6 +59,12 @@
                     [src]="imageBase + '/w154' + details.poster_path"
                     [alt]="details.title"
                   />
+
+                  <ng-container *ngIf="commonService.isMobile">
+                    <ng-container
+                      *ngTemplateOutlet="interactionActions"
+                    ></ng-container>
+                  </ng-container>
                 </div>
 
                 <div class="mobile-right-wrapper">
@@ -79,11 +85,7 @@
                         {{ languageNames }}
                       </div>
 
-                      <span
-                        class="dot"
-                        *ngIf="details.videos.results.length > 0"
-                        >•</span
-                      >
+                      <span class="dot" *ngIf="languageNames">•</span>
 
                       <app-button
                         *ngIf="details.videos.results.length > 0"
@@ -99,6 +101,21 @@
                         }"
                         (onClick)="watchTrailer()"
                       />
+
+                      <span
+                        class="dot"
+                        *ngIf="
+                          details.videos.results.length > 0 &&
+                          !commonService.isMobile
+                        "
+                        >•</span
+                      >
+
+                      <ng-container *ngIf="!commonService.isMobile">
+                        <ng-container
+                          *ngTemplateOutlet="interactionActions"
+                        ></ng-container>
+                      </ng-container>
                     </div>
                   </div>
 
@@ -472,6 +489,69 @@
           </div>
         </div>
 
+        <!-- Review Section -->
+        <div class="col-12 review-section-col slight-up-scroll">
+          <div class="row">
+            <div class="col-12">
+              <div class="label-row">
+                <div class="label">Reviews & Ratings</div>
+                <button
+                  class="add-review-minimal-btn"
+                  (click)="toggleReviewPopup()"
+                >
+                  <i class="pi pi-plus"></i> Add Review
+                </button>
+              </div>
+
+              <div class="reviews-list" *ngIf="reviews.length > 0">
+                <div
+                  class="review-item common-container"
+                  *ngFor="let review of reviews"
+                >
+                  <div class="review-header">
+                    <div class="reviewer-info">
+                      <span class="reviewer">{{ review.username }}</span>
+                      <span class="review-date">{{
+                        review.createdAt | date: "mediumDate"
+                      }}</span>
+                    </div>
+                    <span
+                      class="review-rating"
+                      [ngClass]="
+                        review.rating >= 7
+                          ? 'good'
+                          : review.rating >= 5
+                            ? 'avg'
+                            : 'bad'
+                      "
+                    >
+                      <i class="pi pi-star-fill"></i> {{ review.rating }}/10
+                    </span>
+                  </div>
+                  <div class="review-content">
+                    {{ review.review }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="no-reviews" *ngIf="reviews.length === 0">
+                <div class="empty-reviews-state">
+                  <i class="pi pi-comments"></i>
+                  <p>No reviews yet. Be the first to share your thoughts!</p>
+                  <app-button
+                    label="Write a Review"
+                    [styles]="{
+                      bgColor: 'var(--primary-color)',
+                      textColor: 'white',
+                    }"
+                    (onClick)="toggleReviewPopup()"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div
           class="col-12 slight-up-scroll"
           *ngIf="details.recommendations.results.length"
@@ -516,6 +596,60 @@
   </div>
 </div>
 
+<!-- REVIEW POPUP / BOTTOM PANEL -->
+<div
+  class="review-popup-overlay"
+  *ngIf="showReviewPopup"
+  (click)="closeReviewPopup()"
+>
+  <div class="review-popup-content" (click)="$event.stopPropagation()">
+    <!-- Top Close Button for Desktop -->
+    <button class="popup-close-btn" (click)="closeReviewPopup()">
+      <i class="pi pi-times"></i>
+    </button>
+
+    <!-- Star Coming Out -->
+    <div class="floating-star" [ngClass]="getStarClass()">
+      <i class="pi pi-star-fill"></i>
+      <span class="rating-text" *ngIf="userRating > 0">{{ userRating }}</span>
+      <span class="rating-text" *ngIf="userRating === 0">?</span>
+    </div>
+
+    <div class="popup-header">
+      <span class="rate-this-label">RATE THIS</span>
+      <h2 class="popup-title">{{ details.title || details.name }}</h2>
+    </div>
+
+    <div class="rating-stars-wrap">
+      <div class="stars-row">
+        <i
+          *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+          class="pi"
+          [ngClass]="i <= userRating ? 'pi-star-fill active' : 'pi-star'"
+          (click)="setRating(i)"
+        ></i>
+      </div>
+    </div>
+
+    <div class="review-input-wrap" *ngIf="userRating > 0">
+      <textarea
+        [(ngModel)]="userReview"
+        placeholder="What did you think of this?"
+        class="popup-textarea"
+      ></textarea>
+
+      <button
+        class="popup-submit-btn"
+        [disabled]="isSubmittingReview || !userReview.trim()"
+        (click)="submitReview()"
+      >
+        <span>{{ isSubmittingReview ? "Submitting..." : "Rate" }}</span>
+        <i class="pi pi-arrow-right" *ngIf="!isSubmittingReview"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
 <app-video-player
   [(visible)]="videoPlayer.visible"
   [videoKeys]="videoPlayer.keys"
@@ -528,3 +662,36 @@
   [(currentIndex)]="imageViewer.currentIndex"
   [caption]="imageViewer.caption"
 ></app-image-viewer>
+
+<ng-template #interactionActions>
+  <div class="interaction-actions">
+    <button
+      class="action-icon-btn wishlist"
+      [class.active]="inWishlist"
+      (click)="toggleWishlist()"
+      [title]="inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'"
+    >
+      <i [class]="inWishlist ? 'pi pi-bookmark-fill' : 'pi pi-bookmark'"></i>
+      <span class="btn-text">Wishlist</span>
+    </button>
+
+    <button
+      class="action-icon-btn favorite"
+      [class.active]="inFavorites"
+      (click)="toggleFavorite()"
+      [title]="inFavorites ? 'Remove from Favourites' : 'Add to Favourites'"
+    >
+      <i [class]="inFavorites ? 'pi pi-heart-fill' : 'pi pi-heart'"></i>
+      <span class="btn-text">Favourite</span>
+    </button>
+
+    <button
+      class="action-icon-btn review"
+      (click)="toggleReviewPopup()"
+      title="Add Review"
+    >
+      <i class="pi pi-star"></i>
+      <span class="btn-text">Review</span>
+    </button>
+  </div>
+</ng-template>

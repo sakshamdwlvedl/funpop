@@ -4,6 +4,7 @@ import { ENDPOINTS } from '../api/endpoints';
 import { map, Observable } from 'rxjs';
 import { MovieDetails } from '../../features/interfaces/movie-detail.interface';
 import { PersonDetail } from '../../features/interfaces/person-detail.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -284,5 +285,84 @@ export class ApiCallService {
 
   getPersonDetails(id: string): Observable<PersonDetail> {
     return this.http.get({ url: ENDPOINTS.TMDB.PERSON_DETAILS(id) });
+  }
+
+  private readonly baseUrl = environment.BACKEND_URL + '/interactions';
+  private readonly userId = 'funpop_user_123';
+
+  toggleWishlist(item: any, mediaType: string): Observable<any> {
+    const body = {
+      userId: this.userId,
+      mediaId: item.id.toString(),
+      mediaType,
+      title: item.title || item.name,
+      posterPath: item.poster_path,
+      voteAverage: item.vote_average,
+      releaseDate: item.release_date || item.first_air_date,
+    };
+    return this.http.post({
+      url: ENDPOINTS.BACKEND.TOGGLE_WISHLIST,
+      body,
+      showLoader: false,
+    });
+  }
+
+  getWishlist(): Observable<any> {
+    return this.http.get({ url: ENDPOINTS.BACKEND.GET_WISHLIST(this.userId) });
+  }
+
+  toggleFavorite(item: any, mediaType: string): Observable<any> {
+    const body = {
+      userId: this.userId,
+      mediaId: item.id.toString(),
+      mediaType,
+      title: item.title || item.name,
+      posterPath: item.poster_path,
+      voteAverage: item.vote_average,
+      releaseDate: item.release_date || item.first_air_date,
+    };
+    return this.http.post({
+      url: ENDPOINTS.BACKEND.TOGGLE_FAVOURITE,
+      body,
+      showLoader: false,
+    });
+  }
+
+  getFavorites(): Observable<any> {
+    return this.http.get({ url: ENDPOINTS.BACKEND.GET_FAVOURITE(this.userId) });
+  }
+
+  addReview(
+    mediaId: string,
+    mediaType: string,
+    rating: number,
+    review: string,
+  ): Observable<any> {
+    const body = {
+      userId: this.userId,
+      username: 'FunPop User',
+      mediaId: mediaId.toString(),
+      mediaType,
+      rating,
+      review,
+    };
+    return this.http.post({ url: ENDPOINTS.BACKEND.ADD_REVIEW, body });
+  }
+
+  getReviews(mediaType: string, mediaId: string): Observable<any> {
+    return this.http.get({
+      url: ENDPOINTS.BACKEND.GET_REVIEWS(mediaType, mediaId),
+    });
+  }
+
+  getInteractionStatus(mediaId: string, mediaType: string): Observable<any> {
+    return this.http.get({
+      url: ENDPOINTS.BACKEND.GET_INTERACTION_STATUS,
+      params: {
+        userId: this.userId,
+        mediaId: mediaId.toString(),
+        mediaType,
+      },
+    });
   }
 }

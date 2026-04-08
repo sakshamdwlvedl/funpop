@@ -47,6 +47,18 @@
   }
 }
 
+@keyframes pop {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 @include breakpoint(sm) {
   .card {
     width: 110px;

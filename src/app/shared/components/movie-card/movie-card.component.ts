@@ -1,6 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonService } from '../../../core/services/common.service';
 
 @Component({
@@ -12,9 +11,8 @@ import { CommonService } from '../../../core/services/common.service';
 export class MovieCardComponent {
   @Input() type!: 'movie' | 'tv';
   @Input() movie: any = {};
-
-  hoveredId: number | null = null;
-  trailers: { [key: number]: string } = {};
+  @Input() isWishlist: boolean = false;
+  @Input() isFavorite: boolean = false;
 
   constructor(public commonService: CommonService) {}
 }

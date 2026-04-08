@@ -11,6 +11,20 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'wishlist',
+    loadComponent: () =>
+      import('./features/pages/wishlist-page/wishlist-page.component').then(
+        (m) => m.WishlistPageComponent,
+      ),
+  },
+  {
+    path: 'favourites',
+    loadComponent: () =>
+      import('./features/pages/favourites-page/favourites-page.component').then(
+        (m) => m.FavouritesPageComponent,
+      ),
+  },
+  {
     path: 'details/person/:id',
     loadComponent: () =>
       import('./features/pages/person-detail-page/person-detail-page.component').then(

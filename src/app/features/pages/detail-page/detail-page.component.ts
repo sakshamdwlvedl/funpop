@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieDetails } from '../../interfaces/movie-detail.interface';
 import { environment } from '../../../../environments/environment';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 import { CommonService } from '../../../core/services/common.service';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -24,11 +24,14 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
 import { CarouselComponent } from '../../../shared/components/carousel/carousel.component';
 import { COMMON_CONFIG } from '../../../core/configs/common.config';
 import { MovieCardComponent } from '../../../shared/components/movie-card/movie-card.component';
+import { FormsModule } from '@angular/forms';
+import { ApiCallService } from '../../../core/services/api-call.service';
 
 @Component({
   selector: 'app-detail-page',
   imports: [
     CommonModule,
+    FormsModule,
     RatingComponent,
     ScrollIndicatorComponent,
     ProfileCardComponent,
@@ -39,6 +42,7 @@ import { MovieCardComponent } from '../../../shared/components/movie-card/movie-
     CarouselComponent,
     MovieCardComponent,
   ],
+  providers: [DatePipe, CurrencyPipe],
   templateUrl: './detail-page.component.html',
   styleUrls: ['./detail-page.component.scss'],
 })
@@ -71,6 +75,14 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
 
   COMMON_CONFIG: typeof COMMON_CONFIG = COMMON_CONFIG;
 
+  inWishlist = false;
+  inFavorites = false;
+  userReview = '';
+  userRating = 0;
+  reviews: any[] = [];
+  isSubmittingReview = false;
+  showReviewPopup = false;
+
   @ViewChild('posterCard') posterCard!: ElementRef;
   @ViewChild('movieTitle') movieTitle!: ElementRef;
 
@@ -78,7 +90,8 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     public commonService: CommonService,
     private readonly router: Router,
-    private seo: SeoService,
+    private readonly apiService: ApiCallService,
+    private readonly seo: SeoService,
   ) {}
 
   ngOnInit() {
@@ -109,27 +122,9 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
       this.details.title || this.details.name,
       this.details.overview.substring(0, 160),
     );
-  }
 
-  getDirector() {
-    if (this.details?.created_by?.length) {
-      this.director = this.details.created_by;
-      return;
-    }
-
-    if (this.mediaType === 'movie') {
-      this.director = this.details.credits.crew.filter(
-        (crew) => crew.job === 'Director',
-      );
-    } else {
-      this.director = this.details.credits.crew.filter(
-        (crew) =>
-          (crew.job === 'Executive Producer' ||
-            crew.job === 'Original Concept' ||
-            crew.job === 'Original Story') &&
-          crew.known_for_department === 'Writing',
-      );
-    }
+    this.getInteractionStatus();
+    this.getReviews();
   }
 
   ngAfterViewInit() {
@@ -338,6 +333,115 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
     );
 
     ScrollTrigger.refresh();
+  }
+
+  getInteractionStatus() {
+    this.apiService
+      .getInteractionStatus(this.details.id.toString(), this.mediaType)
+      .subscribe((status) => {
+        this.inWishlist = status.inWishlist;
+        this.inFavorites = status.inFavorites;
+        if (status.userReview) {
+          this.userRating = status.userReview.rating;
+          this.userReview = status.userReview.review;
+        }
+      });
+  }
+
+  getReviews() {
+    this.apiService
+      .getReviews(this.mediaType, this.details.id.toString())
+      .subscribe((reviews) => {
+        this.reviews = reviews;
+      });
+  }
+
+  toggleWishlist() {
+    this.apiService
+      .toggleWishlist(this.details, this.mediaType)
+      .subscribe((res) => {
+        this.inWishlist = res.added;
+      });
+  }
+
+  toggleFavorite() {
+    this.apiService
+      .toggleFavorite(this.details, this.mediaType)
+      .subscribe((res) => {
+        this.inFavorites = res.added;
+      });
+  }
+
+  submitReview() {
+    if (this.userRating === 0 || !this.userReview.trim()) {
+      return;
+    }
+
+    this.isSubmittingReview = true;
+    this.apiService
+      .addReview(
+        this.details.id.toString(),
+        this.mediaType,
+        this.userRating,
+        this.userReview,
+      )
+      .subscribe({
+        next: () => {
+          this.isSubmittingReview = false;
+          this.getReviews();
+          this.closeReviewPopup();
+        },
+        error: () => {
+          this.isSubmittingReview = false;
+        },
+      });
+  }
+
+  toggleReviewPopup() {
+    this.showReviewPopup = !this.showReviewPopup;
+    if (this.showReviewPopup) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  closeReviewPopup() {
+    setTimeout(() => {
+      this.showReviewPopup = false;
+    }, 1000);
+    document.body.style.overflow = '';
+  }
+
+  getStarClass() {
+    if (this.userRating >= 7) return 'good';
+    if (this.userRating >= 5) return 'avg';
+    return this.userRating > 0 ? 'bad' : '';
+  }
+
+  setRating(rating: number) {
+    this.userRating = rating;
+  }
+
+  getDirector() {
+    if (this.details?.created_by?.length) {
+      this.director = this.details.created_by;
+      return;
+    }
+
+    if (this.mediaType === 'movie') {
+      this.director = this.details.credits.crew.filter(
+        (crew) => crew.job === 'Director',
+      );
+    } else {
+      this.director = this.details.credits.crew.filter(
+        (crew) =>
+          (crew.job === 'Executive Producer' ||
+            crew.job === 'Original Concept' ||
+            crew.job === 'Original Story') &&
+          crew.known_for_department === 'Writing',
+      );
+    }
   }
 
   navigateToGenre(genreId: number): void {

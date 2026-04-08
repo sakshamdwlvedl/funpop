@@ -72,6 +72,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   isVisible(section: any): boolean {
+    if (section.isLocal) {
+      return this.data[section.key] && this.data[section.key].length > 0;
+    }
     if (!this.activeFilter) return true;
     return section.mediaType === this.activeFilter;
   }
@@ -117,15 +120,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   getSectionsData() {
     this.sections.forEach((section) => {
-      section.apiFunction(this.apiService).subscribe((res) => {
-        this.data[section.key] = sortByPopularity(res.results);
-        if (section.key === 'trendingMovies' || section.key === 'trendingTV') {
-          this.data['heroCarousel'] = [
-            ...sortByPopularity(this.data['trendingMovies'] ?? []).slice(0, 10),
-            ...sortByPopularity(this.data['trendingTV'] ?? []).slice(0, 10),
-          ];
-        }
-      });
+      if (section.apiFunction) {
+        section.apiFunction(this.apiService).subscribe((res: any) => {
+          this.data[section.key] = sortByPopularity(res.results);
+          if (
+            section.key === 'trendingMovies' ||
+            section.key === 'trendingTV'
+          ) {
+            this.data['heroCarousel'] = [
+              ...sortByPopularity(this.data['trendingMovies'] ?? []).slice(
+                0,
+                10,
+              ),
+              ...sortByPopularity(this.data['trendingTV'] ?? []).slice(0, 10),
+            ];
+          }
+        });
+      }
     });
   }
 

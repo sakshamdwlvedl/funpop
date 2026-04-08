@@ -118,7 +118,7 @@
   &.active {
     background: #111;
     border-color: #111;
-    color: #fff;
+    color: black;
 
     &:hover {
       background: #333;
@@ -240,6 +240,6 @@
     }
   }
   .header {
-    padding: 12px;
+    padding: 10px 10px 10px 5px;
   }
 }

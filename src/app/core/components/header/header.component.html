@@ -29,10 +29,17 @@
     <button
       *ngFor="let link of navLinks"
       class="nav-btn"
-      [class.active]="activeFilter === link.filter"
-      (click)="navigateToDashboard(link.filter)"
+      [class.active]="currentRoute === link.route"
+      [ngStyle]="{
+        backgroundColor: isTabActive(link) ? link.activeBg : 'transparent',
+        borderColor: isTabActive(link) ? link.activeColor : 'transparent',
+        color: isTabActive(link) ? link.activeColor : 'black',
+      }"
+      (click)="navigateTo(link.route!)"
     >
-      <i [class]="link.icon"></i>
+      <i
+        [class]="currentRoute === link.route ? link.activeIcon : link.icon"
+      ></i>
       <span>{{ link.label }}</span>
     </button>
   </nav>
@@ -49,7 +56,14 @@
     [class.active]="isTabActive(link)"
     (click)="!isTabActive(link) && onTabClick(link, true)"
   >
-    <span class="tab-icon"><i [class]="link.icon"></i></span>
+    <span
+      class="tab-icon"
+      [ngStyle]="{
+        backgroundColor: isTabActive(link) ? link.activeBg : 'transparent',
+        color: isTabActive(link) ? link.activeColor : 'black',
+      }"
+      ><i [class]="isTabActive(link) ? link.activeIcon : link.icon"></i
+    ></span>
     <span class="tab-label">{{ link.label }}</span>
   </button>
 </nav>
