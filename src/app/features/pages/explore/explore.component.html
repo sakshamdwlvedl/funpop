@@ -41,6 +41,15 @@
           cdkDrag
           [cdkDragDisabled]="!canReorder()"
         >
+          <ng-template cdkDragPreview>
+            <div class="drag-preview-lite">
+              <img
+                *ngIf="item?.poster_path"
+                [src]="'https://image.tmdb.org/t/p/w300' + item.poster_path"
+              />
+            </div>
+          </ng-template>
+
           <!-- Drag Handle -->
           <div class="drag-handle" cdkDragHandle *ngIf="canReorder()">
             <i class="pi pi-bars"></i>
@@ -56,33 +65,19 @@
             [movie]="item"
             (click)="navigateToDetails(item)"
           ></app-movie-card>
-
-          <!-- Hover Title Overlay -->
-          <div class="hover-info" *ngIf="item?.poster_path">
-             <div class="hover-title">{{ item.title || item.name }}</div>
-          </div>
         </div>
       </div>
     </ng-container>
 
     <!-- People grid -->
     <ng-container *ngIf="!initialLoad && isPeopleTab()">
-      <div
-        class="people-grid"
-        *ngIf="results.length; else emptyState"
-        cdkDropList
-        (cdkDropListDropped)="onDrop($event)"
-        [cdkDropListDisabled]="!canReorder()"
-        cdkDropListOrientation="mixed"
-      >
+      <div class="people-grid" *ngIf="results.length; else emptyState">
         <div
           class="card-wrapper"
           *ngFor="let person of results; let i = index; trackBy: trackById"
-          cdkDrag
-          [cdkDragDisabled]="!canReorder()"
         >
           <!-- Drag Handle for People (if reorder enabled) -->
-          <div class="drag-handle" cdkDragHandle *ngIf="canReorder()">
+          <div *ngIf="canReorder()">
             <i class="pi pi-bars"></i>
           </div>
 
@@ -91,9 +86,7 @@
             <span>#{{ i + 1 }}</span>
           </div>
 
-          <app-profile-card
-            [profile]="person"
-          ></app-profile-card>
+          <app-profile-card [profile]="person"></app-profile-card>
         </div>
       </div>
     </ng-container>

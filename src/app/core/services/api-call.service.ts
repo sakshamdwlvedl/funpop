@@ -319,7 +319,7 @@ export class ApiCallService {
       mediaId: item.id.toString(),
       mediaType,
       title: item.title || item.name,
-      posterPath: item.poster_path,
+      posterPath: item.profile_path,
       voteAverage: item.vote_average,
       releaseDate: item.release_date || item.first_air_date,
     };

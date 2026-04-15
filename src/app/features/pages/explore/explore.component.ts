@@ -84,7 +84,6 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
     this.route.queryParamMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
-        debugger;
         if (this.inputStrategy) {
           this.applyStrategy(this.inputStrategy, this.inputParam || '');
           return;
