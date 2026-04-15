@@ -1,4 +1,7 @@
 <div class="card">
+  <div class="rank-badge" *ngIf="rank">
+    {{ rank }}
+  </div>
   <img
     [ngSrc]="movie.poster_path"
     [alt]="movie.title || movie.name || 'Movie Poster'"
@@ -6,7 +9,7 @@
     [height]="commonService.isMobile ? 165 : 270"
   />
 
-  <div class="title">
+  <div class="title" *ngIf="!rank">
     {{ movie.title || movie.name }}
   </div>
 </div>

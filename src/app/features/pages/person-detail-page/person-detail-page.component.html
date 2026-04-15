@@ -39,7 +39,17 @@
       <div class="hero-text">
         <div class="department-tag">{{ details.known_for_department }}</div>
 
-        <h1 class="person-name">{{ details.name }}</h1>
+        <div class="name-row">
+          <h1 class="person-name">{{ details.name }}</h1>
+          <button
+            class="action-btn fav-btn"
+            [class.active]="inFavorites"
+            (click)="toggleFavorite()"
+            [title]="inFavorites ? 'Remove from Favourites' : 'Add to Favourites'"
+          >
+            <i class="pi" [class.pi-heart]="!inFavorites" [class.pi-heart-fill]="inFavorites"></i>
+          </button>
+        </div>
 
         <div class="also-known" *ngIf="details.also_known_as.length">
           <span class="aka-label">Also known as</span>

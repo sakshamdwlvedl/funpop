@@ -27,24 +27,74 @@
 
     <!-- Movie / TV grid -->
     <ng-container *ngIf="!initialLoad && isMovieOrTvTab()">
-      <div class="results-grid" *ngIf="results.length; else emptyState">
-        <ng-container *ngFor="let item of results; trackBy: trackById">
+      <div
+        class="results-grid"
+        *ngIf="results.length; else emptyState"
+        cdkDropList
+        (cdkDropListDropped)="onDrop($event)"
+        [cdkDropListDisabled]="!canReorder()"
+        cdkDropListOrientation="mixed"
+      >
+        <div
+          class="card-wrapper"
+          *ngFor="let item of results; let i = index; trackBy: trackById"
+          cdkDrag
+          [cdkDragDisabled]="!canReorder()"
+        >
+          <!-- Drag Handle -->
+          <div class="drag-handle" cdkDragHandle *ngIf="canReorder()">
+            <i class="pi pi-bars"></i>
+          </div>
+
+          <!-- Attractive Rank Badge -->
+          <div class="attractive-rank" *ngIf="canReorder()">
+            <span>#{{ i + 1 }}</span>
+          </div>
+
           <app-movie-card
             *ngIf="item?.poster_path"
             [movie]="item"
             (click)="navigateToDetails(item)"
           ></app-movie-card>
-        </ng-container>
+
+          <!-- Hover Title Overlay -->
+          <div class="hover-info" *ngIf="item?.poster_path">
+             <div class="hover-title">{{ item.title || item.name }}</div>
+          </div>
+        </div>
       </div>
     </ng-container>
 
     <!-- People grid -->
     <ng-container *ngIf="!initialLoad && isPeopleTab()">
-      <div class="people-grid" *ngIf="results.length; else emptyState">
-        <app-profile-card
-          *ngFor="let person of results; trackBy: trackById"
-          [profile]="person"
-        ></app-profile-card>
+      <div
+        class="people-grid"
+        *ngIf="results.length; else emptyState"
+        cdkDropList
+        (cdkDropListDropped)="onDrop($event)"
+        [cdkDropListDisabled]="!canReorder()"
+        cdkDropListOrientation="mixed"
+      >
+        <div
+          class="card-wrapper"
+          *ngFor="let person of results; let i = index; trackBy: trackById"
+          cdkDrag
+          [cdkDragDisabled]="!canReorder()"
+        >
+          <!-- Drag Handle for People (if reorder enabled) -->
+          <div class="drag-handle" cdkDragHandle *ngIf="canReorder()">
+            <i class="pi pi-bars"></i>
+          </div>
+
+          <!-- Attractive Rank Badge for People -->
+          <div class="attractive-rank" *ngIf="canReorder()">
+            <span>#{{ i + 1 }}</span>
+          </div>
+
+          <app-profile-card
+            [profile]="person"
+          ></app-profile-card>
+        </div>
       </div>
     </ng-container>
 

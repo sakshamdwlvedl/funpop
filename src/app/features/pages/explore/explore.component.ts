@@ -8,6 +8,7 @@ import {
   ElementRef,
   ViewChild,
   NgZone,
+  Input,
 } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -25,6 +26,11 @@ import { SeoService } from '../../../core/services/seo.service';
 import { COMMON } from '../../../core/constants/common.constant';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { CommonService } from '../../../core/services/common.service';
+import {
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-explore',
@@ -34,6 +40,7 @@ import { CommonService } from '../../../core/services/common.service';
     MovieCardComponent,
     ProfileCardComponent,
     LoaderComponent,
+    DragDropModule,
   ],
   templateUrl: './explore.component.html',
   styleUrls: ['./explore.component.scss'],
@@ -44,13 +51,16 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
   tabs: TabConfig[] = [];
   activeTab!: TabConfig;
 
+  @Input() inputStrategy?: string;
+  @Input() inputParam?: string;
+
   results: any[] = [];
   page = 1;
   totalPages = 1;
   loading = false;
   initialLoad = true;
 
-  private strategyKey = '';
+  strategyKey = '';
   private param = '';
 
   private strategy!: ExploreStrategy;
@@ -74,6 +84,12 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
     this.route.queryParamMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
+        debugger;
+        if (this.inputStrategy) {
+          this.applyStrategy(this.inputStrategy, this.inputParam || '');
+          return;
+        }
+
         const resolved = this.resolveStrategy(params);
         if (!resolved) {
           this.router.navigate(['/']);
@@ -81,23 +97,28 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         const { strategyKey, param } = resolved;
-        this.strategyKey = strategyKey;
-        this.param = param;
-        this.strategy = EXPLORE_STRATEGIES[strategyKey];
-
-        this.showTabs = this.strategy.showTabs;
-        this.tabs = this.strategy.tabs;
-        this.heading = this.strategy.heading(param);
-
-        // For `type` strategy, derive tab from the param suffix (movie/tv)
-        const defaultTab = this.pickDefaultTab(strategyKey, param);
-        this.switchTab(defaultTab, false);
-
-        this.seo.updateMeta(
-          this.heading,
-          `Explore ${this.heading} on ${COMMON.APP_NAME}. Find the best movies, TV shows, and celebrities.`,
-        );
+        this.applyStrategy(strategyKey, param);
       });
+  }
+
+  private applyStrategy(strategyKey: string, param: string): void {
+    this.strategyKey = strategyKey;
+    this.param = param;
+    this.strategy = EXPLORE_STRATEGIES[strategyKey];
+
+    if (!this.strategy) return;
+
+    this.showTabs = this.strategy.showTabs;
+    this.tabs = this.strategy.tabs;
+    this.heading = this.strategy.heading(param);
+
+    const defaultTab = this.pickDefaultTab(strategyKey, param);
+    this.switchTab(defaultTab, false);
+
+    this.seo.updateMeta(
+      this.heading,
+      `Explore ${this.heading} on ${COMMON.APP_NAME}. Find the best movies, TV shows, and celebrities.`,
+    );
   }
 
   ngAfterViewInit(): void {
@@ -123,7 +144,6 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
   private resolveStrategy(
     params: import('@angular/router').ParamMap,
   ): { strategyKey: string; param: string } | null {
-    // Priority order — first match wins
     const priority = ['query', 'genre', 'keyword', 'type', 'people'];
     for (const key of priority) {
       const val = params.get(key);
@@ -170,9 +190,27 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe({
         next: (res: any) => {
           const raw: any[] = res.results ?? [];
-          const transformed = this.activeTab.transform
+          let transformed = this.activeTab.transform
             ? raw.map(this.activeTab.transform)
             : raw;
+
+          // Extra safety check for categorization
+          if (this.activeTab.key === 'movies') {
+            transformed = transformed.filter(
+              (item) => item.media_type === 'movie',
+            );
+          } else if (this.activeTab.key === 'tv') {
+            transformed = transformed.filter(
+              (item) => item.media_type === 'tv',
+            );
+          } else if (this.activeTab.key === 'people') {
+            // Persons in TMDB sometimes don't have media_type or it's 'person'
+            transformed = transformed.filter(
+              (item) =>
+                item.media_type === 'person' ||
+                (!item.media_type && item.profile_path),
+            );
+          }
 
           this.results = [...this.results, ...transformed];
           this.totalPages = res.total_pages ?? 1;
@@ -180,7 +218,6 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
           this.loading = false;
           this.initialLoad = false;
 
-          // Re-observe sentinel after DOM update
           setTimeout(() => this.observeSentinel(), 100);
         },
         error: () => {
@@ -200,7 +237,7 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
           this.ngZone.run(() => this.loadPage());
         }
       },
-      { rootMargin: '200px' }, // trigger 200px before sentinel hits viewport
+      { rootMargin: '200px' },
     );
     this.observeSentinel();
   }
@@ -210,6 +247,22 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
       this.observer.disconnect();
       this.observer.observe(this.sentinel.nativeElement);
     }
+  }
+
+  // ── Drag & Drop ────────────────────────────────────────────────────────────
+  onDrop(event: CdkDragDrop<any[]>): void {
+    if (!this.canReorder()) return;
+
+    moveItemInArray(this.results, event.previousIndex, event.currentIndex);
+
+    const mediaIds = this.results.map((r) => r.id.toString());
+    if (this.strategyKey === 'wishlist') {
+      this.api.updateWishlistOrder(mediaIds).subscribe();
+    }
+  }
+
+  canReorder(): boolean {
+    return this.strategyKey === 'wishlist';
   }
 
   // ── Template helpers ───────────────────────────────────────────────────────

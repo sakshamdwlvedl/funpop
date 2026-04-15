@@ -13,6 +13,7 @@ export class MovieCardComponent {
   @Input() movie: any = {};
   @Input() isWishlist: boolean = false;
   @Input() isFavorite: boolean = false;
+  @Input() rank?: number;
 
   constructor(public commonService: CommonService) {}
 }

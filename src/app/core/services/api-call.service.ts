@@ -307,8 +307,10 @@ export class ApiCallService {
     });
   }
 
-  getWishlist(): Observable<any> {
-    return this.http.get({ url: ENDPOINTS.BACKEND.GET_WISHLIST(this.userId) });
+  getWishlist(mediaType?: string): Observable<any> {
+    return this.http.get({
+      url: ENDPOINTS.BACKEND.GET_WISHLIST(this.userId, mediaType),
+    });
   }
 
   toggleFavorite(item: any, mediaType: string): Observable<any> {
@@ -328,8 +330,18 @@ export class ApiCallService {
     });
   }
 
-  getFavorites(): Observable<any> {
-    return this.http.get({ url: ENDPOINTS.BACKEND.GET_FAVOURITE(this.userId) });
+  updateWishlistOrder(mediaIds: string[]): Observable<any> {
+    return this.http.post({
+      url: ENDPOINTS.BACKEND.REORDER_WISHLIST,
+      body: { userId: this.userId, mediaIds },
+      showLoader: false,
+    });
+  }
+
+  getFavorites(mediaType?: string): Observable<any> {
+    return this.http.get({
+      url: ENDPOINTS.BACKEND.GET_FAVOURITE(this.userId, mediaType),
+    });
   }
 
   addReview(

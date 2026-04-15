@@ -1,5 +1,5 @@
 import { ApiCallService } from '../../../core/services/api-call.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 export type ExploreTab = 'movies' | 'tv' | 'people';
 
@@ -40,6 +40,18 @@ const peopleTab = (apiFn: TabConfig['apiFn']): TabConfig => ({
   key: 'people',
   label: 'People',
   apiFn,
+});
+
+const backendTransform = (item: any) => ({
+  ...item,
+  id: item.mediaId,
+  poster_path: item.posterPath,
+  profile_path: item.posterPath,
+  title: item.title,
+  name: item.title,
+  media_type: item.mediaType,
+  vote_average: item.voteAverage,
+  release_date: item.releaseDate,
 });
 
 /**
@@ -116,6 +128,47 @@ export const EXPLORE_STRATEGIES: Record<string, ExploreStrategy> = {
         const [mediaType, id] = param.split('-') as ['movie' | 'tv', string];
         return api.getPeopleByMedia(mediaType, id);
       }),
+    ],
+  },
+
+  // ── Favourites ─────────────────────────────────────────────────────────────
+  favourites: {
+    heading: () => 'My Favourites',
+    showTabs: true,
+    tabs: [
+      {
+        ...movieTab((api) => api.getFavorites('movie')),
+        apiFn: (api) =>
+          api.getFavorites('movie').pipe(map((res) => ({ results: res.map(backendTransform) }))),
+      },
+      {
+        ...tvTab((api) => api.getFavorites('tv')),
+        apiFn: (api) =>
+          api.getFavorites('tv').pipe(map((res) => ({ results: res.map(backendTransform) }))),
+      },
+      {
+        ...peopleTab((api) => api.getFavorites('person')),
+        apiFn: (api) =>
+          api.getFavorites('person').pipe(map((res) => ({ results: res.map(backendTransform) }))),
+      },
+    ],
+  },
+
+  // ── Wishlist ───────────────────────────────────────────────────────────────
+  wishlist: {
+    heading: () => 'My Wishlist',
+    showTabs: true,
+    tabs: [
+      {
+        ...movieTab((api) => api.getWishlist('movie')),
+        apiFn: (api) =>
+          api.getWishlist('movie').pipe(map((res) => ({ results: res.map(backendTransform) }))),
+      },
+      {
+        ...tvTab((api) => api.getWishlist('tv')),
+        apiFn: (api) =>
+          api.getWishlist('tv').pipe(map((res) => ({ results: res.map(backendTransform) }))),
+      },
     ],
   },
 };

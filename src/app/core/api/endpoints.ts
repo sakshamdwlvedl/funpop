@@ -79,9 +79,16 @@ export const ENDPOINTS = {
   BACKEND: {
     LOGIN: api('/auth/login'),
     TOGGLE_WISHLIST: api('/interactions/wishlist'),
-    GET_WISHLIST: (userId: string) => api(`/interactions/wishlist/${userId}`),
+    GET_WISHLIST: (userId: string, mediaType?: string) =>
+      api(
+        `/interactions/wishlist/${userId}${mediaType ? '?mediaType=' + mediaType : ''}`,
+      ),
     TOGGLE_FAVOURITE: api('/interactions/favorites'),
-    GET_FAVOURITE: (userId: string) => api(`/interactions/favorites/${userId}`),
+    GET_FAVOURITE: (userId: string, mediaType?: string) =>
+      api(
+        `/interactions/favorites/${userId}${mediaType ? '?mediaType=' + mediaType : ''}`,
+      ),
+    REORDER_WISHLIST: api('/interactions/wishlist/reorder'),
     ADD_REVIEW: api('/interactions/reviews'),
     GET_REVIEWS: (mediaType: string, mediaId: string) =>
       api(`/interactions/reviews/${mediaType}/${mediaId}`),

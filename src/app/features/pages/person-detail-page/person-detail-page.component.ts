@@ -25,6 +25,7 @@ import { SeoService } from '../../../core/services/seo.service';
 import { ImageViewerComponent } from '../../../shared/components/image-viewer/image-viewer.component';
 
 type FilmographyFilter = 'all' | 'movie' | 'tv';
+import { ApiCallService } from '../../../core/services/api-call.service';
 
 @Component({
   selector: 'app-person-detail-page',
@@ -57,6 +58,8 @@ export class PersonDetailPageComponent
 
   socialLinks: { icon: string; label: string; url: string }[] = [];
 
+  inFavorites = false;
+
   @ViewChild('heroSection') heroSection!: ElementRef;
   @ViewChildren('fadeItem') fadeItems!: QueryList<ElementRef>;
 
@@ -64,6 +67,7 @@ export class PersonDetailPageComponent
     private route: ActivatedRoute,
     private router: Router,
     private seo: SeoService,
+    private api: ApiCallService,
   ) {}
 
   // ── Lifecycle ──────────────────────────────────────────────────────────────
@@ -77,6 +81,22 @@ export class PersonDetailPageComponent
       this.details.biography?.substring(0, 160) ||
         `Learn more about ${this.details.name}.`,
     );
+
+    this.getInteractionStatus();
+  }
+
+  getInteractionStatus() {
+    this.api
+      .getInteractionStatus(this.details.id.toString(), 'person')
+      .subscribe((status) => {
+        this.inFavorites = status.inFavorites;
+      });
+  }
+
+  toggleFavorite() {
+    this.api.toggleFavorite(this.details, 'person').subscribe((res) => {
+      this.inFavorites = res.added;
+    });
   }
 
   ngAfterViewInit(): void {
