@@ -290,7 +290,7 @@ export class ApiCallService {
 
 
   private readonly baseUrl = environment.BACKEND_URL + '/interactions';
-  private readonly userId = 'funpop_user_123';
+  private readonly userId = environment.USER_ID;
 
   toggleWishlist(item: any, mediaType: string): Observable<any> {
     const body = {
@@ -354,7 +354,7 @@ export class ApiCallService {
   ): Observable<any> {
     const body = {
       userId: this.userId,
-      username: 'FunPop User',
+      username: environment.USER_NAME,
       mediaId: mediaId.toString(),
       mediaType,
       rating,

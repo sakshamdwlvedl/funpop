@@ -8,6 +8,7 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
 import { COMMON } from './core/constants/common.constant';
 import { NotificationService } from './core/services/notification.service';
 import { NetworkIndicatorComponent } from './shared/components/network-indicator/network-indicator.component';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -40,7 +41,7 @@ export class AppComponent {
     }
 
     // Subscribe to push notifications
-    this.notificationService.requestPermissionAndSubscribe('guest-user'); // Using dummy ID for now
+    this.notificationService.requestPermissionAndSubscribe(environment.USER_ID);
     this.notificationService.listenToNotifications();
   }
 
