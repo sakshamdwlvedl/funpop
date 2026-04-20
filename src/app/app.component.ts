@@ -6,6 +6,8 @@ import { SplashComponent } from './shared/components/splash/splash.component';
 import { CommonService } from './core/services/common.service';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { COMMON } from './core/constants/common.constant';
+import { NotificationService } from './core/services/notification.service';
+import { NetworkIndicatorComponent } from './shared/components/network-indicator/network-indicator.component';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +18,7 @@ import { COMMON } from './core/constants/common.constant';
     CommonModule,
     SplashComponent,
     LoaderComponent,
+    NetworkIndicatorComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -27,11 +30,18 @@ export class AppComponent {
 
   COMMON: typeof COMMON = COMMON;
 
-  constructor(public commonService: CommonService) {
+  constructor(
+    public commonService: CommonService,
+    private notificationService: NotificationService
+  ) {
     const splashPlayed = sessionStorage.getItem('splashPlayed');
     if (!this.commonService.isPwa() || splashPlayed === 'true') {
       this.showSplash = false;
     }
+
+    // Subscribe to push notifications
+    this.notificationService.requestPermissionAndSubscribe('guest-user'); // Using dummy ID for now
+    this.notificationService.listenToNotifications();
   }
 
   @HostListener('window:beforeinstallprompt', ['$event'])

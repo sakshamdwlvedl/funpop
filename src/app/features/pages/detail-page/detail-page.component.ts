@@ -472,6 +472,8 @@ export class DetailPageComponent implements AfterViewInit, OnDestroy {
     this.selectedSeason = season;
   }
 
+
+
   getCollectionClass() {
     return this.details.revenue > this.details.budget ? 'profit' : 'loss';
   }

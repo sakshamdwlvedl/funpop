@@ -136,7 +136,6 @@
   border: 2px solid white;
   pointer-events: none;
   font-family: "Outfit", sans-serif;
-  letter-spacing: -0.5px;
 }
 
 // CDK Drag Styling
@@ -199,17 +198,17 @@
 }
 
 .end-message {
+  font-size: 12px;
   text-align: center;
   padding: 60px 0 32px;
-  font-size: 0.9rem;
   opacity: 0.5;
-  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--primary-color);
   font-weight: 600;
 }
 
 .empty-state {
+  font-size: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -225,7 +224,6 @@
   }
 
   p {
-    font-size: 1.2rem;
     font-weight: 500;
   }
 }

@@ -1,0 +1,44 @@
+.network-toast {
+  position: fixed;
+  font-size: 12px;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 50px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: white;
+
+  &.offline {
+    background: rgba(255, 68, 68, 0.9);
+  }
+
+  &.slow {
+    background: rgba(255, 187, 51, 0.9);
+    color: #333;
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}

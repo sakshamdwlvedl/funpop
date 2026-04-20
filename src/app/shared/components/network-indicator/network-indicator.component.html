@@ -1,0 +1,17 @@
+<div
+  class="network-toast"
+  *ngIf="isOffline || isSlow"
+  [class.offline]="isOffline"
+  [class.slow]="isSlow"
+>
+  <div class="content">
+    <i
+      class="pi"
+      [class.pi-wifi]="isSlow"
+      [class.pi-times-circle]="isOffline"
+    ></i>
+    <span class="text-nowrap">{{
+      isOffline ? "You are offline" : "Slow network detected"
+    }}</span>
+  </div>
+</div>

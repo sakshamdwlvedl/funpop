@@ -287,6 +287,8 @@ export class ApiCallService {
     return this.http.get({ url: ENDPOINTS.TMDB.PERSON_DETAILS(id) });
   }
 
+
+
   private readonly baseUrl = environment.BACKEND_URL + '/interactions';
   private readonly userId = 'funpop_user_123';
 
@@ -377,4 +379,6 @@ export class ApiCallService {
       },
     });
   }
+
+
 }

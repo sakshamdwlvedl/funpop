@@ -61,6 +61,7 @@ export const routes: Routes = [
         (m) => m.ExploreComponent,
       ),
   },
+
   {
     path: '**',
     redirectTo: 'dashboard',
