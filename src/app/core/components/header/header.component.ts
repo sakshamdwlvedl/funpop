@@ -18,6 +18,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { CommonService } from '../../services/common.service';
+import { AuthService } from '../../services/auth.service';
 
 interface NavLink {
   label: string;
@@ -101,6 +102,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly commonService: CommonService,
+    public readonly authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -193,6 +195,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSearchClear() {
     this.commonService.navigateBack();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  get currentUser() {
+    return this.authService.currentUser;
   }
 
   ngOnDestroy(): void {

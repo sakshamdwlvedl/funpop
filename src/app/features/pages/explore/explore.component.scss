@@ -13,16 +13,11 @@
   }
 }
 
-.explore-content {
-  @include breakpoint(sm) {
-    padding: 0;
-  }
-}
-
 .tab-switcher {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-bottom: 0;
 }
 
 .tab-btn {
@@ -34,7 +29,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
     background: #00000012;
@@ -44,9 +39,25 @@
     background: $black;
     border-color: $black;
     color: $white;
+    transform: scale(1.05);
   }
   @include breakpoint(sm) {
     padding: 4px 10px;
+  }
+}
+
+.explore-content {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  will-change: opacity, transform;
+
+  &.switching {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+  }
+
+  @include breakpoint(sm) {
+    padding: 0;
   }
 }
 

@@ -43,6 +43,27 @@
       <span>{{ link.label }}</span>
     </button>
   </nav>
+
+  <!-- User avatar + logout -->
+  <div class="user-menu" *ngIf="currentUser">
+    <div class="user-avatar" [title]="currentUser.username">
+      <img
+        *ngIf="currentUser.avatar"
+        [src]="currentUser.avatar"
+        [alt]="currentUser.username"
+      />
+      <span *ngIf="!currentUser.avatar">{{
+        currentUser.username.charAt(0).toUpperCase()
+      }}</span>
+    </div>
+    <div class="user-dropdown">
+      <span class="user-name">{{ currentUser.username }}</span>
+      <span class="user-email text-nowrap">{{ currentUser.email }}</span>
+      <button class="logout-btn text-nowrap" (click)="logout()">
+        <i class="pi pi-sign-out"></i> Sign Out
+      </button>
+    </div>
+  </div>
 </header>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════

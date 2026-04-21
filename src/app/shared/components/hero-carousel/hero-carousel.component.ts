@@ -33,7 +33,7 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
   private touchEndX = 0;
 
   constructor(
-    private apiService: ApiCallService,
+    private api: ApiCallService,
     private sanitizer: DomSanitizer,
     public commonService: CommonService,
   ) {}
@@ -93,9 +93,9 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
 
   loadTrailer(item: any) {
     if (this.trailers[item.id]) return;
-    this.apiService
+    this.api
       .getVideos(item.id, item.media_type || 'movie')
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         const video =
           res.results.find(
             (v: any) => v.site === 'YouTube' && v.type === 'Trailer',
@@ -138,7 +138,7 @@ export class HeroCarouselComponent implements OnInit, OnDestroy {
 
   navigateToDetailPage(item: any) {
     this.commonService.navigateTo({
-      route: `/details/${item.media_type}/${item.id}`,
+      route: `/details/${item.media_type || 'movie'}/${item.id}`,
     } as NavigationData);
   }
 

@@ -25,7 +25,7 @@ export class CarouselComponent implements AfterContentInit {
   @Input() title: string = '';
   @Input() keyToEmit: string = '';
   @Input() showSeeMore: boolean = true;
-  @Input() fadeColor: 'white' | 'black' = 'white';
+  @Input() fadeColor: 'white' | 'black' | 'dashboard-bg' = 'white';
   @Input() showTitle: boolean = true;
   @Output() onSeeMore: EventEmitter<string> = new EventEmitter<string>();
 

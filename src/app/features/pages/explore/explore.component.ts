@@ -9,6 +9,7 @@ import {
   ViewChild,
   NgZone,
   Input,
+  HostListener,
 } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -59,6 +60,7 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
   totalPages = 1;
   loading = false;
   initialLoad = true;
+  isSwitching = false;
 
   strategyKey = '';
   private param = '';
@@ -68,6 +70,10 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('sentinel') sentinel!: ElementRef<HTMLDivElement>;
   private observer!: IntersectionObserver;
+
+  // --- Swipe Gestures ---
+  private touchStartX = 0;
+  private touchEndX = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -152,6 +158,11 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private pickDefaultTab(strategyKey: string, param: string): ExploreTab {
+    const tabFromUrl = this.route.snapshot.queryParamMap.get('tab') as ExploreTab;
+    if (tabFromUrl && this.tabs.find((t) => t.key === tabFromUrl)) {
+      return tabFromUrl;
+    }
+
     if (strategyKey === 'type') {
       if (param.endsWith('-tv') || param === 'on-the-air') return 'tv';
       return 'movies';
@@ -162,13 +173,66 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
 
   switchTab(tabKey: ExploreTab, scrollToTop = true): void {
     const tab = this.tabs.find((t) => t.key === tabKey);
-    if (!tab) return;
+    if (!tab || this.activeTab?.key === tabKey) return;
 
-    this.activeTab = tab;
-    this.reset();
-    this.loadPage();
+    this.isSwitching = true;
+    setTimeout(() => {
+      this.activeTab = tab;
 
-    if (scrollToTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Update URL without reloading
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { tab: tabKey },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+
+      this.reset();
+      this.loadPage();
+
+      if (scrollToTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Ensure switching is false after a bit more time for the fade in
+      setTimeout(() => {
+        this.isSwitching = false;
+      }, 100);
+    }, 150);
+  }
+
+
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  @HostListener('touchend', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
+  private handleSwipe() {
+    if (!this.showTabs || this.tabs.length <= 1) return;
+
+    const swipeThreshold = 50;
+    const deltaX = this.touchEndX - this.touchStartX;
+
+    if (Math.abs(deltaX) > swipeThreshold) {
+      const currentIndex = this.tabs.findIndex(
+        (t) => t.key === this.activeTab.key,
+      );
+      if (deltaX > 0) {
+        // Swipe Right -> Prev Tab
+        if (currentIndex > 0) {
+          this.switchTab(this.tabs[currentIndex - 1].key);
+        }
+      } else {
+        // Swipe Left -> Next Tab
+        if (currentIndex < this.tabs.length - 1) {
+          this.switchTab(this.tabs[currentIndex + 1].key);
+        }
+      }
+    }
   }
 
   private reset(): void {
@@ -256,12 +320,18 @@ export class ExploreComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const mediaIds = this.results.map((r) => r.id.toString());
     if (this.strategyKey === 'wishlist') {
-      this.api.updateWishlistOrder(mediaIds).subscribe();
+      this.api.updateWishlistOrder(mediaIds, this.activeTab.key).subscribe();
+    } else if (this.strategyKey === 'favourites') {
+      this.api.updateFavoritesOrder(mediaIds, this.activeTab.key).subscribe();
     }
   }
 
   canReorder(): boolean {
-    return this.strategyKey === 'wishlist';
+    return (
+      this.strategyKey === 'wishlist' ||
+      (this.strategyKey === 'favourites' &&
+        (this.activeTab.key === 'movies' || this.activeTab.key === 'tv'))
+    );
   }
 
   // ── Template helpers ───────────────────────────────────────────────────────

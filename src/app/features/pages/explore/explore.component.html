@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class="explore-content container">
+  <div class="explore-content container" [class.switching]="isSwitching">
     <!-- Initial skeleton -->
     <ng-container *ngIf="initialLoad && loading">
       <div class="results-grid">

@@ -1,0 +1,129 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="assets/images/funpop-logo.png" alt="FunPop" />
+      <span class="logo-text">FUN<span class="logo-accent">POP</span></span>
+    </div>
+
+    <h1 class="auth-title">
+      {{ isRegister ? 'Create your account' : 'Welcome back' }}
+    </h1>
+    <p class="auth-subtitle">
+      {{
+        isRegister
+          ? 'Join FunPop and track your favourite movies & shows.'
+          : 'Sign in to continue to FunPop.'
+      }}
+    </p>
+
+    <!-- Error -->
+    <div class="auth-error" *ngIf="error">{{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="field" *ngIf="isRegister">
+        <label>Name</label>
+        <div class="input-wrap">
+          <i class="pi pi-user"></i>
+          <input
+            type="text"
+            formControlName="username"
+            placeholder="Your display name"
+          />
+        </div>
+        <span
+          class="field-error"
+          *ngIf="f['username']?.touched && f['username']?.invalid"
+        >
+          Name is required
+        </span>
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <div class="input-wrap">
+          <i class="pi pi-envelope"></i>
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+          />
+        </div>
+        <span class="field-error" *ngIf="f['email'].touched && f['email'].invalid">
+          Enter a valid email
+        </span>
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <div class="input-wrap">
+          <i class="pi pi-lock"></i>
+          <input
+            [type]="showPwd ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+          />
+          <button type="button" class="pwd-toggle" (click)="showPwd = !showPwd">
+            <i [class]="showPwd ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+          </button>
+        </div>
+        <span
+          class="field-error"
+          *ngIf="f['password'].touched && f['password'].invalid"
+        >
+          Password must be at least 6 characters
+        </span>
+      </div>
+
+      <!-- Avatar Selection (Register only) -->
+      <div class="field avatars-field" *ngIf="isRegister">
+        <label>Select Profile Character (Optional)</label>
+        
+        <div class="avatar-loading" *ngIf="fetchingAvatars">
+          <i class="pi pi-spin pi-spinner"></i> Loading Characters...
+        </div>
+
+        <div class="avatar-grid custom-scrollbar" *ngIf="!fetchingAvatars">
+          <div
+            *ngFor="let avatar of avatars"
+            class="avatar-item"
+            [class.selected]="selectedAvatar === avatar.url"
+            (click)="selectAvatar(avatar.url)"
+            [title]="avatar.name"
+          >
+            <img [src]="avatar.url" [alt]="avatar.name" loading="lazy" />
+            <div class="check-overlay" *ngIf="selectedAvatar === avatar.url">
+              <i class="pi pi-check" style="color: white; font-size: 10px;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="loading || form.invalid"
+      >
+        <span *ngIf="!loading">{{
+          isRegister ? 'Create Account' : 'Sign In'
+        }}</span>
+        <i class="pi pi-spin pi-spinner" *ngIf="loading"></i>
+      </button>
+    </form>
+
+    <div class="divider"><span>or</span></div>
+
+    <button class="btn-google" (click)="loginWithGoogle()" [disabled]="loading">
+      <i class="pi pi-google" style="font-size: 1.1rem"></i>
+      Continue with Google
+    </button>
+
+    <p class="auth-toggle">
+      {{ isRegister ? 'Already have an account?' : "Don't have an account?" }}
+      <button type="button" class="toggle-btn" (click)="toggleMode()">
+        {{ isRegister ? 'Sign in' : 'Create one' }}
+      </button>
+    </p>
+  </div>
+</div>

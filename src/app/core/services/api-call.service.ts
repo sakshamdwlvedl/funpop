@@ -4,13 +4,17 @@ import { ENDPOINTS } from '../api/endpoints';
 import { map, Observable } from 'rxjs';
 import { MovieDetails } from '../../features/interfaces/movie-detail.interface';
 import { PersonDetail } from '../../features/interfaces/person-detail.interface';
-import { environment } from '../../../environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiCallService {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, private authService: AuthService) {}
+
+  private get userId(): string {
+    return this.authService.currentUser?.userId ?? '';
+  }
 
   getTrending(mediaType: 'movie' | 'tv') {
     return this.http.get({ url: ENDPOINTS.TMDB.TRENDING(mediaType) }).pipe(
@@ -287,10 +291,7 @@ export class ApiCallService {
     return this.http.get({ url: ENDPOINTS.TMDB.PERSON_DETAILS(id) });
   }
 
-
-
-  private readonly baseUrl = environment.BACKEND_URL + '/interactions';
-  private readonly userId = environment.USER_ID;
+  private readonly baseUrl = '/api/interactions';
 
   toggleWishlist(item: any, mediaType: string): Observable<any> {
     const body = {
@@ -311,7 +312,7 @@ export class ApiCallService {
 
   getWishlist(mediaType?: string): Observable<any> {
     return this.http.get({
-      url: ENDPOINTS.BACKEND.GET_WISHLIST(this.userId, mediaType),
+      url: ENDPOINTS.BACKEND.GET_WISHLIST(mediaType),
     });
   }
 
@@ -321,7 +322,7 @@ export class ApiCallService {
       mediaId: item.id.toString(),
       mediaType,
       title: item.title || item.name,
-      posterPath: item.profile_path,
+      posterPath: item.poster_path ?? item.profile_path,
       voteAverage: item.vote_average,
       releaseDate: item.release_date || item.first_air_date,
     };
@@ -332,17 +333,25 @@ export class ApiCallService {
     });
   }
 
-  updateWishlistOrder(mediaIds: string[]): Observable<any> {
+  updateWishlistOrder(mediaIds: string[], mediaType: string): Observable<any> {
     return this.http.post({
       url: ENDPOINTS.BACKEND.REORDER_WISHLIST,
-      body: { userId: this.userId, mediaIds },
+      body: { userId: this.userId, mediaIds, mediaType },
+      showLoader: false,
+    });
+  }
+
+  updateFavoritesOrder(mediaIds: string[], mediaType: string): Observable<any> {
+    return this.http.post({
+      url: ENDPOINTS.BACKEND.REORDER_FAVOURITE,
+      body: { userId: this.userId, mediaIds, mediaType },
       showLoader: false,
     });
   }
 
   getFavorites(mediaType?: string): Observable<any> {
     return this.http.get({
-      url: ENDPOINTS.BACKEND.GET_FAVOURITE(this.userId, mediaType),
+      url: ENDPOINTS.BACKEND.GET_FAVOURITE(mediaType),
     });
   }
 
@@ -354,7 +363,7 @@ export class ApiCallService {
   ): Observable<any> {
     const body = {
       userId: this.userId,
-      username: environment.USER_NAME,
+      username: this.authService.currentUser?.username ?? 'Anonymous',
       mediaId: mediaId.toString(),
       mediaType,
       rating,
@@ -373,12 +382,9 @@ export class ApiCallService {
     return this.http.get({
       url: ENDPOINTS.BACKEND.GET_INTERACTION_STATUS,
       params: {
-        userId: this.userId,
         mediaId: mediaId.toString(),
         mediaType,
       },
     });
   }
-
-
 }

@@ -35,8 +35,9 @@
           {{ items[currentIndex].overview }}
         </p>
         <div class="actions" *ngIf="!commonService.isMobile">
-          <button>▶ Play</button>
-          <button>+ Watchlist</button>
+          <button (click)="navigateToDetailPage(items[currentIndex])">
+            <i class="pi pi-eye"></i> See
+          </button>
         </div>
       </div>
     </div>

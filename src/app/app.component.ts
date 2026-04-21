@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { HeaderComponent } from './core/components/header/header.component';
 import { SplashComponent } from './shared/components/splash/splash.component';
 import { CommonService } from './core/services/common.service';
@@ -28,13 +29,23 @@ export class AppComponent {
   deferredPrompt: any;
   showInstallButton = false;
   showSplash = true;
+  isLoginPage = false;
 
   COMMON: typeof COMMON = COMMON;
 
   constructor(
     public commonService: CommonService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
   ) {
+    this.isLoginPage = window.location.pathname.includes('/login');
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.isLoginPage = event.urlAfterRedirects.includes('/login');
+    });
+
     const splashPlayed = sessionStorage.getItem('splashPlayed');
     if (!this.commonService.isPwa() || splashPlayed === 'true') {
       this.showSplash = false;
